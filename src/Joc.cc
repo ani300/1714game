@@ -1,27 +1,14 @@
 #include "Joc.h"
 
-Joc::Joc() {
-
+//Constructor
+Joc::Joc() :window(sf::VideoMode::getDesktopMode() , L"1714: La resistència de l'Història", sf::Style::Resize|sf::Style::Close) ,graphic(window) ,logic(graphic) {
+    
 }
 
 int Joc::play() {
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+    //GAME LOOP
+    while(window.isOpen()){
 
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
-
-    return 0;
+    } 
 }
