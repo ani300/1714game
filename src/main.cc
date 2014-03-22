@@ -4,5 +4,5 @@ int main() {
 
 	Joc joc;
 	return joc.play();
-	
+
 }

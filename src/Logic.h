@@ -8,14 +8,12 @@ class Logic {
 
 	public:
 		//Constructor
-		Logic(Graphic &graphicModule);
+		Logic();
 
 		//Destructor
 		~Logic();
 
 	private:
-
-		Graphic graphic;
 
 };
 

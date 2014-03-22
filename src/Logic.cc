@@ -2,7 +2,7 @@
 #include "Logic.h"
 
 //Constructor
-Logic::Logic(Graphic& graphicModule) :graphic(graphicModule) { 
+Logic::Logic() { 
 
 }
 
