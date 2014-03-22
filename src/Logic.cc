@@ -5,3 +5,5 @@
 Logic::Logic(Graphic& graphicModule) :graphic(graphicModule) { 
 
 }
+
+Logic::~Logic() {}
