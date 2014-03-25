@@ -6,6 +6,8 @@
 #include <string>
 #include <sstream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <iostream>
 
 class SplashImage {
 
@@ -14,10 +16,13 @@ class SplashImage {
 		SplashImage();
 
 		//Constructor with name of the image it want's to display
-		SplashImage(std::String pictureName);
+		SplashImage(std::string pictureName);
 
 		//Destructor
 		~SplashImage();
+
+		//Dibuixar
+		void draw(sf::RenderWindow& window);
 
 	private:
 

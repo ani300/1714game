@@ -4,6 +4,7 @@
 
 #include "Logic.h"
 #include "Graphic.h"
+#include "SplashImage.h"
 #include <SFML/Graphics.hpp>
 
 class Joc {

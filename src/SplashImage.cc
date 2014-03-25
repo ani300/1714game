@@ -1,4 +1,5 @@
 /*********************************SplashImage.cpp***********************************/
+#include "SplashImage.h"
 
 //Constructor
 SplashImage::SplashImage(){
@@ -6,9 +7,9 @@ SplashImage::SplashImage(){
 }
 
 //Constructor with name of the image it want's to display
-SplashImage::SplashImage(std::String pictureName){
+SplashImage::SplashImage(std::string pictureName){
 	std::stringstream s;
-	s << "res/pictures/" << name << ".png";
+	s << "res/pictures/" << pictureName << ".png";
 	if(! texture.loadFromFile(s.str()))
 		std::cout <<"Not able to load " << s.str() << std::endl;
 	//the true is for texture rect  to be reseted to the size of the new texture
@@ -18,4 +19,8 @@ SplashImage::SplashImage(std::String pictureName){
 //Destructor
 SplashImage::~SplashImage(){
 
+}
+
+void SplashImage::draw(sf::RenderWindow& window){
+	window.draw(sprite);
 }
