@@ -2,5 +2,6 @@
 *.o
 *.x
 *.exe
+*.pro
 Debug
 gamemilans
