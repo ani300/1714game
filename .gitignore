@@ -3,5 +3,6 @@
 *.x
 *.exe
 *.pro
+*.user
 Debug
 gamemilans
