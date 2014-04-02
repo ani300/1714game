@@ -15,6 +15,9 @@ class Joc {
 		int play();
 
 	private:
+		void processEvents();
+		void update();
+		void render();
 
 	    sf::RenderWindow window;
 	    Graphic graphic;
