@@ -32,4 +32,5 @@ int Joc::play() {
     	update();
     	render();
     }
+    return EXIT_SUCCESS;
 }
