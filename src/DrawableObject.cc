@@ -11,7 +11,7 @@ DrawableObject::DrawableObject(sf::RenderWindow &window) : window(window){
 void DrawableObject::setPosition(sf::Vector2f pos){
 	position = pos;
 }
-sf::Vector2f getPosition(){
+sf::Vector2f DrawableObject::getPosition(){
 	return position;
 }
 
@@ -36,8 +36,8 @@ void DrawableObject::setTextureToSprite(){
 }
 
 //Sets the Rectangle defined for the variables from sf::Texture texture to the sf::Sprite sprite
-void setTextureRectToSprite(sf::IntRect rect){
-	sprite.setTextureRect(rect.left, rect.top, rect.width, rect.height);
+void DrawableObject::setTextureRectToSprite(sf::IntRect rect){
+	sprite.setTextureRect(rect);
 }
 
 //Draw the 'sprite' at 'position' with the size 'size' on the 'window'
