@@ -2,6 +2,8 @@
 #ifndef DRAWABLEOBJECT
 #define DRAWABLEOBJECT
 
+#include <string>
+#include <sstream>
 #include <iostream>
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
@@ -13,34 +15,31 @@ public:
 
 	//Constructor with window as a reference
     DrawableObject(sf::RenderWindow &window);
-
-	//Setter and getter for Size
-	void setSize(sf::Vector2f size);
-	sf::vector2f getSize();
 	
 	//Setter and getter for Position
 	void setPosition(sf::Vector2f pos);
-	sf::vector2f getPosition();
+	sf::Vector2f getPosition();
 
 	//Load the image named 'textureName' to the sf::Texture texture
-	void loadTexture(sf::String textureName);
+	void loadTexture(std::string textureName);
 
 	//Sets the sf::Texture on texture to the sf::Sprite sprite
 	void setTextureToSprite();
 	
-	//Draw the 'sprite' at 'position' with the size 'size' on the 'window'
+	//Sets the Rectangle defined for the variables from sf::Texture texture to the sf::Sprite sprite
+	void setTextureRectToSprite(sf::IntRect rect);
+	
+	//Draw the 'sprite' at 'position' with the size 'size' on the 'window' ('xxx' are the private variables)
 	void draw();
 	
-	//Draw the 'sprite' at 'position' with the size 'size' on the 'otherWindow'
-	void draw(sf::RenderWindow &otherWindow);
+	//Draw the 'sprite' at 'position' with the size 'size' on the window 'Wind'
+	void draw(sf::RenderWindow &Wind);
 	
 private:
 
    sf::RenderWindow& window;
-   sf::Vector2f windowSize;
+   sf::Vector2u windowSize;
    sf::Vector2f position;
-   sf::Vector2f size;
-   
    sf::Texture texture;
    sf::Sprite sprite;
    

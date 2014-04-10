@@ -2,7 +2,6 @@
 #ifndef GRAPHIC
 #define GRAPHIC
 
-
 #include <SFML/Graphics.hpp>
 
 class Graphic {
@@ -19,6 +18,5 @@ class Graphic {
 		sf::RenderWindow &window;
 
 };
-
 
 #endif

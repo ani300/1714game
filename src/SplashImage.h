@@ -5,9 +5,9 @@
 
 #include <string>
 #include <sstream>
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
 #include <iostream>
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 
 class SplashImage {
 
