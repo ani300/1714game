@@ -17,16 +17,11 @@ sf::Vector2f DrawableObject::getPosition(){
 
 //Load the image named 'textureName' to the sf::Texture texture 
 void DrawableObject::loadTexture(std::string textureName){
-	std::stringstream s;
-	s << "res/pictures/" << textureName << ".png";
-	if(! texture.loadFromFile(s.str())) {
-		std::cerr <<"Not able to load png" << s.str() << std::endl;
-	}
-	else {
-		s << "res/pictures/" << textureName << ".jpg";
-		if(! texture.loadFromFile(s.str())) 
-			std::cerr <<"Not able to load jpg either" << s.str() << std::endl;
-	}
+	std::stringstream png, jpg;
+	png << "res/pictures/" << textureName << ".png";
+	jpg << "res/pictures/" << textureName << ".jpg";
+	if(! texture.loadFromFile(png.str())) std::cerr <<"Not able to load png" << png.str() << std::endl;
+	else if(! texture.loadFromFile(jpg.str())) std::cerr <<"Not able to load jpg either" << jpg.str() << std::endl;
 }
 
 //Sets the sf::Texture on texture to the sf::Sprite sprite
