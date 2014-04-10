@@ -62,6 +62,7 @@ int Joc::play() {
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	
+	window.setVerticalSyncEnabled(true);
 	while(window.isOpen()) {
 		processEvents();
 		timeSinceLastUpdate += clock.restart();
