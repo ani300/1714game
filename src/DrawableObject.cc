@@ -30,6 +30,10 @@ void DrawableObject::setTextureToSprite(){
 	sprite.setTexture(texture, true);
 }
 
+void DrawableObject::setScaleToSprite(sf::Vector2f scaleValues){
+	sprite.setScale(scaleValues);
+}
+
 //Sets the Rectangle defined for the variables from sf::Texture texture to the sf::Sprite sprite
 void DrawableObject::setTextureRectToSprite(sf::IntRect rect){
 	sprite.setTextureRect(rect);

@@ -85,11 +85,10 @@ void readNextState(int& skipLines){
 	switch(doc[0]){
 		case 'S' :
 			SplashImage splashIm(doc);
-			//empty drawableObjects;
+			//buidar drawableObjects;
 			drawableObjects.push_back(splashIm);
 			break;
-		case 'E' :
-			//empty drawableobjects
+		case 'X' :
 			break;
 		default:
 			break;
@@ -99,7 +98,6 @@ void readNextState(int& skipLines){
 
 int Joc::play() {
 	
-	//Joc LOOP
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	

@@ -20,13 +20,11 @@ class SplashImage: public DrawableObject{
 		//Destructor
 		~SplashImage();
 		//Dibuixar
-// 		void draw(sf::RenderWindow& window);
+ 		void draw(sf::RenderWindow& window);
 
 	private:
-// 		sf::Sprite sprite;
-// 		sf::Texture texture;
 		string str;
-
+		sf::Text sftext;
 };
 
 

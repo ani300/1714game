@@ -27,6 +27,9 @@ public:
 	//Sets the sf::Texture on texture to the sf::Sprite sprite
 	void setTextureToSprite();
 	
+	//Sets the scale defined by the Vector2f to to the sf::Sprite sprite
+	void setScaleToSprite(sf::Vector2f scaleValues);
+	
 	//Sets the Rectangle defined for the variables from sf::Texture texture to the sf::Sprite sprite
 	void setTextureRectToSprite(sf::IntRect rect);
 	
