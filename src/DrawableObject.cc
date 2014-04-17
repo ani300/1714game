@@ -47,8 +47,12 @@ void DrawableObject::draw(sf::RenderWindow &Wind){
 	window.draw(sprite);
 }
 
+void DrawableObject::move(sf::Vector2f &movement){
+	//Do nothing... (who want's to be able to move should override this method)
+}
 
-
-
+void DrawableObject::click(mouseButtons mouseButton, sf::Vector2f mouseClick){
+	//Do nothing also have to be overrided.
+}
 
 

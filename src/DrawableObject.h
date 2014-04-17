@@ -3,6 +3,7 @@
 #define DRAWABLEOBJECT
 
 #include <string>
+#include "Utils.h"
 #include <sstream>
 #include <iostream>
 #include "SFML/System.hpp"
@@ -34,6 +35,12 @@ public:
 	
 	//Draw the 'sprite' at 'position' with the size 'size' on the window 'Wind'
 	void draw(sf::RenderWindow &Wind);
+	
+	//Move --it is empty if the son would like to move he can implement it
+	void move(sf::Vector2f &movement);
+	
+	//Click --same as move
+	void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
 	
 private:
 
