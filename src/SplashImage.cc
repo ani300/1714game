@@ -2,30 +2,31 @@
 #include "SplashImage.h"
 
 //Constructor
-SplashImage::SplashImage(){
+SplashImage::SplashImage(sf::RenderWindow &window) : DrawableObject(window) {
 
 }
 
 //Constructor with name of the image it want's to display
-SplashImage::SplashImage(std::string document){
+SplashImage::SplashImage(sf::RenderWindow &window, std::string document): DrawableObject(window) {
 	std::stringstream s;
-	s << "res/document/" << document;
-	str = s.c_str();
+	s << "res/document/" << document << std::endl;
+	getline(s, str);
 	
-	string tex;
-	ifstream infile;
-	infile.open (str);
+	std::string tex;
+	std::ifstream infile;
+	infile.open (str.c_str());
 	getline(infile, tex);
 	while(tex[0] == '%') getline(infile, tex); 
 	std::stringstream t;
-	t << "res/pictures/" << tex;
-	loadTexture(t.c_str());
+	t << "res/pictures/" << tex << std::endl;
+	getline(t, tex);
+	loadTexture(tex.c_str());
 	setTextureToSprite();
 	sf::Vector2f escala(1,1);
 	//POSAR VALORS A ESCALA PERQUE OCUPI TOTA LA PANTALLA
 	setScaleToSprite(escala);
 
-	string text, textPosX, textPosY;
+	std::string text, textPosX, textPosY;
 	getline(infile, text); while(tex[0] == '%') getline(infile, text); 
 	getline(infile, text); while(tex[0] == '%') getline(infile, text); 
 	getline(infile, text); while(tex[0] == '%') getline(infile, text); 
@@ -41,7 +42,7 @@ SplashImage::SplashImage(std::string document){
 SplashImage::~SplashImage(){
 }
 
-void SplashImage::draw(sf::RenderWindow& window){
-	window.draw(sprite);
+void SplashImage::draw(){
+	DrawableObject::draw();
 	window.draw(sftext);
 }

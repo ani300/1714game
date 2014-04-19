@@ -7,7 +7,7 @@
 #include "Graphic.h"
 #include "SplashImage.h"
 #include "DrawableObject.h"
-#include <SFML/Graphics.hpp>
+
 class Joc {
 
 	public:
@@ -21,6 +21,7 @@ class Joc {
 		void processEvents();
 		void update(sf::Time elapsedTime);
 		void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
+		void readNextState(int& skipLines);
 		
     	Logic logic;
 		directions dir;
@@ -28,7 +29,7 @@ class Joc {
 		sf::Vector2f mouseClick;
 	    sf::RenderWindow window;
 	    sf::CircleShape mPlayer;
-		vector<DrawableObject> drawableObjects;
+		std::vector<DrawableObject*> drawableObjects;
 };
 
 

@@ -52,7 +52,7 @@ void DrawableObject::draw(sf::RenderWindow &Wind){
 }
 
 void DrawableObject::move(sf::Vector2f &movement){
-	//Do nothing... (who want's to be able to move should override this method)
+	//Do nothing... (whoever wants to be able to move should override this method)
 }
 
 void DrawableObject::click(mouseButtons mouseButton, sf::Vector2f mouseClick){

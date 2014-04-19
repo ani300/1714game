@@ -2,13 +2,7 @@
 #ifndef DRAWABLEOBJECT
 #define DRAWABLEOBJECT
 
-#include <string>
 #include "Utils.h"
-#include <sstream>
-#include <iostream>
-#include "SFML/System.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/Graphics.hpp"
 
 class DrawableObject {
 
@@ -34,25 +28,25 @@ public:
 	void setTextureRectToSprite(sf::IntRect rect);
 	
 	//Draw the 'sprite' at 'position' with the size 'size' on the 'window' ('xxx' are the private variables)
-	void draw();
+	virtual void draw();
 	
 	//Draw the 'sprite' at 'position' with the size 'size' on the window 'Wind'
-	void draw(sf::RenderWindow &Wind);
+	virtual void draw(sf::RenderWindow &Wind);
 	
 	//Move --it is empty if the son would like to move he can implement it
-	void move(sf::Vector2f &movement);
+	virtual void move(sf::Vector2f &movement);
 	
 	//Click --same as move
-	void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
+	virtual void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
 	
 private:
-
-   sf::RenderWindow& window;
-   sf::Vector2u windowSize;
-   sf::Vector2f position;
-   sf::Texture texture;
-   sf::Sprite sprite;
-   
+	sf::Vector2u windowSize;
+	sf::Vector2f position;
+	sf::Texture texture;
+	sf::Sprite sprite;
+  
+protected:
+	sf::RenderWindow& window;
 };
 
 #endif
