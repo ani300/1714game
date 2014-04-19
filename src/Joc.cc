@@ -6,6 +6,13 @@ Joc::Joc() : window(sf::VideoMode::getDesktopMode() , L"1714: La resistència de
 
 }
 
+Joc::~Joc() {
+	// Neteja la memòria
+	for (int i = 0; i < drawableObjects.size(); ++i) {
+		delete drawableObjects[i];
+	}
+}
+
 void Joc::processEvents() {
 	sf::Event event;
 	while(window.pollEvent(event)) {
@@ -71,7 +78,7 @@ void Joc::render() {
 void Joc::readNextState(int& skipLines){
 	std::string doc;
 	std::ifstream infile;
-	infile.open ("res/document/Joc.txt");
+	infile.open ("res/documents/Joc.txt");
 	for(int i = 0; i < skipLines; ++i) std::getline(infile,doc); // Saves the line in STRING.
 	//% means this line is a comment
 	while(doc[0] == '%') {
@@ -109,7 +116,7 @@ int Joc::play() {
 		std::ifstream estatFile;
 		estatFile.open("res/documents/Status.txt");
 		std::string stat;
-		getline(estatFile,stat);
+		getline(estatFile, stat);
 		estatFile.close();
 		if(stat == "OK") {
 			//delete OK from estatFile

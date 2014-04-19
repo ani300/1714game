@@ -12,6 +12,7 @@ class Joc {
 
 	public:
 		Joc();
+		~Joc();
 
 		int play();
 
