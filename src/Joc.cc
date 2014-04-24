@@ -78,12 +78,13 @@ void Joc::render() {
 
 void Joc::readNextState(int& skipLines){
 	std::string doc;
-	std::ifstream infile;
-	infile.open ("res/documents/Joc.txt");
-	std::cerr << "res/document/joc.txt" << " obert " << std::endl;
-	for(int i = 0; i < skipLines; ++i) std::getline(infile,doc); // Saves the line in STRING.
+    std::ifstream infile;
+    infile.open("res/documents/Joc.txt");
+    if(!infile.is_open())std::cerr << "res/document/Joc.txt" << " no obert " << std::endl;
+
+    for(int i = 0; i < skipLines; ++i) std::getline(infile,doc); // Saves the line in STRING.
 	std::getline(infile,doc);
-	//% means this line is a comment
+    //% means this line is a comment
 	while(doc[0] == '%') {
 		std::getline(infile,doc);
 		++skipLines;
@@ -116,7 +117,7 @@ int Joc::play() {
 	window.setVerticalSyncEnabled(true);
 	
 	while(window.isOpen()) {
-std::cerr << "game loop" << std::endl;
+//std::cerr << "game loop" << std::endl;
 		std::ifstream estatFile;
 		estatFile.open("res/documents/Status.txt");
 		std::string stat;

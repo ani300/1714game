@@ -1,2 +1,2 @@
 %first image will be background
-tex1.png
+tex1
