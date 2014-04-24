@@ -17,10 +17,11 @@ class SplashImage: public DrawableObject {
 		~SplashImage();
 		//Dibuixar
  		void draw();
+        void draw(sf::RenderWindow &Wind);
 
 	private:
 		std::string str;
-		sf::Text sftext;
+        sf::Text escriptura;
 };
 
 

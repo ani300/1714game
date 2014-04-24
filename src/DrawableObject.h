@@ -46,7 +46,7 @@ protected:
 	sf::Vector2u windowSize;
 	sf::Vector2f position;
 	sf::Texture texture;
-	sf::Sprite sprite;
+    sf::Sprite sprite;
 };
 
 #endif

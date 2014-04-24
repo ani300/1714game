@@ -1,2 +1,12 @@
 %first image will be background
+%la textura del background es tex1
 tex1
+
+%el text que posarem es
+L'aluno no calla
+%posx
+0
+%posy
+0
+
+
