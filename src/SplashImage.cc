@@ -53,6 +53,7 @@ SplashImage::SplashImage(sf::RenderWindow &window, std::string document): Drawab
             //void 	setPosition (const Vector2f &position)
             //void 	setScale (float factorX, float factorY)
             //CARREGAR UNA FONT I POSAR-LI LA POSICIO textPosition i el qeu faci falta
+
     }
 
 }
@@ -62,7 +63,7 @@ SplashImage::~SplashImage(){
 }
 
 void SplashImage::draw(){
-	DrawableObject::draw();
+    DrawableObject::draw();
     window.draw(escriptura);
 }
 
