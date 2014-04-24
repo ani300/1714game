@@ -3,6 +3,7 @@
 //Constructor
 Joc::Joc() : window(sf::VideoMode::getDesktopMode() , L"1714: La resistència de l'Història"
 	, sf::Style::Resize|sf::Style::Close) {
+	dir = dir_none;
 
 }
 
@@ -51,7 +52,7 @@ void Joc::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
 
 void Joc::update(sf::Time elapsedTime) {
 	for(int i = 0; i < drawableObjects.size(); ++i){
-		
+
 		if(dir != dir_none) { //THERE IS MOVEMENT	
 			sf::Vector2f movement(0.f,0.f);
 			movement.x = dirx[dir] * elapsedTime.asSeconds();
@@ -63,7 +64,7 @@ void Joc::update(sf::Time elapsedTime) {
 			drawableObjects[i]->click(mouseBut, mouseClick);
 			mouseBut = mouse_none;
 		}
-		
+
 	}
 }
 
@@ -79,13 +80,15 @@ void Joc::readNextState(int& skipLines){
 	std::string doc;
 	std::ifstream infile;
 	infile.open ("res/documents/Joc.txt");
+	std::cerr << "res/document/joc.txt" << " obert " << std::endl;
 	for(int i = 0; i < skipLines; ++i) std::getline(infile,doc); // Saves the line in STRING.
+	std::getline(infile,doc);
 	//% means this line is a comment
 	while(doc[0] == '%') {
 		std::getline(infile,doc);
 		++skipLines;
 	}
-	
+
 	switch(doc[0]){
 		case 'S':
 		{
@@ -111,8 +114,9 @@ int Joc::play() {
 	readNextState(skipLines);
 	
 	window.setVerticalSyncEnabled(true);
+	
 	while(window.isOpen()) {
-
+std::cerr << "game loop" << std::endl;
 		std::ifstream estatFile;
 		estatFile.open("res/documents/Status.txt");
 		std::string stat;
@@ -122,16 +126,24 @@ int Joc::play() {
 			//delete OK from estatFile
 			readNextState(skipLines);
 		}
-		
+// std::cerr << "Estat comprobat" << std::endl;
+// std::cerr << "I will processEvents" << std::endl;
 		processEvents();
+// std::cerr << "Events processed" << std::endl;
 		timeSinceLastUpdate += clock.restart();
 
 		while(timeSinceLastUpdate > TimePerFrame) {
 			timeSinceLastUpdate -= TimePerFrame;
+// std::cerr << "I will process events" << std::endl;
 			processEvents();
+// std::cerr << "event processed" << std::endl;
+// std::cerr << "I will update" << std::endl;
 			update(TimePerFrame);
+// std::cerr << "update done" << std::endl;
 		}
+// std::cerr << "before render" << std::endl;
 		render();
+// std::cerr << "after render" << std::endl;
 	}
 	return EXIT_SUCCESS;
 }

@@ -40,13 +40,13 @@ public:
 	virtual void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
 	
 private:
+  
+protected:
+	sf::RenderWindow& window;
 	sf::Vector2u windowSize;
 	sf::Vector2f position;
 	sf::Texture texture;
 	sf::Sprite sprite;
-  
-protected:
-	sf::RenderWindow& window;
 };
 
 #endif

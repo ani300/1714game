@@ -10,6 +10,7 @@ SplashImage::SplashImage(sf::RenderWindow &window) : DrawableObject(window) {
 SplashImage::SplashImage(sf::RenderWindow &window, std::string document): DrawableObject(window) {
 	std::stringstream s;
 	s << "res/document/" << document << std::endl;
+	std::cerr << "res/document/" << document << " obert " << std::endl; 
 	getline(s, str);
 	
 	std::string tex;
@@ -19,23 +20,26 @@ SplashImage::SplashImage(sf::RenderWindow &window, std::string document): Drawab
 	while(tex[0] == '%') getline(infile, tex); 
 	std::stringstream t;
 	t << "res/pictures/" << tex << std::endl;
-	getline(t, tex);
+		std::cerr << "res/pictures/" << tex << " agafada " << std::endl;
+	//getline(t, tex);
 	loadTexture(tex.c_str());
 	setTextureToSprite();
 	sf::Vector2f escala(1,1);
 	//POSAR VALORS A ESCALA PERQUE OCUPI TOTA LA PANTALLA
 	setScaleToSprite(escala);
 
-	std::string text, textPosX, textPosY;
+/*	std::string text, textPosX, textPosY;
 	getline(infile, text); while(tex[0] == '%') getline(infile, text); 
 	getline(infile, text); while(tex[0] == '%') getline(infile, text); 
 	getline(infile, text); while(tex[0] == '%') getline(infile, text); 
 	sf::Vector2f textPosition(atoi(textPosX.c_str()), atoi(textPosY.c_str()));
 	sftext.setString(text);
-	//void 	setFont (const Font &font)
+*/	//void 	setFont (const Font &font)
 	//void 	setPosition (const Vector2f &position)
 	//void 	setScale (float factorX, float factorY)
-	//CARREGAR UNA FONT I I POSAR-LI LA POSICIO textPosition i el qeu faci falta
+	//CARREGAR UNA FONT I POSAR-LI LA POSICIO textPosition i el qeu faci falta
+	
+	setPosition(sf::Vector2f(0, 0));
 }
 
 //Destructor
