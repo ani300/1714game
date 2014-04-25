@@ -43,16 +43,16 @@ SplashImage::SplashImage(sf::RenderWindow &window, std::string document): Drawab
     for(int i = 0; i < numText; ++i){
 
             std::string text, textPosX, textPosY;
+            //read the text that will be displayed (and read again if there is a %)
             getline(infile, text); while(tex[0] == '%') getline(infile, text);
+            //read the X position of the text (and read again if there is a %)
             getline(infile, textPosX); while(tex[0] == '%') getline(infile, textPosX);
+            //read the Y position of the text (and read again if there is a %)
             getline(infile, textPosY); while(tex[0] == '%') getline(infile, textPosY);
-            sf::Vector2f textPosition(atoi(textPosX.c_str()), atoi(textPosY.c_str()));
+            //save the position that are on strings in a Vector2f
+            textPosition(atoi(textPosX.c_str()), atoi(textPosY.c_str()));
+            //set text, font and size to escriptura
             escriptura  = sf::Text(text,mFont,20);
-
-            //void 	setFont (const Font &font)
-            //void 	setPosition (const Vector2f &position)
-            //void 	setScale (float factorX, float factorY)
-            //CARREGAR UNA FONT I POSAR-LI LA POSICIO textPosition i el qeu faci falta
 
     }
 
@@ -68,9 +68,13 @@ void SplashImage::draw(){
 }
 
 void SplashImage::draw(sf::RenderWindow &Wind){
+	//set sprite values
     sprite.setTexture(texture);
     sprite.setPosition(position.x, position.y);
-    window.draw(sprite);
-
+    //set text values
+	escriptura.setPosition(textPosition);
+	
+	//draw drawable things
+	window.draw(sprite);
     window.draw(escriptura);
 }
