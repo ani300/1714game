@@ -27,14 +27,14 @@ SplashImage::SplashImage(sf::RenderWindow &window, std::string document): Drawab
     loadTexture(tex.c_str());
     setTextureToSprite();
 
-    windowSize.x = window.getSize().x;
-    windowSize.y = window.getSize().y;
+    windowSize.x = window.getSize().x; windowSize.y = window.getSize().y;
     sf::Vector2f escala(windowSize.x/texture.getSize().x, windowSize.x/texture.getSize().x);
-    //sf::Vector2f escala(1,1);
-   // sf::Vector2f escala(2,2);
-    setPosition(sf::Vector2f((windowSize.x-texture.getSize().x*escala.x)/2, (float)0.0));
+    setScaleToSprite(escala);
+    
     //centrar la pantalla
-	setScaleToSprite(escala);
+    setPosition(sf::Vector2f((windowSize.x-texture.getSize().x*escala.x)/2, (float)0.0));
+
+
 
     std::string num_text;
     getline(infile, num_text); while(tex[0] == '%') getline(infile, num_text);
