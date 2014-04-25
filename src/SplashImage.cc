@@ -50,7 +50,7 @@ SplashImage::SplashImage(sf::RenderWindow &window, std::string document): Drawab
             //save the position that are on strings in a Vector2f
             textPosition = sf::Vector2f((float)atoi(textPosX.c_str()),(float)atoi(textPosY.c_str()));
 		// s'ha de guardar aquesta posicio a un vector de posicions (moar pushbacks)
-			
+	    positions.push_back(textPosition);
             //set text, font and size to escriptura
 			escriptura.setString(text);
 			escriptura.setFont(mFont);
@@ -75,12 +75,10 @@ void SplashImage::draw(sf::RenderWindow &Wind){
     sprite.setTexture(texture);
     sprite.setPosition(position.x, position.y);
     //set text values
-
-// en comptes de set position(textPosition), s'ha de fer set position de vectorpositions[i] a cada vector de textos
+    for(int i = 0; i < textos.size(); ++i)	textos[i].setPosition(positions[i]);	
 	
 	//draw drawable things
 	window.draw(sprite);
-
 	for(int i = 0; i < textos.size(); ++i)	window.draw(textos[i]);
 
 }
