@@ -27,7 +27,8 @@ class SplashImage: public DrawableObject {
 		sf::Text escriptura;
 		sf::Vector2f textPosition;
 		std::vector<sf::Text> textos;
-		//s'ha de guardar un vector de posicions per cada text ^
+		std::vector<sf::Vector2f> positions;
+
 };
 
 
