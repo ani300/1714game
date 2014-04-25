@@ -41,10 +41,26 @@ void Joc::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
 
 	dir = dir_none;
 	if(isPressed){
-		if (isPressed && key == sf::Keyboard::W) dir = dir_up;
-		if (isPressed && key == sf::Keyboard::S) dir = dir_down;
-		if (isPressed && key == sf::Keyboard::A) dir = dir_left;
-		if (isPressed && key == sf::Keyboard::D) dir = dir_right;
+		if (isPressed && key == sf::Keyboard::W) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) dir = dir_up_left;
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) dir = dir_up_right;
+			else dir = dir_up;
+		}
+		if (isPressed && key == sf::Keyboard::S) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) dir = dir_down_left;
+			elseif (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) dir = dir_down_right;
+			else dir = dir_down;
+		}
+		if (isPressed && key == sf::Keyboard::A) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dir = dir_up_left;
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dir = dir_down_left;
+			else dir = dir_left;
+		}
+		if (isPressed && key == sf::Keyboard::D) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dir = dir_up_left;
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dir = dir_down_right;
+			else dir = dir_right;
+		}
 	}
 	
 	
