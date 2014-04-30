@@ -127,7 +127,11 @@ void Minigaem1::readNextState(int& skipLines){
         ++skipLines;
     }
     background.loadFromFile(doc);
-    player.loadFromFile(player);
+    while(doc[0] == '%') {
+        std::getline(infile,doc);
+        ++skipLines;
+    }
+    player.loadFromFile(doc);
 }
 
 
