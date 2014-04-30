@@ -3,7 +3,7 @@
 #include "Minigaem1.h"
 int main() {
 
-    Minigaem1 joc;
+    Joc joc;
 	return joc.play();
 
 }
