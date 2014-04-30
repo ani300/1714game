@@ -2,14 +2,14 @@
 #ifndef PLAYER
 #define PLAYER
 
+#include "Utils.h"
+#include "DrawableObject.h"
 
-#include <SFML/Graphics.hpp>
-
-class Player : public DrawableObject{
+class Player : public DrawableObject {
 
 	public:
 		//Constructor
-		Player();
+		Player(sf::RenderWindow &window);
 
 		//Destructor
 		~Player();

@@ -20,8 +20,11 @@ void DrawableObject::loadTexture(std::string textureName){
 	std::stringstream png, jpg;
 	png << "res/pictures/" << textureName << ".png";
 	jpg << "res/pictures/" << textureName << ".jpg";
-	if(! texture.loadFromFile(png.str())) std::cerr <<"Not able to load png" << png.str() << std::endl;
-	else if(! texture.loadFromFile(jpg.str())) std::cerr <<"Not able to load jpg either" << jpg.str() << std::endl;
+    if(texture.loadFromFile(png.str())){}
+    else{
+        std::cerr <<"Not able to load png i will try with jpg" << png.str() << std::endl;
+        if(! texture.loadFromFile(jpg.str())) std::cerr <<"Not able to load " << jpg.str() <<  " either, it is a shiet "  << std::endl;
+    }
 }
 
 //Sets the sf::Texture on texture to the sf::Sprite sprite
@@ -52,7 +55,7 @@ void DrawableObject::draw(sf::RenderWindow &Wind){
 }
 
 void DrawableObject::move(sf::Vector2f &movement){
-	//Do nothing... (who want's to be able to move should override this method)
+	//Do nothing... (whoever wants to be able to move should override this method)
 }
 
 void DrawableObject::click(mouseButtons mouseButton, sf::Vector2f mouseClick){

@@ -1,0 +1,15 @@
+%first image will be background
+%la textura del background es tex1
+tex1
+%numero de textos
+2
+%el text que posarem es
+1714 la resistència de l'història //*//
+%posx
+1000
+%posy
+1000
+Penguins :)
+250
+250
+

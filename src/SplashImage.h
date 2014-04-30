@@ -3,28 +3,32 @@
 #ifndef SPLASHIMAGE
 #define SPLASHIMAGE
 
-#include <string>
-#include <sstream>
-#include <iostream>
-#include <SFML/Window.hpp>
+#include <vector>
+#include "Utils.h"
 #include "DrawableObject.h"
-#include <SFML/Graphics.hpp>
 
-class SplashImage: public DrawableObject{
+class SplashImage: public DrawableObject {
 
 	public:
 		//Constructor
-		SplashImage();
+		SplashImage(sf::RenderWindow &window);
 		//Constructor with name of the image it want's to display
-		SplashImage(std::string pictureName);
+		SplashImage(sf::RenderWindow &window, std::string pictureName);
 		//Destructor
 		~SplashImage();
 		//Dibuixar
- 		void draw(sf::RenderWindow& window);
+ 		void draw();
+ 		//Draw with a window as parameter
+		void draw(sf::RenderWindow &Wind);
 
 	private:
-		string str;
-		sf::Text sftext;
+	    sf::Font mFont;
+		std::string str;
+		sf::Text escriptura;
+		sf::Vector2f textPosition;
+		std::vector<sf::Text> textos;
+		std::vector<sf::Vector2f> positions;
+
 };
 
 
