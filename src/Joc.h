@@ -32,6 +32,7 @@ class Joc {
 	    sf::RenderTexture rTexture;
 	    sf::Vector2u windowSize;
 	    sf::CircleShape mPlayer;
+	    sf::Vector2f escala;
 		std::vector<DrawableObject*> drawableObjects;
 };
 

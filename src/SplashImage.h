@@ -22,6 +22,8 @@ class SplashImage: public DrawableObject {
  		//Draw with a window as parameter
 		void draw(sf::RenderTexture &rTexture);
 
+		void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
+
 	private:
 	    sf::Font mFont;
         std::string str;
@@ -29,6 +31,7 @@ class SplashImage: public DrawableObject {
 		sf::Vector2f textPosition;
 		std::vector<sf::Text> textos;
 		std::vector<sf::Vector2f> positions;
+		sf::RectangleShape fletxaRect;
         std::wstring utf8_to_utf16(const std::string& utf8);
 
 };
