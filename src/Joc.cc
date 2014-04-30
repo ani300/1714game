@@ -1,8 +1,8 @@
 #include "Joc.h"
 
 //Constructor
-//Joc::Joc() : window(sf::VideoMode::getDesktopMode(), L"1714: La resistència de l'Història"
-Joc::Joc() : window(sf::VideoMode(800,600), L"1714: La resistència de l'Història"
+Joc::Joc() : window(sf::VideoMode::getDesktopMode(), L"1714: La resistència de l'Història"
+//Joc::Joc() : window(sf::VideoMode(800,600), L"1714: La resistència de l'Història"
 	, sf::Style::Close), rTexture() {
 	dir = dir_none;
 	if (!rTexture.create(1920, 1080)) cout << "OPMERDA: No pot crear la RenderTexture" << endl;
