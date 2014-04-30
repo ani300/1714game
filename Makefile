@@ -26,7 +26,7 @@ SplashImage: src/SplashImage.*
 	g++ $(COMP11) -c src/SplashImage.cc -o Debug/SplashImage.o
 
 link:
-	g++ -o Debug/joc *.o -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system
+	g++ -o Debug/joc Debug/*.o -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system
 
 exe:
 	./Debug/joc
