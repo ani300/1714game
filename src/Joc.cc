@@ -84,8 +84,8 @@ void Joc::update(sf::Time elapsedTime) {
 		if(mouseBut != mouse_none){
 			// Corregir la posició del mouse
 			sf::Vector2f mouseBo;
-			mouseBo.x = mouseClick.x * escala.x;
-			mouseBo.y = mouseClick.y * escala.y;
+			mouseBo.x = mouseClick.x * 1.0/escala.x;
+			mouseBo.y = mouseClick.y * 1.0/escala.y;
 			drawableObjects[i]->click(mouseBut, mouseBo);
 			mouseBut = mouse_none;
 		}
@@ -131,6 +131,10 @@ void Joc::readNextState(int& skipLines){
 
 	switch(doc[0]){
 		case 'S': {
+			for (uint i = 0; i < drawableObjects.size(); ++i) {
+				delete drawableObjects[i];
+			}
+			drawableObjects = vector<DrawableObject*>();
 			SplashImage* splashIm = new SplashImage(rTexture, doc);
             //buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
 			drawableObjects.push_back(splashIm);
