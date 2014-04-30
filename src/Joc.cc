@@ -130,11 +130,12 @@ void Joc::readNextState(int& skipLines){
 	}
 
 	switch(doc[0]){
-		case 'S':
+		case 'S': {
 			SplashImage* splashIm = new SplashImage(rTexture, doc);
             //buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
 			drawableObjects.push_back(splashIm);
 			break;
+		}
         case 'N':
             /*//s'ha de incloure el Minigaem1.h
             Minigaem1 minigame;
@@ -147,6 +148,7 @@ void Joc::readNextState(int& skipLines){
             //buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
             drawableObjects.push_back();
             */
+            break;
 		default:
 			break;
 	}

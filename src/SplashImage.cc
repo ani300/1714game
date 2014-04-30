@@ -90,6 +90,7 @@ void SplashImage::draw(sf::RenderTexture &rTexture){
 
 void SplashImage::click(mouseButtons mouseButton, sf::Vector2f mouseClick){
     if (mouseButton == mouse_left) {
+        cout << mouseClick.x << " " << mouseClick.y << endl;
         if (mouseClick.x > 1620 and mouseClick.y > 930) {
             cout << "WOLOLO2" << endl;
             std::ofstream outfile;
