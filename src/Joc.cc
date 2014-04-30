@@ -1,8 +1,9 @@
 #include "Joc.h"
 
 //Constructor
-Joc::Joc() : window(sf::VideoMode::getDesktopMode(), L"1714: La resistència de l'Història"
-	, sf::Style::Resize|sf::Style::Close), rTexture() {
+//Joc::Joc() : window(sf::VideoMode::getDesktopMode(), L"1714: La resistència de l'Història"
+Joc::Joc() : window(sf::VideoMode(800,600), L"1714: La resistència de l'Història"
+	, sf::Style::Close), rTexture() {
 	dir = dir_none;
 	if (!rTexture.create(1920, 1080)) cout << "OPMERDA: No pot crear la RenderTexture" << endl;
 	rTexture.setSmooth(true);
@@ -102,7 +103,8 @@ void Joc::render() {
 	sf::Sprite sprite(rTexture.getTexture());
 	// Llegeix mida de la finestra (x, y)
 	windowSize = window.getSize();
-    sf::Vector2f escala(float(windowSize.x)/float(rTexture.getSize().x), float(windowSize.x)/float(rTexture.getSize().x));
+	sprite.setScale(1.0, 1.0);
+    sf::Vector2f escala(float(windowSize.x)/float(rTexture.getSize().x), float(windowSize.y)/float(rTexture.getSize().y));
     sprite.setScale(escala);
 
 	window.draw(sprite);
