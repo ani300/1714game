@@ -129,7 +129,13 @@ void Minigaem1::readNextState(int& skipLines){
     tbackground.loadFromFile("res/documents/Netejabackground.png");
     tplayer.loadFromFile("res/documents/Netejaplayer.png");
     mPlayer.setTexture(tplayer);
+
     mBackground.setTexture(tbackground);
+
+    }
+    background.loadFromFile(doc);
+    //player.loadFromFile(player);
+
 }
 
 

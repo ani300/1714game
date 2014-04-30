@@ -177,6 +177,7 @@ int Joc::play() {
 		getline(estatFile, stat);
 		if(stat == "OK") {
 			//delete OK from estatFile
+            if( remove( "myfile.txt" ) != 0 ) std::cout <<  "Error deleting file" << std::endl;
 			readNextState(skipLines);
 		}
         estatFile.close();
