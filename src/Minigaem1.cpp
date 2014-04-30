@@ -91,9 +91,9 @@ void Minigaem1::update(sf::Time elapsedTime) {
 
 void Minigaem1::render() {
     rTexture.clear();
-    for(int i = 0; i < drawableObjects.size(); ++i){
-        drawableObjects[i]->draw(rTexture);
-    }
+    rTexture.draw(mBackground);
+    rTexture.draw(mPlayer);
+    rTexture.draw(mBackground);
     rTexture.display();
 
      // Now we start rendering to the window, clear it first
@@ -129,6 +129,7 @@ void Minigaem1::readNextState(int& skipLines){
     tbackground.loadFromFile("res/documents/Netejabackground.png");
     tplayer.loadFromFile("res/documents/Netejaplayer.png");
     mPlayer.setTexture(tplayer);
+    mBackground.setTexture(tbackground);
 }
 
 
