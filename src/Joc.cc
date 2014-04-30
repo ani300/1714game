@@ -134,10 +134,11 @@ void Joc::readNextState(int& skipLines){
 			for (uint i = 0; i < drawableObjects.size(); ++i) {
 				delete drawableObjects[i];
 			}
-			drawableObjects = vector<DrawableObject*>();
+			drawableObjects = vector<DrawableObject*>(0);
 			SplashImage* splashIm = new SplashImage(rTexture, doc);
             //buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
 			drawableObjects.push_back(splashIm);
+			++skipLines;
 			break;
 		}
         case 'N':
@@ -177,7 +178,7 @@ int Joc::play() {
 		getline(estatFile, stat);
 		if(stat == "OK") {
 			//delete OK from estatFile
-            if( remove( "myfile.txt" ) != 0 ) std::cout <<  "Error deleting file" << std::endl;
+            if( remove( "res/documents/Status.txt" ) != 0 ) std::cout <<  "Error deleting file" << std::endl;
 			readNextState(skipLines);
 		}
         estatFile.close();

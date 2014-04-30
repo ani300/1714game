@@ -3,6 +3,10 @@
 % cada instrucció ha de tenir una lletra inicial diferent
 SplashImage1.txt
 SplashImage2.txt
+SplashImage2.txt
+SplashImage2.txt
+SplashImage2.txt
+SplashImage2.txt
 %NetejaMinigaem
 % MinigameX.txt
 %
