@@ -131,11 +131,8 @@ void Minigaem1::readNextState(int& skipLines){
 
     mBackground.setTexture(tbackground);
 
-    }
-    background.loadFromFile(doc);
-    //player.loadFromFile(player);
-
 }
+
 
 
 int Minigaem1::play() {

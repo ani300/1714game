@@ -35,6 +35,8 @@ class Minigaem1 {
         sf::Texture tplayer;
         sf::Sprite mPlayer;
         sf::Sprite mBackground;
+        sf::Vector2f escala;
+
         std::vector<DrawableObject*> drawableObjects;
 };
 
