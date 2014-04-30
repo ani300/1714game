@@ -5,7 +5,7 @@ Joc::Joc() : window(sf::VideoMode(1920,1080) , L"1714: La resistència de l'Hist
 //Joc::Joc() : window(sf::VideoMode::getDesktopMode() , L"1714: La resistència de l'Història"
 	, sf::Style::Resize|sf::Style::Close) {
 	dir = dir_none;
-
+	std::cout << window.getSize().x << " " << window.getSize().y << std::endl;
 }
 
 Joc::~Joc() {
