@@ -5,6 +5,7 @@ Joc::Joc() : window(sf::VideoMode::getDesktopMode(), L"1714: La resistència de 
 	, sf::Style::Resize|sf::Style::Close), rTexture() {
 	dir = dir_none;
 	if (!rTexture.create(1920, 1080)) cout << "OPMERDA: No pot crear la RenderTexture" << endl;
+	rTexture.setSmooth(true);
 }
 
 Joc::~Joc() {

@@ -87,8 +87,10 @@ SplashImage::SplashImage(sf::RenderTexture &rTexture, std::string document): Dra
     loadTexture(tex.c_str());
     setTextureToSprite();
     
-    //centrar la pantalla
-    setPosition(sf::Vector2f(0.0f, (gameSize.y-texture.getSize().y)/2));
+    //centrar la pantalla i escalar la imatge
+    float esc = float(gameSize.x)/float(texture.getSize().x);
+    setScaleToSprite(sf::Vector2f(esc, esc));
+    setPosition(sf::Vector2f(0.0f, (gameSize.y-texture.getSize().y*esc)/2));
 
 
     //number of texsts we want to write in this splash immage
@@ -135,8 +137,6 @@ void SplashImage::draw(sf::RenderTexture &rTexture){
     //set text values
     for(int i = 0; i < textos.size(); ++i)	textos[i].setPosition(positions[i]);	
 	
-    float esc = float(gameSize.x)/float(texture.getSize().x);
-    setScaleToSprite(sf::Vector2f(esc, esc));
 	//draw drawable things
 	rTexture.draw(sprite);
 	for(int i = 0; i < textos.size(); ++i)rTexture.draw(textos[i]);
