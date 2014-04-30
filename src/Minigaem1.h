@@ -32,6 +32,8 @@ class Minigaem1 {
         sf::RenderTexture rTexture;
         sf::Vector2u windowSize;
         sf::CircleShape mPlayer;
+        sf::Texture background;
+        sf::Texture player;
         std::vector<DrawableObject*> drawableObjects;
 };
 

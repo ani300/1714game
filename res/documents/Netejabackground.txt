@@ -1,0 +1,4 @@
+%first image will be background
+%la textura del background es tex1
+Netejabackground
+

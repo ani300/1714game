@@ -116,8 +116,8 @@ void Minigaem1::render() {
 void Minigaem1::readNextState(int& skipLines){
     std::string doc;
     std::ifstream infile;
-    infile.open("res/documents/Joc.txt");
-    if(!infile.is_open()) std::cerr << "res/document/Joc.txt" << " no obert " << std::endl;
+    infile.open("res/documents/Minigaem1.txt");
+    if(!infile.is_open()) std::cerr << "res/document/Minigaem1.txt" << " no obert " << std::endl;
 
     for(int i = 0; i < skipLines; ++i) std::getline(infile,doc); // Saves the line in STRING.
     std::getline(infile,doc);
@@ -126,22 +126,10 @@ void Minigaem1::readNextState(int& skipLines){
         std::getline(infile,doc);
         ++skipLines;
     }
-
-    switch(doc[0]){
-        case 'S':
-        {
-            SplashImage* splashIm = new SplashImage(rTexture, doc);
-            //buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
-            drawableObjects.push_back(splashIm);
-            break;
-        }
-        case 'X':
-            break;
-        default:
-            break;
-    }
-    infile.close();
+    background.loadFromFile(doc);
+    player.loadFromFile(player);
 }
+
 
 int Minigaem1::play() {
 
@@ -154,35 +142,23 @@ int Minigaem1::play() {
     window.setVerticalSyncEnabled(true);
 
     while(window.isOpen()) {
-//std::cerr << "game loop" << std::endl;
         std::ifstream estatFile;
         estatFile.open("res/documents/Status.txt");
         std::string stat;
         getline(estatFile, stat);
         estatFile.close();
         if(stat == "OK") {
-            //delete OK from estatFile
             readNextState(skipLines);
         }
-// std::cerr << "Estat comprobat" << std::endl;
-// std::cerr << "I will processEvents" << std::endl;
         processEvents();
-// std::cerr << "Events processed" << std::endl;
         timeSinceLastUpdate += clock.restart();
 
         while(timeSinceLastUpdate > TimePerFrame) {
             timeSinceLastUpdate -= TimePerFrame;
-// std::cerr << "I will process events" << std::endl;
             processEvents();
-// std::cerr << "event processed" << std::endl;
-// std::cerr << "I will update" << std::endl;
             update(TimePerFrame);
-// std::cerr << "update done" << std::endl;
         }
-// std::cerr << "before render" << std::endl;
         render();
-// std::cerr << "after render" << std::endl;
     }
     return EXIT_SUCCESS;
 }
-
