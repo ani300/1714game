@@ -135,8 +135,10 @@ void SplashImage::draw(sf::RenderTexture &rTexture){
     //set text values
     for(int i = 0; i < textos.size(); ++i)	textos[i].setPosition(positions[i]);	
 	
+    float esc = float(gameSize.x)/float(texture.getSize().x);
+    setScaleToSprite(sf::Vector2f(esc, esc));
 	//draw drawable things
 	rTexture.draw(sprite);
-	for(int i = 0; i < textos.size(); ++i)	rTexture.draw(textos[i]);
+	for(int i = 0; i < textos.size(); ++i)rTexture.draw(textos[i]);
 
 }
