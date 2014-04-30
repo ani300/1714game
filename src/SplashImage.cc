@@ -10,7 +10,8 @@ SplashImage::SplashImage(){
 SplashImage::SplashImage(std::string document){
 	std::stringstream s;
 	s << "res/document/" << document;
-	str = s.c_str();
+	str = s.c_str();    
+	
 	
 	string tex;
 	ifstream infile;
