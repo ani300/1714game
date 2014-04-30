@@ -1,9 +1,9 @@
 /***********************************main.cpp*************************************************/
 #include "Joc.h"
-
+#include "Minigaem1.h"
 int main() {
 
-    Joc joc;
+    Minigaem1 joc;
 	return joc.play();
 
 }

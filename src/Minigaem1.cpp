@@ -93,22 +93,21 @@ void Minigaem1::render() {
     rTexture.clear();
     rTexture.draw(mBackground);
     rTexture.draw(mPlayer);
-    rTexture.draw(mBackground);
     rTexture.display();
 
-     // Now we start rendering to the window, clear it first
-    window.clear();
-    // Draw the texture
-    sf::Sprite sprite(rTexture.getTexture());
-    // Llegeix mida de la finestra (x, y)
-    windowSize = window.getSize();
-    sprite.setScale(1.0, 1.0);
-    sf::Vector2f escala(float(windowSize.x)/float(rTexture.getSize().x), float(windowSize.y)/float(rTexture.getSize().y));
-    sprite.setScale(escala);
+    // Now we start rendering to the window, clear it first
+   window.clear();
+   // Draw the texture
+   sf::Sprite sprite(rTexture.getTexture());
+   // Llegeix mida de la finestra (x, y)
+   windowSize = window.getSize();
+   sprite.setScale(1.0, 1.0);
+   escala = sf::Vector2f(float(windowSize.x)/float(rTexture.getSize().x), float(windowSize.y)/float(rTexture.getSize().y));
+   sprite.setScale(escala);
 
-    window.draw(sprite);
-    // End the current frame and display its contents on screen
-    window.display();
+   window.draw(sprite);
+   // End the current frame and display its contents on screen
+   window.display();
 }
 
 void Minigaem1::readNextState(int& skipLines){
@@ -126,8 +125,8 @@ void Minigaem1::readNextState(int& skipLines){
     }*/
 
     //TODO posar que agafi dels fitxers, hardcodeado per veure si va
-    tbackground.loadFromFile("res/documents/Netejabackground.png");
-    tplayer.loadFromFile("res/documents/Netejaplayer.png");
+    tbackground.loadFromFile("res/pictures/Netejabackground.png");
+    tplayer.loadFromFile("res/pictures/Netejaplayer.png");
     mPlayer.setTexture(tplayer);
 
     mBackground.setTexture(tbackground);
