@@ -12,9 +12,7 @@ Minigaem1::Minigaem1() : window(sf::VideoMode::getDesktopMode(), L"1714: La resi
 
 Minigaem1::~Minigaem1() {
     // Neteja la memòria
-    for (uint i = 0; i < drawableObjects.size(); ++i) {
-        delete drawableObjects[i];
-    }
+
 }
 
 void Minigaem1::processEvents() {
@@ -122,16 +120,15 @@ void Minigaem1::readNextState(int& skipLines){
     for(int i = 0; i < skipLines; ++i) std::getline(infile,doc); // Saves the line in STRING.
     std::getline(infile,doc);
     //% means this line is a comment
-    while(doc[0] == '%') {
+    /*while(doc[0] == '%') {
         std::getline(infile,doc);
         ++skipLines;
-    }
-    background.loadFromFile(doc);
-    while(doc[0] == '%') {
-        std::getline(infile,doc);
-        ++skipLines;
-    }
-    player.loadFromFile(doc);
+    }*/
+
+    //TODO posar que agafi dels fitxers, hardcodeado per veure si va
+    tbackground.loadFromFile("res/documents/Netejabackground.png");
+    tplayer.loadFromFile("res/documents/Netejaplayer.png");
+    mPlayer.setTexture(tplayer);
 }
 
 
