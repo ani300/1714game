@@ -144,8 +144,8 @@ void Joc::readNextState(int& skipLines){
 			break;
         case 'W':
             /*
-            WalkMap* walkMap = new WalkMap(parametres);
             //buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
+
             drawableObjects.push_back();
             */
             break;
