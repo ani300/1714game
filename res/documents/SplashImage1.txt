@@ -6,9 +6,9 @@ tex1
 %el text que posarem es
 1714 la resistència de l'història //*//
 %posx
-1000
+100
 %posy
-1000
+100
 Penguins :)
 250
 250

@@ -8,34 +8,34 @@ SplashImage::SplashImage(sf::RenderWindow &window) : DrawableObject(window) {
 
 //Constructor with name of the image it want's to display
 SplashImage::SplashImage(sf::RenderWindow &window, std::string document): DrawableObject(window) {
-	std::stringstream s;
+    std::stringstream s;
 
     mFont.loadFromFile("res/media/Sansation.otf");
     s << "res/documents/" << document << std::endl;
-	getline(s, str);
-	std::string tex;
-	std::ifstream infile;
+    getline(s, str);
+    std::string tex;
+    std::ifstream infile;
     infile.open (str);
 
     if(!infile.is_open()) std::cerr << "No puc obrir el document de l'Splash image" << std::endl;
 
     getline(infile, tex);
     while(tex[0] == '%') getline(infile, tex);
-	std::stringstream t;
-	t << "res/pictures/" << tex << std::endl;
+    std::stringstream t;
+    t << "res/pictures/" << tex << std::endl;
 
     loadTexture(tex.c_str());
     setTextureToSprite();
 
     windowSize.x = window.getSize().x; windowSize.y = window.getSize().y;
-    sf::Vector2f escala(windowSize.x/texture.getSize().x, windowSize.x/texture.getSize().x);
+    sf::Vector2f escala(float(windowSize.y)/float(texture.getSize().y), float(windowSize.y)/float(texture.getSize().y));
     setScaleToSprite(escala);
     
     //centrar la pantalla
-    setPosition(sf::Vector2f((windowSize.x-texture.getSize().x*escala.x)/2, (float)0.0));
+    setPosition(sf::Vector2f((windowSize.x-texture.getSize().x*escala.x)/2, 0.0f));
 
 
-	//number of texsts we want to writte in this splash immage
+    //number of texsts we want to write in this splash immage
     std::string num_text;
     getline(infile, num_text); while(num_text[0] == '%') getline(infile, num_text);
     int numText = atoi(num_text.c_str());
@@ -51,9 +51,10 @@ SplashImage::SplashImage(sf::RenderWindow &window, std::string document): Drawab
             //save the position that are on strings in a Vector2f
             textPosition = sf::Vector2f((float)atoi(textPosX.c_str()),(float)atoi(textPosY.c_str()));
 		// s'ha de guardar aquesta posicio a un vector de posicions (moar pushbacks)
-	    positions.push_back(textPosition);
+        positions.push_back(textPosition);
             //set text, font and size to escriptura
-			escriptura.setString(text);
+            std::cout << text << std::endl;
+            escriptura.setString(sf::String(text));
 			escriptura.setFont(mFont);
 			escriptura.setCharacterSize(50);
 			escriptura.setColor(sf::Color::Red);

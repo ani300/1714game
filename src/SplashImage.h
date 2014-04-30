@@ -13,7 +13,7 @@ class SplashImage: public DrawableObject {
 		//Constructor
 		SplashImage(sf::RenderWindow &window);
 		//Constructor with name of the image it want's to display
-		SplashImage(sf::RenderWindow &window, std::string pictureName);
+        SplashImage(sf::RenderWindow &window, std::string pictureName);
 		//Destructor
 		~SplashImage();
 		//Dibuixar
@@ -23,7 +23,7 @@ class SplashImage: public DrawableObject {
 
 	private:
 	    sf::Font mFont;
-		std::string str;
+        std::string str;
 		sf::Text escriptura;
 		sf::Vector2f textPosition;
 		std::vector<sf::Text> textos;

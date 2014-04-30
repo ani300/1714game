@@ -1,7 +1,8 @@
 #include "Joc.h"
 
 //Constructor
-Joc::Joc() : window(sf::VideoMode::getDesktopMode() , L"1714: La resistència de l'Història"
+Joc::Joc() : window(sf::VideoMode(1920,1080) , L"1714: La resistència de l'Història"
+//Joc::Joc() : window(sf::VideoMode::getDesktopMode() , L"1714: La resistència de l'Història"
 	, sf::Style::Resize|sf::Style::Close) {
 	dir = dir_none;
 
@@ -9,7 +10,7 @@ Joc::Joc() : window(sf::VideoMode::getDesktopMode() , L"1714: La resistència de
 
 Joc::~Joc() {
 	// Neteja la memòria
-	for (int i = 0; i < drawableObjects.size(); ++i) {
+    for (uint i = 0; i < drawableObjects.size(); ++i) {
 		delete drawableObjects[i];
 	}
 }
@@ -97,10 +98,10 @@ void Joc::render() {
 }
 
 void Joc::readNextState(int& skipLines){
-	std::string doc;
+    std::string doc;
     std::ifstream infile;
     infile.open("res/documents/Joc.txt");
-    if(!infile.is_open())std::cerr << "res/document/Joc.txt" << " no obert " << std::endl;
+    if(!infile.is_open()) std::cerr << "res/document/Joc.txt" << " no obert " << std::endl;
 
     for(int i = 0; i < skipLines; ++i) std::getline(infile,doc); // Saves the line in STRING.
 	std::getline(infile,doc);
