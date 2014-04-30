@@ -2,8 +2,7 @@
 #include "DrawableObject.h"
 
 //Constructor with window as a reference
-DrawableObject::DrawableObject(sf::RenderWindow &window) : window(window){
-	windowSize = window.getSize();
+DrawableObject::DrawableObject(sf::RenderTexture &rTexture) : rTexture(rTexture) {
 	position.x = position.y = 0;
 } 
 
@@ -44,14 +43,14 @@ void DrawableObject::setTextureRectToSprite(sf::IntRect rect){
 
 //Draw the 'sprite' at 'position' with the size 'size' on the 'window'
 void DrawableObject::draw(){
-	draw(window);
+	draw(rTexture);
 }
 
 //Draw the 'sprite' at 'position' with the size 'size' on the 'otherWindow'
-void DrawableObject::draw(sf::RenderWindow &Wind){
+void DrawableObject::draw(sf::RenderTexture &rTexture){
 	sprite.setTexture(texture);
 	sprite.setPosition(position.x, position.y);	
-	window.draw(sprite);
+	rTexture.draw(sprite);
 }
 
 void DrawableObject::move(sf::Vector2f &movement){

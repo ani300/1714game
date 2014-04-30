@@ -29,6 +29,8 @@ class Joc {
 		mouseButtons mouseBut;
 		sf::Vector2f mouseClick;
 	    sf::RenderWindow window;
+	    sf::RenderTexture rTexture;
+	    sf::Vector2u windowSize;
 	    sf::CircleShape mPlayer;
 		std::vector<DrawableObject*> drawableObjects;
 };

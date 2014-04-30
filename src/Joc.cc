@@ -1,11 +1,10 @@
 #include "Joc.h"
 
 //Constructor
-Joc::Joc() : window(sf::VideoMode(1920,1080) , L"1714: La resistència de l'Història"
-//Joc::Joc() : window(sf::VideoMode::getDesktopMode() , L"1714: La resistència de l'Història"
-	, sf::Style::Resize|sf::Style::Close) {
+Joc::Joc() : window(sf::VideoMode::getDesktopMode(), L"1714: La resistència de l'Història"
+	, sf::Style::Resize|sf::Style::Close), rTexture() {
 	dir = dir_none;
-	std::cout << window.getSize().x << " " << window.getSize().y << std::endl;
+	if (!rTexture.create(1920, 1080)) cout << "OPMERDA: No pot crear la RenderTexture" << endl;
 }
 
 Joc::~Joc() {
@@ -90,10 +89,23 @@ void Joc::update(sf::Time elapsedTime) {
 }
 
 void Joc::render() {
-	window.clear();
+	rTexture.clear();
 	for(int i = 0; i < drawableObjects.size(); ++i){
-		drawableObjects[i]->draw(window);
+		drawableObjects[i]->draw(rTexture);
 	}
+	rTexture.display();
+
+	 // Now we start rendering to the window, clear it first
+	window.clear();
+	// Draw the texture
+	sf::Sprite sprite(rTexture.getTexture());
+	// Llegeix mida de la finestra (x, y)
+	windowSize = window.getSize();
+    sf::Vector2f escala(float(windowSize.x)/float(rTexture.getSize().x), float(windowSize.x)/float(rTexture.getSize().x));
+    sprite.setScale(escala);
+
+	window.draw(sprite);
+	// End the current frame and display its contents on screen
 	window.display();
 }
 
@@ -114,7 +126,7 @@ void Joc::readNextState(int& skipLines){
 	switch(doc[0]){
 		case 'S':
 		{
-			SplashImage* splashIm = new SplashImage(window, doc);
+			SplashImage* splashIm = new SplashImage(rTexture, doc);
 			//buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
 			drawableObjects.push_back(splashIm);
 			break;

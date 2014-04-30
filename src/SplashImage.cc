@@ -2,12 +2,11 @@
 #include "SplashImage.h"
 
 //Constructor
-SplashImage::SplashImage(sf::RenderWindow &window) : DrawableObject(window) {
+SplashImage::SplashImage(sf::RenderTexture &rTexture) : DrawableObject(rTexture) {
 
 }
 
-std::wstring SplashImage::utf8_to_utf16(const std::string& utf8)
-{
+std::wstring SplashImage::utf8_to_utf16(const std::string& utf8) {
     std::vector<unsigned long> unicode;
     size_t i = 0;
     while (i < utf8.size()) {
@@ -68,7 +67,7 @@ std::wstring SplashImage::utf8_to_utf16(const std::string& utf8)
 }
 
 //Constructor with name of the image it want's to display
-SplashImage::SplashImage(sf::RenderWindow &window, std::string document): DrawableObject(window) {
+SplashImage::SplashImage(sf::RenderTexture &rTexture, std::string document): DrawableObject(rTexture) {
     std::stringstream s;
 
     mFont.loadFromFile("res/media/Sansation.otf");
@@ -87,13 +86,9 @@ SplashImage::SplashImage(sf::RenderWindow &window, std::string document): Drawab
 
     loadTexture(tex.c_str());
     setTextureToSprite();
-
-    windowSize.x = window.getSize().x; windowSize.y = window.getSize().y;
-    sf::Vector2f escala(float(windowSize.y)/float(texture.getSize().y), float(windowSize.y)/float(texture.getSize().y));
-    setScaleToSprite(escala);
     
     //centrar la pantalla
-    setPosition(sf::Vector2f((windowSize.x-texture.getSize().x*escala.x)/2, 0.0f));
+    setPosition(sf::Vector2f(0.0f, (gameSize.y-texture.getSize().y)/2));
 
 
     //number of texsts we want to write in this splash immage
@@ -130,10 +125,10 @@ SplashImage::~SplashImage(){
 
 void SplashImage::draw(){
     DrawableObject::draw();
-    window.draw(escriptura);
+    rTexture.draw(escriptura);
 }
 
-void SplashImage::draw(sf::RenderWindow &Wind){
+void SplashImage::draw(sf::RenderTexture &rTexture){
 	//set sprite values
     sprite.setTexture(texture);
     sprite.setPosition(position.x, position.y);
@@ -141,7 +136,7 @@ void SplashImage::draw(sf::RenderWindow &Wind){
     for(int i = 0; i < textos.size(); ++i)	textos[i].setPosition(positions[i]);	
 	
 	//draw drawable things
-	window.draw(sprite);
-	for(int i = 0; i < textos.size(); ++i)	window.draw(textos[i]);
+	rTexture.draw(sprite);
+	for(int i = 0; i < textos.size(); ++i)	rTexture.draw(textos[i]);
 
 }

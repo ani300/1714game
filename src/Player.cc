@@ -2,7 +2,7 @@
 #include "Player.h"
 
 //Constructor
-Player::Player(sf::RenderWindow &window): DrawableObject(window) {
+Player::Player(sf::RenderTexture &rTexture): DrawableObject(rTexture) {
 }
 
 //Destructor

@@ -9,7 +9,7 @@ class DrawableObject {
 public:
 
 	//Constructor with window as a reference
-    DrawableObject(sf::RenderWindow &window);
+    DrawableObject(sf::RenderTexture &rTexture);
 	
 	//Setter and getter for Position
 	void setPosition(sf::Vector2f pos);
@@ -29,9 +29,9 @@ public:
 	
 	//Draw the 'sprite' at 'position' with the size 'size' on the 'window' ('xxx' are the private variables)
 	virtual void draw();
-	
+
 	//Draw the 'sprite' at 'position' with the size 'size' on the window 'Wind'
-	virtual void draw(sf::RenderWindow &Wind);
+	virtual void draw(sf::RenderTexture &rTexture);
 	
 	//Move --it is empty if the son would like to move he can implement it
 	virtual void move(sf::Vector2f &movement);
@@ -42,7 +42,7 @@ public:
 private:
   
 protected:
-	sf::RenderWindow& window;
+	sf::RenderTexture& rTexture;
 	sf::Vector2u windowSize;
 	sf::Vector2f position;
 	sf::Texture texture;

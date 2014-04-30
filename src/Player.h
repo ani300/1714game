@@ -9,7 +9,7 @@ class Player : public DrawableObject {
 
 	public:
 		//Constructor
-		Player(sf::RenderWindow &window);
+		Player(sf::RenderTexture &rTexture);
 
 		//Destructor
 		~Player();
