@@ -128,14 +128,22 @@ void Joc::readNextState(int& skipLines){
 
 	switch(doc[0]){
 		case 'S':
-		{
 			SplashImage* splashIm = new SplashImage(rTexture, doc);
-			//buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
+            //buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
 			drawableObjects.push_back(splashIm);
 			break;
-		}
-		case 'X':
+        case 'N':
+            /*//s'ha de incloure el Minigaem1.h
+            Minigaem1 minigame;
+            minigame.play();
+            */
 			break;
+        case 'W':
+            /*
+            WalkMap* walkMap = new WalkMap(parametres);
+            //buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
+            drawableObjects.push_back();
+            */
 		default:
 			break;
 	}
@@ -158,11 +166,11 @@ int Joc::play() {
 		estatFile.open("res/documents/Status.txt");
 		std::string stat;
 		getline(estatFile, stat);
-		estatFile.close();
 		if(stat == "OK") {
 			//delete OK from estatFile
 			readNextState(skipLines);
 		}
+        estatFile.close();
 // std::cerr << "Estat comprobat" << std::endl;
 // std::cerr << "I will processEvents" << std::endl;
 		processEvents();
