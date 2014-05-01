@@ -23,6 +23,7 @@ class Minigaem1 {
         void update(sf::Time elapsedTime);
         void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
         void readNextState(int& skipLines);
+        //void move(sf::Vector2f &movement);
 
         Logic logic;
         directions dir;

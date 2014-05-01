@@ -70,6 +70,10 @@ void Minigaem1::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
 
 }
 
+/*void Minigaem1::move(sf::Vector2f &movement) {
+    mPlayer.setPosition(movement.x,movement.y);
+}*/
+
 void Minigaem1::update(sf::Time elapsedTime) {
     for(int i = 0; i < drawableObjects.size(); ++i){
 
@@ -77,7 +81,7 @@ void Minigaem1::update(sf::Time elapsedTime) {
             sf::Vector2f movement(0.f,0.f);
             movement.x = dirx[dir] * elapsedTime.asSeconds();
             movement.y = diry[dir] * elapsedTime.asSeconds();
-            drawableObjects[i]->move(movement);
+            mPlayer.move(movement*elapsedTime.asSeconds());
             dir = dir_none;
         }
         if(mouseBut != mouse_none){
