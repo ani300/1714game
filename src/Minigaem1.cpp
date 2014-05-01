@@ -128,12 +128,11 @@ void Minigaem1::readNextState(int& skipLines){
     tbackground.loadFromFile("res/pictures/Netejabackground.png");
     tplayer.loadFromFile("res/pictures/Netejaplayer.png");
 
+
+    mBackground.setScale(sf::Vector2f(float(rTexture.getSize().x)/float(tbackground.getSize().x), float(rTexture.getSize().y)/float(tbackground.getSize().y)));
+    mPlayer.setScale(sf::Vector2f(0.1*float(rTexture.getSize().x)/float(tplayer.getSize().x), 0.1*float(rTexture.getSize().y)/float(tplayer.getSize().y)));
+
     mPlayer.setTexture(tplayer,true);
-
-    escala = sf::Vector2f(float(rTexture.getSize().x)/float(window.getSize().x), float(rTexture.getSize().y)/float(window.getSize().y));
-    mPlayer.setScale(escala);
-    mBackground.setScale(escala);
-
     mBackground.setTexture(tbackground,true);
 
 }
