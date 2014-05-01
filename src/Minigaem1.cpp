@@ -3,8 +3,7 @@
 
 //Constructor
 Minigaem1::Minigaem1() : window(sf::VideoMode::getDesktopMode(), L"1714: La resistència de l'Història"
-//Joc::Joc() : window(sf::VideoMode(800,600), L"1714: La resistència de l'Història"
-    , sf::Style::Close), rTexture() {
+    , sf::Style::Titlebar | sf::Style::Close), rTexture() {
     dir = dir_none;
     if (!rTexture.create(1920, 1080)) cout << "OPMERDA: No pot crear la RenderTexture" << endl;
     rTexture.setSmooth(true);
@@ -95,6 +94,7 @@ void Minigaem1::render() {
     rTexture.draw(mPlayer);
     rTexture.display();
 
+
     // Now we start rendering to the window, clear it first
    window.clear();
    // Draw the texture
@@ -127,9 +127,14 @@ void Minigaem1::readNextState(int& skipLines){
     //TODO posar que agafi dels fitxers, hardcodeado per veure si va
     tbackground.loadFromFile("res/pictures/Netejabackground.png");
     tplayer.loadFromFile("res/pictures/Netejaplayer.png");
-    mPlayer.setTexture(tplayer);
 
-    mBackground.setTexture(tbackground);
+    mPlayer.setTexture(tplayer,true);
+
+    escala = sf::Vector2f(float(rTexture.getSize().x)/float(window.getSize().x), float(rTexture.getSize().y)/float(window.getSize().y));
+    mPlayer.setScale(escala);
+    mBackground.setScale(escala);
+
+    mBackground.setTexture(tbackground,true);
 
 }
 
