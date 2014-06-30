@@ -3,16 +3,13 @@
 //Constructor
 Joc::Joc() : window(sf::VideoMode::getDesktopMode(), L"1714: La resistència de l'Història"
 	, sf::Style::Titlebar | sf::Style::Close), rTexture() {
-	dir = dir_none;
 	if (!rTexture.create(1920, 1080)) cout << "OPMERDA: No pot crear la RenderTexture" << endl;
 	rTexture.setSmooth(true);
+    estat = 0;
 }
 
 Joc::~Joc() {
-	// Neteja la memòria
-    for (uint i = 0; i < drawableObjects.size(); ++i) {
-		delete drawableObjects[i];
-	}
+    delete estat;
 }
 
 void Joc::processEvents() {
@@ -20,17 +17,21 @@ void Joc::processEvents() {
 	while(window.pollEvent(event)) {
 		switch(event.type) {
 			case sf::Event::KeyPressed:
-				handlePlayerInput(event.key.code,true);
+                estat->handlePlayerInput(event.key.code,true);
 				break;
 			case sf::Event::KeyReleased:
-				handlePlayerInput(event.key.code,false);
+                estat->handlePlayerInput(event.key.code,false);
 				break;
-			case sf::Event::MouseButtonPressed:
+            case sf::Event::MouseButtonPressed: {
+                mouseButtons mouseBut;
+                sf::Vector2f mouseClick;
 				if (event.mouseButton.button == sf::Mouse::Left) mouseBut = mouse_left;
 				else if (event.mouseButton.button == sf::Mouse::Right) mouseBut = mouse_right;
 				mouseClick.x = event.mouseButton.x;
 				mouseClick.y = event.mouseButton.y;
-				break;
+                estat->handlePlayerMouse(mouseBut, mouseClick);
+                break;
+            }
 			case sf::Event::Closed:
 				window.close();
 				break;
@@ -38,40 +39,7 @@ void Joc::processEvents() {
 	}
 }
 
-void Joc::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
-
-	dir = dir_none;
-	if(isPressed){
-		if (isPressed && key == sf::Keyboard::W) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) dir = dir_up_left;
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) dir = dir_up_right;
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dir = dir_none;
-			else dir = dir_up;
-		}
-		if (isPressed && key == sf::Keyboard::S) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) dir = dir_down_left;
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) dir = dir_down_right;
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dir = dir_none;
-			else dir = dir_down;
-		}
-		if (isPressed && key == sf::Keyboard::A) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dir = dir_up_left;
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dir = dir_down_left;
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) dir = dir_none;
-			else dir = dir_left;
-		}
-		if (isPressed && key == sf::Keyboard::D) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dir = dir_up_left;
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dir = dir_down_right;
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) dir = dir_none;
-			else dir = dir_right;
-		}
-	}
-	
-	
-}
-
-void Joc::update(sf::Time elapsedTime) {
+/*void Joc::update(sf::Time elapsedTime) {
 	for(int i = 0; i < drawableObjects.size(); ++i){
 
 		if(dir != dir_none) { //THERE IS MOVEMENT	
@@ -89,31 +57,8 @@ void Joc::update(sf::Time elapsedTime) {
 			drawableObjects[i]->click(mouseBut, mouseBo);
 			mouseBut = mouse_none;
 		}
-
 	}
-}
-
-void Joc::render() {
-	rTexture.clear();
-	for(int i = 0; i < drawableObjects.size(); ++i){
-		drawableObjects[i]->draw(rTexture);
-	}
-	rTexture.display();
-
-	 // Now we start rendering to the window, clear it first
-	window.clear();
-	// Draw the texture
-	sf::Sprite sprite(rTexture.getTexture());
-	// Llegeix mida de la finestra (x, y)
-	windowSize = window.getSize();
-	sprite.setScale(1.0, 1.0);
-    escala = sf::Vector2f(float(windowSize.x)/float(rTexture.getSize().x), float(windowSize.y)/float(rTexture.getSize().y));
-    sprite.setScale(escala);
-
-	window.draw(sprite);
-	// End the current frame and display its contents on screen
-	window.display();
-}
+}*/
 
 void Joc::readNextState(int& skipLines){
     std::string doc;
@@ -129,15 +74,11 @@ void Joc::readNextState(int& skipLines){
 		++skipLines;
 	}
 
+
 	switch(doc[0]){
 		case 'S': {
-			for (uint i = 0; i < drawableObjects.size(); ++i) {
-				delete drawableObjects[i];
-			}
-			drawableObjects = vector<DrawableObject*>(0);
-			SplashImage* splashIm = new SplashImage(rTexture, doc);
-            //buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
-			drawableObjects.push_back(splashIm);
+            delete estat;
+            estat = new SplashImage(&window, &rTexture, doc);
 			++skipLines;
 			break;
 		}
@@ -145,6 +86,8 @@ void Joc::readNextState(int& skipLines){
             /*//s'ha de incloure el Minigaem1.h
             Minigaem1 minigame;
             minigame.play();
+            delete estat;
+            estat = new Minigaem1();
             */
 			break;
         case 'W':
@@ -194,11 +137,12 @@ int Joc::play() {
 			processEvents();
 // std::cerr << "event processed" << std::endl;
 // std::cerr << "I will update" << std::endl;
-			update(TimePerFrame);
+            estat->update(TimePerFrame);
 // std::cerr << "update done" << std::endl;
 		}
 // std::cerr << "before render" << std::endl;
-		render();
+        estat->render();
+        estat->paint(); // AMAZING
 // std::cerr << "after render" << std::endl;
 	}
 	return EXIT_SUCCESS;

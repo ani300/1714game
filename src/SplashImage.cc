@@ -2,13 +2,15 @@
 #include "SplashImage.h"
 
 //Constructor
-SplashImage::SplashImage(sf::RenderTexture &rTexture) : DrawableObject(rTexture) {
-
+SplashImage::SplashImage(sf::RenderWindow *gaemWindow, sf::RenderTexture *gaemTexture) :
+    Estat(gaemWindow, gaemTexture) {
 }
 
 //Constructor with name of the image it want's to display
-SplashImage::SplashImage(sf::RenderTexture &rTexture, std::string document): DrawableObject(rTexture) {
+SplashImage::SplashImage(sf::RenderWindow *gaemWindow, sf::RenderTexture *gaemTexture, std::string document):
+    Estat(gaemWindow, gaemTexture) {
     std::stringstream s;
+    DrawableObject* splashImage = new DrawableObject(*gaemTexture);
 
     mFont.loadFromFile("res/media/Sansation.otf");
     s << "res/documents/" << document << std::endl;
@@ -24,13 +26,16 @@ SplashImage::SplashImage(sf::RenderTexture &rTexture, std::string document): Dra
     std::stringstream t;
     t << "res/pictures/" << tex << std::endl;
 
-    loadTexture(tex.c_str());
-    setTextureToSprite();
+    splashImage->loadTexture(tex.c_str());
+    splashImage->setTextureToSprite();
     
     //centrar la pantalla i escalar la imatge
+    sf::Texture texture = splashImage->getTexture();
     float esc = float(gameSize.x)/float(texture.getSize().x);
-    setScaleToSprite(sf::Vector2f(esc, esc));
-    setPosition(sf::Vector2f(0.0f, (gameSize.y-texture.getSize().y*esc)/2));
+    splashImage->setScaleToSprite(sf::Vector2f(esc, esc));
+    splashImage->setPosition(sf::Vector2f(0.0f, (gameSize.y-texture.getSize().y*esc)/2));
+
+    drawableObjects.push_back(splashImage);
 
     //number of texts we want to write in this splash immage
     std::string num_text;
@@ -70,34 +75,40 @@ SplashImage::SplashImage(sf::RenderTexture &rTexture, std::string document): Dra
 SplashImage::~SplashImage(){
 }
 
-void SplashImage::draw(){
-    DrawableObject::draw();
-    rTexture.draw(escriptura);
-}
+void SplashImage::render() {
+    Estat::render();
 
-void SplashImage::draw(sf::RenderTexture &rTexture){
-	//set sprite values
-    sprite.setTexture(texture);
-    sprite.setPosition(position.x, position.y);
+    // Print texts
     //set text values
-    for(int i = 0; i < textos.size(); ++i)	textos[i].setPosition(positions[i]);	
-	
-	//draw drawable things
-	rTexture.draw(sprite);
-	for(int i = 0; i < textos.size(); ++i)rTexture.draw(textos[i]);
-    rTexture.draw(fletxaRect);
+    for(int i = 0; i < textos.size(); ++i)	textos[i].setPosition(positions[i]);
+    //draw drawable things
+    for(int i = 0; i < textos.size(); ++i) rTexture->draw(textos[i]);
+    rTexture->draw(fletxaRect);
+
+    /*//set sprite values
+    sprite.setTexture(texture);
+    sprite.setPosition(position.x, position.y);*/
 }
 
-void SplashImage::click(mouseButtons mouseButton, sf::Vector2f mouseClick){
-    if (mouseButton == mouse_left) {
-        if (mouseClick.x > 1620 and mouseClick.y > 930) {
+void SplashImage::update(sf::Time elapsedTime) {
+    if (mouseBut == mouse_left) {
+        sf::Vector2f mouseBo;
+        mouseBo.x = mouseClick.x * 1.0/escala.x;
+        mouseBo.y = mouseClick.y * 1.0/escala.y;
+        if (mouseBo.x > 1620 and mouseBo.y > 930) {
             std::ofstream outfile;
             outfile.open("res/documents/Status.txt");
             if(!outfile.is_open()) std::cerr << "res/documents/Status.txt" << " no obert " << std::endl;
             outfile << "OK" << endl;
             outfile.close();
         }
+        mouseBut = mouse_none;
     }
+}
+
+void SplashImage::handlePlayerMouse(mouseButtons mouseButton, sf::Vector2f mouseClick) {
+    this->mouseBut = mouseButton;
+    this->mouseClick = mouseClick;
 }
 
 std::wstring SplashImage::utf8_to_utf16(const std::string& utf8) {

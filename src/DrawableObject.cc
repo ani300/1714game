@@ -26,6 +26,10 @@ void DrawableObject::loadTexture(std::string textureName){
     }
 }
 
+sf::Texture DrawableObject::getTexture() {
+    return texture;
+}
+
 //Sets the sf::Texture on texture to the sf::Sprite sprite
 void DrawableObject::setTextureToSprite(){
 	//The true is for texture rect to be reseted to the size of the new texture

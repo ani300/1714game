@@ -3,6 +3,7 @@
 #define JOC
 
 #include "Utils.h"
+#include "Estat.h"
 #include "Logic.h"
 #include "Graphic.h"
 #include "SplashImage.h"
@@ -18,22 +19,14 @@ class Joc {
 
 	private:
 		
-		void render();
 		void processEvents();
-		void update(sf::Time elapsedTime);
-		void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 		void readNextState(int& skipLines);
 		
     	Logic logic;
-		directions dir;
-		mouseButtons mouseBut;
-		sf::Vector2f mouseClick;
-	    sf::RenderWindow window;
+        Estat* estat;
+        sf::RenderWindow window;
+        sf::Vector2u windowSize;
 	    sf::RenderTexture rTexture;
-	    sf::Vector2u windowSize;
-	    sf::CircleShape mPlayer;
-	    sf::Vector2f escala;
-		std::vector<DrawableObject*> drawableObjects;
 };
 
 

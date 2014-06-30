@@ -5,10 +5,12 @@ CONFIG -= qt
 QMAKE_CXXFLAGS = -std=c++11
 
 SOURCES += src/main.cc src/Logic.cc src/Joc.cc src/Graphic.cc src/SplashImage.cc src/Player.cc src/DrawableObject.cc \
-    src/Minigaem1.cpp
+    src/Minigaem1.cpp \
+    src/Estat.cc
  
 HEADERS += src/Logic.h src/Joc.h src/Graphic.h src/SplashImage.h src/Player.h \
     src/Utils.h src/DrawableObject.h \
-    src/Minigaem1.h
+    src/Minigaem1.h \
+    src/Estat.h
 
 LIBS += -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system

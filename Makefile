@@ -2,7 +2,7 @@
 
 COMP11 = -std=c++11 -gstabs+
 
-all: main DrawableObject Graphic Joc Logic Player SplashImage link
+all: main DrawableObject Graphic Joc Logic Player SplashImage Estat link
 
 main: main.cpp
 	g++ $(COMP11) -c src/main.cc -o Debug/main.o
@@ -24,6 +24,9 @@ Player: src/Player.*
 
 SplashImage: src/SplashImage.*
 	g++ $(COMP11) -c src/SplashImage.cc -o Debug/SplashImage.o
+	
+Estat: src/Estat.*
+	g++ $(COMP11) -c src/Estat.cc -o Debug/Estat.o
 
 link:
 	g++ -o Debug/joc Debug/*.o -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system

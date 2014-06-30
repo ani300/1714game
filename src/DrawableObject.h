@@ -18,6 +18,8 @@ public:
 	//Load the image named 'textureName' to the sf::Texture texture
 	void loadTexture(std::string textureName);
 
+    sf::Texture getTexture();
+
 	//Sets the sf::Texture on texture to the sf::Sprite sprite
 	void setTextureToSprite();
 	

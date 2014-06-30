@@ -5,24 +5,29 @@
 
 #include <vector>
 #include "Utils.h"
+#include "Estat.h"
 #include <stdexcept>
 #include "DrawableObject.h"
 
-class SplashImage: public DrawableObject {
+class SplashImage: public Estat {
 
 	public:
 		//Constructor
-		SplashImage(sf::RenderTexture &rTexture);
+        SplashImage(sf::RenderWindow *gaemWindow, sf::RenderTexture *gaemTexture);
 		//Constructor with name of the image it want's to display
-        SplashImage(sf::RenderTexture &rTexture, std::string pictureName);
+        SplashImage(sf::RenderWindow *gaemWindow, sf::RenderTexture *gaemTexture, std::string document);
 		//Destructor
-		~SplashImage();
+        ~SplashImage();
 		//Dibuixar
  		void draw();
  		//Draw with a window as parameter
 		void draw(sf::RenderTexture &rTexture);
 
 		void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
+
+        void render();
+        void update(sf::Time elapsedTime);
+        void handlePlayerMouse(mouseButtons mouseBut, sf::Vector2f mouseClick);
 
 	private:
 	    sf::Font mFont;
