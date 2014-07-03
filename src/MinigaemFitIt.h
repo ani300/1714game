@@ -4,6 +4,7 @@
 
 #include "Utils.h"
 #include "Estat.h"
+#include "Player.h"
 #include "DrawableObject.h"
 
 class MinigaemFitIt: public Estat {
@@ -20,7 +21,8 @@ class MinigaemFitIt: public Estat {
 
     private:
 
-        DrawableObject player, background;
+        Player player;
+        DrawableObject background;
         
         
     //heredats de Estat

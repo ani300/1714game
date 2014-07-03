@@ -14,8 +14,12 @@ class Player : public DrawableObject {
 		//Destructor
 		~Player();
 
+        void move(directions dir, float Movement );
+
+        void setDirToVel(directions dir, float quantatMoviment);
 	private:
 
+        sf::Vector2i vel;
 };
 
 

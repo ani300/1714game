@@ -39,10 +39,13 @@ public:
 	virtual void draw(sf::RenderTexture &rTexture);
 	
 	//Move --it is empty if the son would like to move he can implement it
-	virtual void move(sf::Vector2f &movement);
+    virtual void move();
+    virtual void move(directions dir);
+    virtual void move(sf::Vector2f &movement);    
 	
 	//Click --same as move
 	virtual void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
+    
 	
 private:
   
@@ -52,6 +55,7 @@ protected:
 	sf::Vector2f position;
 	sf::Texture texture;
     sf::Sprite sprite;
+
 };
 
 #endif

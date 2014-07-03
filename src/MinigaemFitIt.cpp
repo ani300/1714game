@@ -22,17 +22,16 @@ MinigaemFitIt::MinigaemFitIt(sf::RenderWindow *gaemWindow, sf::RenderTexture *ga
     
     
     background.setSize(sf::Vector2f (gaemTexture->getSize()));
+    
     drawableObjects.push_back(&background);
     drawableObjects.push_back(&player);
-    
-    
 }
 
 MinigaemFitIt::~MinigaemFitIt() {  
 }
 
 void MinigaemFitIt::update(sf::Time elapsedTime) {
-    //doing nothing    
+    player.move(dir, 200*(elapsedTime.asSeconds()));    
 }
 
 void MinigaemFitIt::handlePlayerMouse(mouseButtons mouseBut, sf::Vector2f mouseClick){

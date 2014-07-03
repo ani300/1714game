@@ -57,6 +57,8 @@ void DrawableObject::draw(sf::RenderTexture &rTexture){
 	rTexture.draw(sprite);
 }
 
+void DrawableObject::move(){}
+void DrawableObject::move(directions dir){}
 void DrawableObject::move(sf::Vector2f &movement){
 	//Do nothing... (whoever wants to be able to move should override this method)
 }

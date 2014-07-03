@@ -62,7 +62,7 @@ void Estat::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
             else dir = dir_left;
         }
         if (isPressed && key == sf::Keyboard::D) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dir = dir_up_left;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dir = dir_up_right;
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dir = dir_down_right;
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) dir = dir_none;
             else dir = dir_right;
