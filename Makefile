@@ -2,7 +2,7 @@
 
 COMP11 = -std=c++11 -gstabs+
 
-all: main DrawableObject Graphic Joc Logic Player SplashImage Estat link
+all: main DrawableObject Graphic Joc Logic Player SplashImage Estat MinigaemFitIt link
 
 main: main.cpp
 	g++ $(COMP11) -c src/main.cc -o Debug/main.o
@@ -27,6 +27,9 @@ SplashImage: src/SplashImage.*
 	
 Estat: src/Estat.*
 	g++ $(COMP11) -c src/Estat.cc -o Debug/Estat.o
+	
+MinigaemFitIt: src/MinigaemFitIt.*
+	g++ $(COMP11) -c src/MinigaemFitIt.cpp -o Debug/MinigaemFitIt.o
 
 link:
 	g++ -o Debug/joc Debug/*.o -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system

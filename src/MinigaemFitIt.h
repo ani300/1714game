@@ -4,6 +4,7 @@
 
 #include "Utils.h"
 #include "Estat.h"
+#include "DrawableObject.h"
 
 class MinigaemFitIt: public Estat {
 
@@ -14,11 +15,13 @@ class MinigaemFitIt: public Estat {
         //Destructor
         ~MinigaemFitIt();
 
-         void update(sf::Time elapsedTime) = 0;
-         void handlePlayerMouse(mouseButtons mouseBut, sf::Vector2f mouseClick) = 0;
+         void update(sf::Time elapsedTime);
+         void handlePlayerMouse(mouseButtons mouseBut, sf::Vector2f mouseClick);
 
     private:
 
+        DrawableObject player, background;
+        
         
     //heredats de Estat
         /*

@@ -1,0 +1,6 @@
+%Minigaem Fit It
+% Background Texture just name no png nor jpg
+MFIbackground
+% Player Texture just name no png nor jpg
+MFIplayer
+

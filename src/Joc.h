@@ -7,6 +7,7 @@
 #include "Logic.h"
 #include "Graphic.h"
 #include "SplashImage.h"
+#include "MinigaemFitIt.h"
 #include "DrawableObject.h"
 
 class Joc {

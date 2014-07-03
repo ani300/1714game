@@ -65,4 +65,11 @@ void DrawableObject::click(mouseButtons mouseButton, sf::Vector2f mouseClick){
 	//Do nothing also have to be overrided.
 }
 
+void DrawableObject::setSize(sf::Vector2f desiredSize){
+    float scalex, scaley;
+    scalex = scaley = 0.0;
+    scalex = desiredSize.x/texture.getSize().x;
+    scaley = desiredSize.y/texture.getSize().y;
+    sprite.setScale(scalex, scaley);
+}
 

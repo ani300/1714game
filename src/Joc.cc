@@ -75,13 +75,20 @@ void Joc::readNextState(int& skipLines){
 	}
 
 
-	switch(doc[0]){
-		case 'S': {
+    switch(doc[0]){
+        case 'S': {
             delete estat;
             estat = new SplashImage(&window, &rTexture, doc);
-			++skipLines;
-			break;
-		}
+            ++skipLines;
+            break;
+        }
+        case 'M': {
+std::cerr << "minigameFitIt actiu" << std::endl;
+            delete estat;
+            estat = new MinigaemFitIt(&window, &rTexture);
+            ++skipLines;
+            break;
+        }
         case 'N':
             /*//s'ha de incloure el Minigaem1.h
             Minigaem1 minigame;

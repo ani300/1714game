@@ -29,6 +29,9 @@ public:
 	//Sets the Rectangle defined for the variables from sf::Texture texture to the sf::Sprite sprite
 	void setTextureRectToSprite(sf::IntRect rect);
 	
+    //SetSize to the sprite scaling it respect to the texture size;
+    void setSize(sf::Vector2f desiredSize);
+    
 	//Draw the 'sprite' at 'position' with the size 'size' on the 'window' ('xxx' are the private variables)
 	virtual void draw();
 
