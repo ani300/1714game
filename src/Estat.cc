@@ -5,6 +5,7 @@ Estat::Estat(sf::RenderWindow *gaemWindow, sf::RenderTexture *gaemTexture) :
         rWindow = gaemWindow;
         rTexture = gaemTexture;
         mouseBut = mouse_none;
+        windowSize = rWindow->getSize();
         mouseClick = sf::Vector2f(0.0, 0.0);
 }
 
