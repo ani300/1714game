@@ -19,6 +19,7 @@ MinigaemFitIt::MinigaemFitIt(sf::RenderWindow *gaemWindow, sf::RenderTexture *ga
     while(tex[0] == '%') getline(infile, tex);
     player.loadTexture(tex.c_str());
     player.setTextureToSprite();
+    player.setSize(sf::Vector2f (gameSize.x/10, gameSize.y/4));
 
     getline(infile, tex);
     while(tex[0] == '%') getline(infile, tex);
@@ -29,21 +30,18 @@ MinigaemFitIt::MinigaemFitIt(sf::RenderWindow *gaemWindow, sf::RenderTexture *ga
         while(tex[0] == '%') getline(infile, tex);
         box.loadTexture(tex);
         box.setTextureToSprite();
+        box.setSize(sf::Vector2f (200, 200));
+        box.setPosition(sf::Vector2f(960-100,540-100));
         boxes.push_back(box);
-        std::cerr << "forlup" << std::endl;
     }
-    std::cerr << "boobs" << std::endl;
     background.setSize(sf::Vector2f (gaemTexture->getSize()));
-std::cerr << "end init" << std::endl;
 }
 
 MinigaemFitIt::~MinigaemFitIt() {  
 }
 
 void MinigaemFitIt::update(sf::Time elapsedTime) {
-    std::cerr << "boobies" << std::endl;
     player.move(dir, 200*(elapsedTime.asSeconds()));
-   std::cerr << "boinging boobs" << std::endl;
 }
 
 void MinigaemFitIt::handlePlayerMouse(mouseButtons mouseBut, sf::Vector2f mouseClick){
@@ -57,9 +55,7 @@ void MinigaemFitIt::render(){
     for(int i = 0; i < boxes.size(); ++i){
         drawableObjects.push_back(&boxes[i]);
     }
-std::cerr << "render done" << std::endl;
     Estat::render();
-std::cerr << "estat rendeer done" << std::endl;
 }
 
     //heredats de Estat
