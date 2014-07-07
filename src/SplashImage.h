@@ -35,8 +35,8 @@ class SplashImage: public Estat {
 		sf::Text escriptura;
 		sf::Vector2f textPosition;
 		std::vector<sf::Text> textos;
-		std::vector<sf::Vector2f> positions;
 		sf::RectangleShape fletxaRect;
+		std::vector<sf::Vector2f> positions;
         std::wstring utf8_to_utf16(const std::string& utf8);
 
 };

@@ -18,12 +18,13 @@ class MinigaemFitIt: public Estat {
 
          void update(sf::Time elapsedTime);
          void handlePlayerMouse(mouseButtons mouseBut, sf::Vector2f mouseClick);
+         void render();
 
     private:
 
         Player player;
         DrawableObject background;
-        
+        std::vector<DrawableObject> boxes;
         
     //heredats de Estat
         /*

@@ -143,14 +143,14 @@ int Joc::play() {
 // std::cerr << "I will process events" << std::endl;
 			processEvents();
 // std::cerr << "event processed" << std::endl;
-// std::cerr << "I will update" << std::endl;
+ //std::cerr << "I will update" << std::endl;
             estat->update(TimePerFrame);
-// std::cerr << "update done" << std::endl;
+ //std::cerr << "update done" << std::endl;
 		}
-// std::cerr << "before render" << std::endl;
+ //std::cerr << "before render" << std::endl;
         estat->render();
         estat->paint(); // AMAZING
-// std::cerr << "after render" << std::endl;
+ //std::cerr << "after render" << std::endl;
 	}
 	return EXIT_SUCCESS;
 }
