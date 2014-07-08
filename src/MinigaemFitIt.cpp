@@ -46,10 +46,28 @@ MinigaemFitIt::MinigaemFitIt(sf::RenderWindow *gaemWindow, sf::RenderTexture *ga
 MinigaemFitIt::~MinigaemFitIt() {
 }
 
+directions inverseDir(directions dir){
+    if(dir == dir_none) return dir_none;
+    if(dir%2 == 0) return static_cast<directions>(dir+1);
+    else return static_cast<directions> (dir-1);
+}
+
 void MinigaemFitIt::update(sf::Time elapsedTime) {
     player.move(dir, 200*(elapsedTime.asSeconds()));
     for(int i = 0; i < boxes.size(); ++i){
-        if (player.colide(boxes[i])) boxes[i].move(dir, 200*(elapsedTime.asSeconds()));
+        if (player.colide(boxes[i])) {
+            sf::Vector2f aux = boxes[i].getPosition();
+            boxes[i].move(dir, 200*(elapsedTime.asSeconds()));
+            if(boxes[i].getPosition() == aux) player.move(inverseDir(dir), 200*(elapsedTime.asSeconds()));
+        }
+    }
+    if(player.getPosition().y < 100) player.setPosition(sf::Vector2f(player.getPosition().x, 100));
+    for(int i = 0; i < boxes.size(); ++i) {
+        if(boxes[i].getPosition().x + boxes[i].getSize().x == gameSize.x) {
+            //boxes.erase(boxes.begin()+i);
+            boxes[i].setSize(sf::Vector2f(0,0));
+            //drawableObjects.erase(drawableObjects.begin()+i+2);
+        }
     }
 }
 

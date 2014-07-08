@@ -11,6 +11,9 @@ public:
 	//Constructor with window as a reference
     DrawableObject(sf::RenderTexture &rTexture);
 	
+    //Destructor
+    ~DrawableObject();
+
 	//Setter and getter for Position
     void setPosition(sf::Vector2f pos);
     sf::Vector2f getPosition();

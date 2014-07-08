@@ -6,6 +6,11 @@ DrawableObject::DrawableObject(sf::RenderTexture &rTexture) : rTexture(rTexture)
 	position.x = position.y = 0;
 } 
 
+//Destructor
+DrawableObject::~DrawableObject(){
+
+}
+
 //Setter and getter for Position
 void DrawableObject::setPosition(sf::Vector2f pos){
 	position = pos;
