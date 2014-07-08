@@ -25,23 +25,32 @@ MinigaemFitIt::MinigaemFitIt(sf::RenderWindow *gaemWindow, sf::RenderTexture *ga
     while(tex[0] == '%') getline(infile, tex);
     int boxQtty = atoi(tex.c_str());
     for(int b = 0; b < boxQtty; ++b){
-        DrawableObject box(*gaemTexture);
+        Player box(*gaemTexture);
         getline(infile, tex);
         while(tex[0] == '%') getline(infile, tex);
         box.loadTexture(tex);
         box.setTextureToSprite();
         box.setSize(sf::Vector2f (200, 200));
-        box.setPosition(sf::Vector2f(960-100,540-100));
+            getline(infile, tex);
+            while(tex[0] == '%') getline(infile, tex);
+        int posx = atoi(tex.c_str());
+            getline(infile, tex);
+            while(tex[0] == '%') getline(infile, tex);
+        int posy = atoi(tex.c_str());
+        box.setPosition(sf::Vector2f(posx,posy));
         boxes.push_back(box);
     }
     background.setSize(sf::Vector2f (gaemTexture->getSize()));
 }
 
-MinigaemFitIt::~MinigaemFitIt() {  
+MinigaemFitIt::~MinigaemFitIt() {
 }
 
 void MinigaemFitIt::update(sf::Time elapsedTime) {
     player.move(dir, 200*(elapsedTime.asSeconds()));
+    for(int i = 0; i < boxes.size(); ++i){
+        if (player.colide(boxes[i])) boxes[i].move(dir, 200*(elapsedTime.asSeconds()));
+    }
 }
 
 void MinigaemFitIt::handlePlayerMouse(mouseButtons mouseBut, sf::Vector2f mouseClick){
@@ -49,7 +58,7 @@ void MinigaemFitIt::handlePlayerMouse(mouseButtons mouseBut, sf::Vector2f mouseC
 }
 
 void MinigaemFitIt::render(){
-    drawableObjects.empty();
+    drawableObjects.clear();
     drawableObjects.push_back(&background);
     drawableObjects.push_back(&player);
     for(int i = 0; i < boxes.size(); ++i){

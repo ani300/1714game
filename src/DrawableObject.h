@@ -12,13 +12,13 @@ public:
     DrawableObject(sf::RenderTexture &rTexture);
 	
 	//Setter and getter for Position
-	void setPosition(sf::Vector2f pos);
-	sf::Vector2f getPosition();
+    void setPosition(sf::Vector2f pos);
+    sf::Vector2f getPosition();
 
 	//Load the image named 'textureName' to the sf::Texture texture
 	void loadTexture(std::string textureName);
-
     sf::Texture getTexture();
+
 
 	//Sets the sf::Texture on texture to the sf::Sprite sprite
 	void setTextureToSprite();
@@ -31,7 +31,10 @@ public:
 	
     //SetSize to the sprite scaling it respect to the texture size;
     void setSize(sf::Vector2f desiredSize);
-    
+    sf::Vector2f getSize();
+
+    bool colide(DrawableObject& box);
+
 	//Draw the 'sprite' at 'position' with the size 'size' on the 'window' ('xxx' are the private variables)
 	virtual void draw();
 
@@ -45,17 +48,15 @@ public:
 	
 	//Click --same as move
 	virtual void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
-    
 	
 private:
   
 protected:
-	sf::RenderTexture& rTexture;
-	sf::Vector2u windowSize;
-	sf::Vector2f position;
-	sf::Texture texture;
     sf::Sprite sprite;
-
+    sf::Texture texture;
+	sf::Vector2f position;
+    sf::Vector2u windowSize;
+    sf::RenderTexture& rTexture;
 };
 
 #endif

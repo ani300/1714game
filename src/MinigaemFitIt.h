@@ -24,7 +24,7 @@ class MinigaemFitIt: public Estat {
 
         Player player;
         DrawableObject background;
-        std::vector<DrawableObject> boxes;
+        std::vector<Player> boxes;
         
     //heredats de Estat
         /*

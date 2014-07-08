@@ -75,3 +75,25 @@ void DrawableObject::setSize(sf::Vector2f desiredSize){
     sprite.setScale(scalex, scaley);
 }
 
+sf::Vector2f DrawableObject::getSize(){
+    float x, y;
+    x = sprite.getTexture()->getSize().x * sprite.getScale().x;
+    y = sprite.getTexture()->getSize().y * sprite.getScale().y;
+    return sf::Vector2f(x,y);
+}
+
+bool DrawableObject::colide(DrawableObject& box){
+
+    float left1, right1, top1, bot1;
+    left1 = this->getPosition().x; right1 = left1 + this->getSize().x;
+    top1 = this->getPosition().y; bot1 = top1 + this->getSize().y;
+
+    float left2, right2, top2, bot2;
+    left2 = box.getPosition().x; right2 = left2 + box.getSize().x;
+    top2 = box.getPosition().y; bot2 = top2 + box.getSize().y;
+
+    if(left1 > right2 || right1 < left2 ||
+            top1 > bot2 || bot1 < top2  ) return false;
+    else return true;
+
+}
