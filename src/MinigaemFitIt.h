@@ -5,6 +5,7 @@
 #include "Utils.h"
 #include "Estat.h"
 #include "Player.h"
+#include "MovileObject.h"
 #include "DrawableObject.h"
 
 class MinigaemFitIt: public Estat {
@@ -24,7 +25,7 @@ class MinigaemFitIt: public Estat {
 
         Player player;
         DrawableObject background;
-        std::vector<Player> boxes;
+        std::vector<MovileObject> boxes;
         
     //heredats de Estat
         /*

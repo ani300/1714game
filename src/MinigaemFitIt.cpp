@@ -14,12 +14,12 @@ MinigaemFitIt::MinigaemFitIt(sf::RenderWindow *gaemWindow, sf::RenderTexture *ga
     while(tex[0] == '%') getline(infile, tex);
     background.loadTexture(tex.c_str());
     background.setTextureToSprite();
-    
+
     getline(infile, tex);
     while(tex[0] == '%') getline(infile, tex);
     player.loadTexture(tex.c_str());
     player.setTextureToSprite();
-    player.setSize(sf::Vector2f (gameSize.x/10, gameSize.y/4));
+    player.setSize(sf::Vector2f (100*4, 200*8));
 
     getline(infile, tex);
     while(tex[0] == '%') getline(infile, tex);
@@ -64,6 +64,11 @@ void MinigaemFitIt::update(sf::Time elapsedTime) {
     if(player.getPosition().y < 100) player.setPosition(sf::Vector2f(player.getPosition().x, 100));
     for(int i = 0; i < boxes.size(); ++i) {
         if(boxes[i].getPosition().x + boxes[i].getSize().x == gameSize.x) {
+            //boxes.erase(boxes.begin()+i);
+            boxes[i].setSize(sf::Vector2f(0,0));
+            //drawableObjects.erase(drawableObjects.begin()+i+2);
+        }
+        if(boxes[i].getPosition().y <= 100 - boxes[i].getSize().y/2) {
             //boxes.erase(boxes.begin()+i);
             boxes[i].setSize(sf::Vector2f(0,0));
             //drawableObjects.erase(drawableObjects.begin()+i+2);

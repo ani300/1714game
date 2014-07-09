@@ -24,7 +24,7 @@ public:
 
 
 	//Sets the sf::Texture on texture to the sf::Sprite sprite
-	void setTextureToSprite();
+    virtual void setTextureToSprite();
 	
 	//Sets the scale defined by the Vector2f to to the sf::Sprite sprite
 	void setScaleToSprite(sf::Vector2f scaleValues);
@@ -34,7 +34,6 @@ public:
 	
     //SetSize to the sprite scaling it respect to the texture size;
     void setSize(sf::Vector2f desiredSize);
-    sf::Vector2f getSize();
 
     bool colide(DrawableObject& box);
 
@@ -49,6 +48,7 @@ public:
     virtual void move(directions dir);
     virtual void move(sf::Vector2f &movement);    
 	
+    virtual sf::Vector2f getSize();
 	//Click --same as move
 	virtual void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
 	
