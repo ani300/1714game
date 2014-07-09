@@ -2,14 +2,30 @@
 %la textura del background es tex1
 tex1
 %numero de textos
-2
+7
 %el text que posarem es
-1714 la resistència de l'història //*//
+ Corre l'any xxxx, en Ferriol, un jove català de Barcelona, reflexiona sobre la seva vida,
 %posx
 100
 %posy
 100
-Penguins :)
-250
-250
-
+%segon text
+ d'ençà que son pare va morir, en els fatigosos treballs del port de la ciutat,
+100
+200
+%
+ha estat treballant per el senyor Onofre, que aprofita la seva desgràcia
+100
+300
+per explotar al jove i la seva mare per un poc de menjar i una cambra on dormir.
+100
+400
+Són temps difícils per els que no han nescut en casa bona, 
+100
+600
+però poc s'imaginen els esdeveniments que estan apunt d'ocorrer per tot el país,
+100
+700
+i molt menys, que els fets històrics que presenciaran cambiaran el rumb de tota una nació.
+100
+800

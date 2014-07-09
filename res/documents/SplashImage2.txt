@@ -2,14 +2,26 @@
 %la textura del background es tex1
 tex1
 %numero de textos
-2
+6
 %el text que posarem es
-UAU!!! 2nd image
+Hauria pogut neixer en la noblesa...
 %posx
 100
 %posy
 100
-Seriously :)
-250
-250
+Ser fill de un rei, o al menys un mestre del gremi,
+100
+200
+hauría pogut ser un Home honrat,
+100
+300
+o fins hauría preferit ser fill del flaquer o el peixeter,
+100
+400
+però m'ha tocat viure aquí...
+100
+500
+Estic condemnat a viure aquesta vida miserable...
+100
+600
 

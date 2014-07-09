@@ -1,0 +1,15 @@
+tex1
+%
+4
+- Mare, hem de sortir d'aquest lloc, o acabaré com el pare, mort al port al costat del mar...
+100
+100
+- Ai fill meu... tant de bo fós tan fàcil sortir d'aquesta misèria...
+100
+200
+- M'apuntaré a la coronel·la, faré diners i quan pugui et vindré a treure d'aquí!
+100
+500
+- Ai fill meu tant de bó no et passi res, ves amb compte per aquests mons de déu...
+100
+600

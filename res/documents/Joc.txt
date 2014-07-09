@@ -3,12 +3,27 @@
 % cada instrucció ha de tenir una lletra inicial diferent
 SplashImage1.txt
 SplashImage2.txt
-SplashImage1.txt
-MinigaemFitIt.txt
+SplashImage3.txt
+%Minigame de feines de casa
+SplashImage4.txt
+SplashImage5.txt
+%Walkmap1
+%MinigaemFitIt.txt
 %NetejaMinigaem
+SplashImage4.txt
+SplashImage5.txt
+%Walkmap2
+%MinigaemFitIt.txt
+%NetejaMinigaem
+SplashImage4.txt
+SplashImage5.txt
+%Walkmap3   %pot portar 4 enrrera, o passar al següent
+%MinigaemFitIt.txt
+SplashImage6.txt
+SplashImage7.txt
+%
 % MinigameX.txt
 %
 % WalkmapX.txt
 % BattleX.txt ?
-
 % End.txt

@@ -2,7 +2,7 @@
 
 //Constructor
 //Joc::Joc() : window(sf::VideoMode::getDesktopMode(), L"1714: La resistència de l'Història"
-Joc::Joc() : window(sf::VideoMode(500,250), L"1714: La resistència de l'Història"
+Joc::Joc() : window(sf::VideoMode(1000,500), L"1714: La resistència de l'Història"
 	, sf::Style::Titlebar | sf::Style::Close), rTexture() {
     if (!rTexture.create(1920, 1080)) cout << "OPSHIT: No pot crear la RenderTexture" << endl;
 	rTexture.setSmooth(true);
