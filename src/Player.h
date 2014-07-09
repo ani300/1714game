@@ -19,6 +19,7 @@ class Player : public MovileObject {
 
 	private:
 
+        sf::Clock spriteTimmer;
         sf::Vector2f spriteSize;
         sf::Vector2f spriteSource;
 };

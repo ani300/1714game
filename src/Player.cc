@@ -13,7 +13,11 @@ sf::Vector2f Player::getSize(){
 void Player::move(directions dir, float Movement){
     if(spriteSource.y == dir){
         MovileObject::move(dir, Movement);
-        ++spriteSource.x;
+        float aux = spriteTimmer.getElapsedTime().asSeconds();
+        if(aux >= 0.1) {
+            ++spriteSource.x;
+            spriteTimmer.restart();
+        }
     }
     else if(dir != dir_none)spriteSource.y = dir;
     if(spriteSource.x >= 4) spriteSource.x = 0;
