@@ -11,6 +11,7 @@ class Estat {
         virtual void render(); //implementat
         virtual void paint(); //implementat
         virtual void update(sf::Time elapsedTime) = 0;
+        virtual void handlePlayerInput();
         virtual void handlePlayerInput(sf::Keyboard::Key key, bool isPressed); //implementat
         virtual void handlePlayerMouse(mouseButtons mouseBut, sf::Vector2f mouseClick) = 0;
     protected:

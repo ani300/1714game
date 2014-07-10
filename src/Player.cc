@@ -14,7 +14,7 @@ void Player::move(directions dir, float Movement){
     if(spriteSource.y == dir){
         MovileObject::move(dir, Movement);
         float aux = spriteTimmer.getElapsedTime().asSeconds();
-        if(aux >= 0.1) {
+        if(aux >= 0.091) {
             ++spriteSource.x;
             spriteTimmer.restart();
         }

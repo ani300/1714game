@@ -41,6 +41,12 @@ MinigaemFitIt::MinigaemFitIt(sf::RenderWindow *gaemWindow, sf::RenderTexture *ga
         boxes.push_back(box);
     }
     background.setSize(sf::Vector2f (gaemTexture->getSize()));
+
+    drawableObjects.push_back(&background);
+    drawableObjects.push_back(&player);
+    for(int i = 0; i < boxes.size(); ++i){
+        drawableObjects.push_back(&boxes[i]);
+    }
 }
 
 MinigaemFitIt::~MinigaemFitIt() {
@@ -53,11 +59,19 @@ directions inverseDir(directions dir){
 }
 
 void MinigaemFitIt::update(sf::Time elapsedTime) {
+    //this->handlePlayerInput();
     player.move(dir, 200*(elapsedTime.asSeconds()));
     for(int i = 0; i < boxes.size(); ++i){
         if (player.colide(boxes[i])) {
             sf::Vector2f aux = boxes[i].getPosition();
             boxes[i].move(dir, 200*(elapsedTime.asSeconds()));
+            for(int k = 0; k < boxes.size(); ++k){
+                if(k != i){
+                    if(boxes[i].colide(boxes[k])){
+                        boxes[k].move(dir, 200*elapsedTime.asSeconds());
+                    }
+                }
+            }
             if(boxes[i].getPosition() == aux) player.move(inverseDir(dir), 200*(elapsedTime.asSeconds()));
         }
     }
@@ -81,12 +95,12 @@ void MinigaemFitIt::handlePlayerMouse(mouseButtons mouseBut, sf::Vector2f mouseC
 }
 
 void MinigaemFitIt::render(){
-    drawableObjects.clear();
+    /*drawableObjects.clear();
     drawableObjects.push_back(&background);
     drawableObjects.push_back(&player);
     for(int i = 0; i < boxes.size(); ++i){
         drawableObjects.push_back(&boxes[i]);
-    }
+    }*/
     Estat::render();
 }
 

@@ -133,25 +133,16 @@ int Joc::play() {
 			readNextState(skipLines);
 		}
         estatFile.close();
-// std::cerr << "Estat comprobat" << std::endl;
-// std::cerr << "I will processEvents" << std::endl;
 		processEvents();
-// std::cerr << "Events processed" << std::endl;
 		timeSinceLastUpdate += clock.restart();
 
 		while(timeSinceLastUpdate > TimePerFrame) {
-			timeSinceLastUpdate -= TimePerFrame;
-// std::cerr << "I will process events" << std::endl;
 			processEvents();
-// std::cerr << "event processed" << std::endl;
- //std::cerr << "I will update" << std::endl;
-            estat->update(TimePerFrame);
- //std::cerr << "update done" << std::endl;
+            estat->update(timeSinceLastUpdate);
+            timeSinceLastUpdate = sf::seconds(0.0);
 		}
- //std::cerr << "before render" << std::endl;
         estat->render();
         estat->paint(); // AMAZING
- //std::cerr << "after render" << std::endl;
 	}
 	return EXIT_SUCCESS;
 }
