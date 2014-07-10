@@ -26,6 +26,10 @@ class MinigaemFitIt: public Estat {
         Player player;
         DrawableObject background;
         std::vector<MovileObject> boxes;
+        std::vector<int> goodBoxes;
+        sf::Vector2i good_bad;
+        sf::Text text;
+        sf::Font font;
         
     //heredats de Estat
         /*

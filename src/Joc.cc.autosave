@@ -129,13 +129,7 @@ int Joc::play() {
 		getline(estatFile, stat);
 		if(stat == "OK") {
 			//delete OK from estatFile
-            if( remove( "res/documents/Status.txt" ) != 0 ){
-                std::cout <<  "Error deleting file" << std::endl;
-                std::ofstream outfile;
-                outfile.open("res/documents/Status.txt");
-                if(!outfile.is_open()) std::cerr << "res/documents/Status.txt" << " no obert " << std::endl;
-                outfile.close();
-            }
+            if( remove( "res/documents/Status.txt" ) != 0 ) std::cout <<  "Error deleting file" << std::endl;
 			readNextState(skipLines);
 		}
         estatFile.close();

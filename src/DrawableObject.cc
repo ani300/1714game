@@ -11,6 +11,14 @@ DrawableObject::~DrawableObject(){
 
 }
 
+void DrawableObject::setColor(sf::Color color){
+    sprite.setColor(color);
+}
+
+sf::Color DrawableObject::getColor(){
+    return sprite.getColor();
+}
+
 //Setter and getter for Position
 void DrawableObject::setPosition(sf::Vector2f pos){
 	position = pos;

@@ -37,6 +37,9 @@ public:
 
     bool colide(DrawableObject& box);
 
+    void setColor(sf::Color color);
+    sf::Color getColor();
+
 	//Draw the 'sprite' at 'position' with the size 'size' on the 'window' ('xxx' are the private variables)
 	virtual void draw();
 

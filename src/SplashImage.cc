@@ -99,7 +99,7 @@ void SplashImage::update(sf::Time elapsedTime) {
             std::ofstream outfile;
             outfile.open("res/documents/Status.txt");
             if(!outfile.is_open()) std::cerr << "res/documents/Status.txt" << " no obert " << std::endl;
-            outfile << "OK" << endl;
+            outfile << "OK" << std::endl;
             outfile.close();
         }
         mouseBut = mouse_none;
