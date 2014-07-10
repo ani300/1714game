@@ -12,7 +12,7 @@ class MovileObject : public DrawableObject {
         MovileObject(sf::RenderTexture &rTexture);
 		//Destructor
         ~MovileObject();
-        void move(directions dir, float Movement);
+        void moveIt(directions dir, float Movement);
         void setDirToVel(directions dir, float quantatMoviment);
 	private:
 

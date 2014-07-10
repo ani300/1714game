@@ -69,6 +69,7 @@ directions inverseDir(directions dir){
 }
 
 void MinigaemFitIt::update(sf::Time elapsedTime) {
+<<<<<<< HEAD
     //this->handlePlayerInput();
     text.setString("Be: " + std::to_string(good_bad.x) + " Malament: " + std::to_string(good_bad.y));
     player.move(dir, 300*(elapsedTime.asSeconds()));

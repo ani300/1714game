@@ -10,7 +10,7 @@ MovileObject::MovileObject(sf::RenderTexture &rTexture): DrawableObject(rTexture
 MovileObject::~MovileObject() {
 }
 
-void MovileObject::move(directions dir, float quantatMoviment){
+void MovileObject::moveIt(directions dir, float quantatMoviment){
     setDirToVel(dir, quantatMoviment);
     position.x += vel.x;
     position.y += vel.y;

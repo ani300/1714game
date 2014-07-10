@@ -1,9 +1,18 @@
 /***********************************main.cpp*************************************************/
 #include "Joc.h"
-#include "Minigaem1.h"
+
+#include <stdexcept>
+#include <iostream>
+
 int main() {
 
-    Joc joc;
-    return joc.play();
+    try {
+        Joc joc;
+        joc.play();
+    }
+    catch (std::exception& e) {
+        std::cout << "\nEXCEPTION: " << e.what() << std::endl;
+    }
+
 
 }

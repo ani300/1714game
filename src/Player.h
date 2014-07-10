@@ -15,7 +15,7 @@ class Player : public MovileObject {
 
         sf::Vector2f getSize();
         void setTextureToSprite();
-        void move(directions dir, float Movement);
+        void moveIt(directions dir, float Movement);
 
 	private:
 

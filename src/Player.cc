@@ -10,9 +10,9 @@ sf::Vector2f Player::getSize(){
     return sf::Vector2f(spriteSize.x * sprite.getScale().x, spriteSize.y * sprite.getScale().y);
 }
 
-void Player::move(directions dir, float Movement){
+void Player::moveIt(directions dir, float Movement){
     if(spriteSource.y == dir){
-        MovileObject::move(dir, Movement);
+        MovileObject::moveIt(dir, Movement);
         float aux = spriteTimmer.getElapsedTime().asSeconds();
         if(aux >= 0.091) {
             ++spriteSource.x;
