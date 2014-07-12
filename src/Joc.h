@@ -2,32 +2,44 @@
 #ifndef JOC
 #define JOC
 
-#include "Utils.h"
-#include "Estat.h"
-#include "Logic.h"
-#include "Graphic.h"
-#include "SplashImage.h"
-#include "MinigaemFitIt.h"
-#include "DrawableObject.h"
+#include "ResourceHolder.h"
+#include "ResourceIdentifiers.h"
+#include "PilaEstats.h"
+
+#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
 
 class Joc {
 
 	public:
 		Joc();
-		~Joc();
 
 		int play();
 
 	private:
 		
 		void processEvents();
+        void update(sf::Time dt);
+        void render();
+
 		void readNextState(int& skipLines);
 		
-    	Logic logic;
-        Estat* estat;
-        sf::RenderWindow window;
-        sf::Vector2u windowSize;
-	    sf::RenderTexture rTexture;
+        void updateStatistics(sf::Time dt);
+        void registerStates();
+
+        static const sf::Time TimePerFrame;
+
+        sf::RenderWindow mWindow;
+        sf::Vector2u mWindowSize;
+        sf::RenderTexture mRenderTexture;
+        TextureHolder mTextures;
+        FontHolder mFonts;
+
+        PilaEstats mPilaEstats;
+
+        sf::Text mStatisticsText;
+        sf::Time mStatisticsUpdateTime;
+        std::size_t mStatisticsNumFrames;
 };
 
 

@@ -8,7 +8,7 @@ int main() {
 
     try {
         Joc joc;
-        joc.play();
+        return joc.play();
     }
     catch (std::exception& e) {
         std::cout << "\nEXCEPTION: " << e.what() << std::endl;

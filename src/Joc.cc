@@ -1,16 +1,39 @@
 #include "Joc.h"
 
+#include "Utils.h"
+#include "Estat.h"
+#include "IdentificadorsEstat.h"
+#include "SplashImage.h"
+#include "Minigaem1.h"
+#include "MinigaemFitIt.h"
+#include "Fight.h"
+
+const sf::Time Application::TimePerFrame = sf::seconds(1.f/60.f);
+
 //Constructor
 //Joc::Joc() : window(sf::VideoMode::getDesktopMode(), L"1714: La resistència de l'Història"
-Joc::Joc() : window(sf::VideoMode(1000,500), L"1714: La resistència de l'Història"
-	, sf::Style::Titlebar | sf::Style::Close), rTexture() {
-    if (!rTexture.create(1920, 1080)) cout << "OPSHIT: No pot crear la RenderTexture" << endl;
-	rTexture.setSmooth(true);
-    estat = 0;
-}
+Joc::Joc() :
+  mWindow(sf::VideoMode(1000,500), L"1714: La resistència de l'Història"
+    , sf::Style::Titlebar | sf::Style::Close)
+, mRenderTexture()
+, mTextures()
+, mFonts()
+, mPilaEstats(Estat::Context(mRenderTexture, mTextures, mFonts))
+, mStatisticsText()
+, mStatisticsUpdateTime()
+, mStatisticsNumFrames(0){
+    if (!mRenderTexture.create(1920, 1080)) cout << "OPSHIT: No pot crear la RenderTexture" << endl;
+    mRenderTexture.setSmooth(true);
 
-Joc::~Joc() {
-    delete estat;
+    mFonts.load(Fonts::AlluraRegular, "res/media/AlluraRegular.otf");
+    mFonts.load(Fonts::Sansation, "res/media/Sansation.ttf");
+    mTextures.load(Textures::Llibre, "res/pictures/tex1.png");
+
+    mStatisticsText.setFont(mFonts.get(Fonts::Sansation));
+    mStatisticsText.setPosition(5.f, 5.f);
+    mStatisticsText.setCharacterSize(10u);
+
+    mPilaEstats.pushState(Estats::SplashScreen);
 }
 
 void Joc::processEvents() {
