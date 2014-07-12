@@ -1,84 +1,69 @@
-#ifndef BOOK_STATESTACK_HPP
-#define BOOK_STATESTACK_HPP
+#ifndef PILAESTATS_HPP
+#define PILAESTATS_HPP
 
-#include <Book/State.hpp>
-#include <Book/StateIdentifiers.hpp>
-#include <Book/ResourceIdentifiers.hpp>
+#include "Estat.h"
+#include "IdentificadorsEstat.h"
+#include "ResourceIdentifiers.h"
+#include "Utils.h"
 
-#include <SFML/System/NonCopyable.hpp>
-#include <SFML/System/Time.hpp>
-
-#include <vector>
-#include <utility>
-#include <functional>
-#include <map>
-
-
-namespace sf
-{
-	class Event;
-	class RenderWindow;
-}
-
-class StateStack : private sf::NonCopyable
-{
+class PilaEstats : private sf::NonCopyable {
 	public:
-		enum Action
-		{
+        enum Action {
 			Push,
 			Pop,
 			Clear,
 		};
 
+        typedef std::pair<Estats::ID, std::string> InfoEstat;
 
-	public:		
-		explicit			StateStack(State::Context context);
+        explicit PilaEstats(Estat::Context context);
 
-		template <typename T>
-		void				registerState(States::ID stateID);
+        template <typename T, typename... Args>
+        void registerState(Estats::ID IDestat, Args args);
 
-		void				update(sf::Time dt);
-		void				draw();
-		void				handleEvent(const sf::Event& event);
+        void update(sf::Time dt);
+        void draw();
+        void handleEvent(const sf::Event& event);
 
-		void				pushState(States::ID stateID);
-		void				popState();
-		void				clearStates();
+        void nextState();
+        void pushState(Estats::ID IDestat, std::string file = "");
+        void popState();
+        void clearStates();
 
-		bool				isEmpty() const;
-
-
-	private:
-		State::Ptr			createState(States::ID stateID);
-		void				applyPendingChanges();
-
+        bool isEmpty() const;
 
 	private:
-		struct PendingChange
-		{
-			explicit			PendingChange(Action action, States::ID stateID = States::None);
+        InfoEstat readNextState();
 
-			Action				action;
-			States::ID			stateID;
+        Estat::Ptr createState(Estats::ID IDestat);
+        void applyPendingChanges();
+
+        struct PendingChange {
+            explicit PendingChange(Action action, Estats::ID stateID = Estats::None, std::string file = "");
+
+            Action action;
+            Estats::ID stateID;
+            std::string file;
 		};
 
+        std::vector<Estat::Ptr>	mStack;
+        std::vector<PendingChange> mPendingList;
 
-	private:
-		std::vector<State::Ptr>								mStack;
-		std::vector<PendingChange>							mPendingList;
+        int skipLines; // Lector estats
 
-		State::Context										mContext;
-		std::map<States::ID, std::function<State::Ptr()>>	mFactories;
+        Estat::Context mContext;
+        std::map<Estats::ID, std::function<Estat::Ptr()>> mFactories;
 };
 
 
 template <typename T>
-void StateStack::registerState(States::ID stateID)
-{
-	mFactories[stateID] = [this] ()
-	{
-		return State::Ptr(new T(*this, mContext));
+void PilaEstats::registerState(Estats::ID IDestat) {
+    mFactories[IDestat] = [this] (std::string file="") {
+        if (file != "")
+            return Estat::Ptr(new T(*this, mContext, file));
+        else
+            return Estat::Ptr(new T(*this, mContext));
 	};
 }
 
-#endif // BOOK_STATESTACK_HPP
+#endif PILAESTATS_HPP

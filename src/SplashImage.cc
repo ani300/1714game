@@ -1,18 +1,11 @@
 /*********************************SplashImage.cpp***********************************/
 #include "SplashImage.h"
 
-//Constructor
-SplashImage::SplashImage(sf::RenderWindow *gaemWindow, sf::RenderTexture *gaemTexture) :
-    Estat(gaemWindow, gaemTexture) {
-}
-
-//Constructor with name of the image it want's to display
-SplashImage::SplashImage(sf::RenderWindow *gaemWindow, sf::RenderTexture *gaemTexture, std::string document):
-    Estat(gaemWindow, gaemTexture) {
+SplashImage::SplashImage(PilaEstats& stack, Context context, std::string doc)
+: Estat(stack, context) {
     std::stringstream s;
     DrawableObject* splashImage = new DrawableObject(*gaemTexture);
 
-    mFont.loadFromFile("res/media/Sansation.otf");
     s << "res/documents/" << document << std::endl;
     getline(s, str);
     std::string tex;
@@ -28,7 +21,7 @@ SplashImage::SplashImage(sf::RenderWindow *gaemWindow, sf::RenderTexture *gaemTe
 
     splashImage->loadTexture(tex.c_str());
     splashImage->setTextureToSprite();
-    
+
     //centrar la pantalla i escalar la imatge
     sf::Texture texture = splashImage->getTexture();
     float esc = float(gameSize.x)/float(texture.getSize().x);
@@ -57,10 +50,10 @@ SplashImage::SplashImage(sf::RenderWindow *gaemWindow, sf::RenderTexture *gaemTe
             //set text, font and size to escriptura
             std::cout << text << std::endl;
             escriptura.setString(sf::String(utf8_to_utf16(text)));
-			escriptura.setFont(mFont);
-			escriptura.setCharacterSize(50);
-			escriptura.setColor(sf::Color::Red);
-			textos.push_back(escriptura);
+            escriptura.setFont(mFont);
+            escriptura.setCharacterSize(50);
+            escriptura.setColor(sf::Color::Red);
+            textos.push_back(escriptura);
     }
 
     // define a 120x50 rectangle
@@ -68,8 +61,36 @@ SplashImage::SplashImage(sf::RenderWindow *gaemWindow, sf::RenderTexture *gaemTe
 
     // change the size to 100x100
     fletxaRect.setPosition(sf::Vector2f(1620, 930));
-
 }
+
+void SplashImage::draw()
+{
+    mWorld.draw();
+}
+
+bool SplashImage::update(sf::Time dt)
+{
+    mWorld.update(dt);
+
+    CommandQueue& commands = mWorld.getCommandQueue();
+    mPlayer.handleRealtimeInput(commands);
+
+    return true;
+}
+
+bool SplashImage::handleEvent(const sf::Event& event)
+{
+    // Game input handling
+    CommandQueue& commands = mWorld.getCommandQueue();
+    mPlayer.handleEvent(event, commands);
+
+    // Escape pressed, trigger the pause screen
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+        requestStackPush(States::Pause);
+
+    return true;
+}
+
 
 //Destructor
 SplashImage::~SplashImage(){
@@ -170,3 +191,4 @@ std::wstring SplashImage::utf8_to_utf16(const std::string& utf8) {
     }
     return utf16;
 }
+

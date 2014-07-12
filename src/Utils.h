@@ -1,11 +1,17 @@
 #ifndef AUX
 #define AUX
 
+#include <map>
 #include <cstdio>
 #include <string>
+#include <memory>
+#include <vector>
+#include <cassert>
+#include <utility>
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <functional>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>

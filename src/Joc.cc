@@ -8,7 +8,7 @@
 #include "MinigaemFitIt.h"
 #include "Fight.h"
 
-const sf::Time Application::TimePerFrame = sf::seconds(1.f/60.f);
+const sf::Time Joc::TimePerFrame = sf::seconds(1.f/60.f);
 
 //Constructor
 //Joc::Joc() : window(sf::VideoMode::getDesktopMode(), L"1714: La resistència de l'Història"
@@ -18,7 +18,10 @@ Joc::Joc() :
 , mRenderTexture()
 , mTextures()
 , mFonts()
-, mPilaEstats(Estat::Context(mRenderTexture, mTextures, mFonts))
+, mWindowSize(mWindow.getSize())
+, mEscala(sf::Vector2f(float(mWindowSize.x)/float(mRenderTexture.getSize().x),
+                       9.0/16.0*float(mWindowSize.x)/float(mRenderTexture.getSize().x)))
+, mPilaEstats(Estat::Context(mRenderTexture, mTextures, mFonts, mEscala))
 , mStatisticsText()
 , mStatisticsUpdateTime()
 , mStatisticsNumFrames(0){
@@ -33,145 +36,95 @@ Joc::Joc() :
     mStatisticsText.setPosition(5.f, 5.f);
     mStatisticsText.setCharacterSize(10u);
 
-    mPilaEstats.pushState(Estats::SplashScreen);
-}
+    mWindow.setVerticalSyncEnabled(true);
 
-void Joc::processEvents() {
-	sf::Event event;
-	while(window.pollEvent(event)) {
-		switch(event.type) {
-			case sf::Event::KeyPressed:
-                estat->handlePlayerInput(event.key.code,true);
-				break;
-			case sf::Event::KeyReleased:
-                estat->handlePlayerInput(event.key.code,false);
-				break;
-            case sf::Event::MouseButtonPressed: {
-                mouseButtons mouseBut;
-                sf::Vector2f mouseClick;
-				if (event.mouseButton.button == sf::Mouse::Left) mouseBut = mouse_left;
-				else if (event.mouseButton.button == sf::Mouse::Right) mouseBut = mouse_right;
-				mouseClick.x = event.mouseButton.x;
-				mouseClick.y = event.mouseButton.y;
-                estat->handlePlayerMouse(mouseBut, mouseClick);
-                break;
-            }
-			case sf::Event::Closed:
-				window.close();
-				break;
-		}
-	}
-}
+    registerStates();
 
-/*void Joc::update(sf::Time elapsedTime) {
-	for(int i = 0; i < drawableObjects.size(); ++i){
-
-		if(dir != dir_none) { //THERE IS MOVEMENT	
-			sf::Vector2f movement(0.f,0.f);
-			movement.x = dirx[dir] * elapsedTime.asSeconds();
-			movement.y = diry[dir] * elapsedTime.asSeconds();
-			drawableObjects[i]->move(movement);
-			dir = dir_none;
-		}
-		if(mouseBut != mouse_none){
-			// Corregir la posició del mouse
-			sf::Vector2f mouseBo;
-			mouseBo.x = mouseClick.x * 1.0/escala.x;
-			mouseBo.y = mouseClick.y * 1.0/escala.y;
-			drawableObjects[i]->click(mouseBut, mouseBo);
-			mouseBut = mouse_none;
-		}
-	}
-}*/
-
-void Joc::readNextState(int& skipLines){
-    std::string doc;
-    std::ifstream infile;
-    infile.open("res/documents/Joc.txt");
-    if(!infile.is_open()) std::cerr << "res/document/Joc.txt" << " no obert " << std::endl;
-
-    for(int i = 0; i < skipLines; ++i) std::getline(infile,doc); // Saves the line in STRING.
-	std::getline(infile,doc);
-    //% means this line is a comment
-	while(doc[0] == '%') {
-		std::getline(infile,doc);
-		++skipLines;
-	}
-
-
-    switch(doc[0]){
-        case 'S': {
-            delete estat;
-            estat = new SplashImage(&window, &rTexture, doc);
-            ++skipLines;
-            break;
-        }
-        case 'M': {
-std::cerr << "minigameFitIt actiu" << std::endl;
-            delete estat;
-            estat = new MinigaemFitIt(&window, &rTexture);
-            ++skipLines;
-            break;
-        }
-        case 'N':
-            /*//s'ha de incloure el Minigaem1.h
-            Minigaem1 minigame;
-            minigame.play();
-            delete estat;
-            estat = new Minigaem1();
-            */
-			break;
-        case 'W':
-            /*
-            //buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
-
-            drawableObjects.push_back();
-            */
-            break;
-		default:
-			break;
-	}
-	infile.close();
+    mPilaEstats.nextState();
 }
 
 int Joc::play() {
-	
-	sf::Clock clock;
-	sf::Time timeSinceLastUpdate = sf::Time::Zero;
-	
-	int skipLines = 0;
-	readNextState(skipLines);
-	
-	window.setVerticalSyncEnabled(true);
-	
-	while(window.isOpen()) {
-//std::cerr << "game loop" << std::endl;
-		std::ifstream estatFile;
-		estatFile.open("res/documents/Status.txt");
-		std::string stat;
-		getline(estatFile, stat);
-		if(stat == "OK") {
-			//delete OK from estatFile
-            if( remove( "res/documents/Status.txt" ) != 0 ){
-                std::cout <<  "Error deleting file" << std::endl;
-                std::ofstream outfile;
-                outfile.open("res/documents/Status.txt");
-                if(!outfile.is_open()) std::cerr << "res/documents/Status.txt" << " no obert " << std::endl;
-                outfile.close();
-            }
-			readNextState(skipLines);
-		}
-        estatFile.close();
-		processEvents();
-		timeSinceLastUpdate += clock.restart();
 
-		while(timeSinceLastUpdate > TimePerFrame) {
-			processEvents();
-            estat->update(timeSinceLastUpdate);
-            timeSinceLastUpdate = sf::seconds(0.0);
-		}
-        estat->render();
-        estat->paint(); // AMAZING
-	}
-	return EXIT_SUCCESS;
+    sf::Clock clock;
+    sf::Time timeSinceLastUpdate = sf::Time::Zero;
+
+
+
+    while (mWindow.isOpen()) {
+        sf::Time dt = clock.restart();
+        timeSinceLastUpdate += dt;
+        while (timeSinceLastUpdate > TimePerFrame)
+        {
+            timeSinceLastUpdate -= TimePerFrame;
+
+            processEvents();
+            update(TimePerFrame);
+
+            // Check inside this loop, because stack might be empty before update() call
+            if (mPilaEstats.isEmpty())
+                mWindow.close();
+        }
+
+        updateStatistics(dt);
+        render();
+    }
+
+    return EXIT_SUCCESS;
 }
+
+void Joc::processEvents() {
+    sf::Event event;
+    while (mWindow.pollEvent(event))
+    {
+        mPilaEstats.handleEvent(event);
+
+        if (event.type == sf::Event::Closed)
+            mWindow.close();
+    }
+}
+
+void Joc::update(sf::Time dt) {
+    mPilaEstats.update(dt);
+}
+
+void Joc::render() {
+    mRenderTexture.clear();
+
+    mPilaEstats.draw();
+
+    mRenderTexture.display();
+
+    // Now we start rendering to the window, clear it first
+    mWindow.clear();
+    mWindow.setView(mWindow.getDefaultView());
+    // Draw the texture
+    sf::Sprite sprite(rTexture.getTexture());
+    // Llegeix mida de la finestra (x, y)
+    mWindowSize = mWindow.getSize();
+    sprite.setScale(1.0, 1.0);
+    mEscala = sf::Vector2f(float(windowSize.x)/float(mRenderTexture.getSize().x), 9.0/16.0*float(windowSize.x)/float(mRenderTexture.getSize().x)); // 16:9 aspect ratio
+    sprite.setScale(mEscala);
+    mWindow.draw(sprite);
+    mWindow.draw(mStatisticsText);
+    // End the current frame and display its contents on screen
+    mWindow.display();
+
+}
+
+void Joc::updateStatistics(sf::Time dt) {
+    mStatisticsUpdateTime += dt;
+    mStatisticsNumFrames += 1;
+    if (mStatisticsUpdateTime >= sf::seconds(1.0f))
+    {
+        mStatisticsText.setString("FPS: " + toString(mStatisticsNumFrames));
+
+        mStatisticsUpdateTime -= sf::seconds(1.0f);
+        mStatisticsNumFrames = 0;
+    }
+}
+
+void Joc::registerStates() {
+    mPilaEstats.registerState<SplashImage>(Estats::SplashScreen);
+    mPilaEstats.registerState<MinigaemFitIt>(Estats::MinigaemFitIt);
+}
+

@@ -1,0 +1,136 @@
+#include "PilaEstats.h"
+
+PilaEstats::PilaEstats(Estat::Context context)
+: mStack()
+, mPendingList()
+, mContext(context)
+, mFactories()
+, skipLines(0) {
+}
+
+void PilaEstats::update(sf::Time dt) {
+	// Iterate from top to bottom, stop as soon as update() returns false
+    for (auto itr = mStack.rbegin(); itr != mStack.rend(); ++itr) {
+		if (!(*itr)->update(dt))
+			break;
+	}
+
+	applyPendingChanges();
+}
+
+void PilaEstats::draw() {
+	// Draw all active states from bottom to top
+    for(Estat::Ptr& estat : mStack) {
+        estat->draw();
+    }
+}
+
+void PilaEstats::handleEvent(const sf::Event& event) {
+	// Iterate from top to bottom, stop as soon as handleEvent() returns false
+    for (auto itr = mStack.rbegin(); itr != mStack.rend(); ++itr) {
+		if (!(*itr)->handleEvent(event))
+			break;
+	}
+
+	applyPendingChanges();
+}
+
+void PilaEstats::nextState() {
+    InfoEstat next = readNextState();
+    mPendingList.push_back(PendingChange(Push, next.first, next.second));
+}
+
+void PilaEstats::pushState(States::ID stateID, std::string file="") {
+    mPendingList.push_back(PendingChange(Push, stateID, file));
+}
+
+void PilaEstats::popState() {
+	mPendingList.push_back(PendingChange(Pop));
+}
+
+void PilaEstats::clearStates() {
+	mPendingList.push_back(PendingChange(Clear));
+}
+
+bool PilaEstats::isEmpty() const {
+	return mStack.empty();
+}
+
+State::Ptr PilaEstats::createState(Estats::ID IDestat, std::string file="") {
+    auto found = mFactories.find(IDestat);
+	assert(found != mFactories.end());
+
+    return found->second(file);
+}
+
+void PilaEstats::applyPendingChanges() {
+    for (PendingChange change : mPendingList) {
+        switch (change.action) {
+            case Push:
+                mStack.push_back(createState(change.stateID, change.file));
+                break;
+
+            case Pop:
+                mStack.pop_back();
+                break;
+
+            case Clear:
+                mStack.clear();
+                break;
+        }
+    }
+
+	mPendingList.clear();
+}
+
+PilaEstats::PendingChange::PendingChange(Action action, States::ID stateID, std::string file="")
+: action(action)
+, stateID(stateID)
+, file(file) {
+}
+
+
+PilaEstats::InfoEstat PilaEstats::readNextState() {
+    std::string doc;
+    std::ifstream infile;
+    infile.open("res/documents/Joc.txt");
+    if(!infile.is_open()) std::cerr << "res/document/Joc.txt" << " no obert " << std::endl;
+
+    for(int i = 0; i < skipLines; ++i) std::getline(infile,doc); // Saves the line in STRING.
+    std::getline(infile,doc);
+    //% means this line is a comment
+    while(doc[0] == '%') {
+        std::getline(infile,doc);
+        ++skipLines;
+    }
+
+    switch(doc[0]){
+        case 'S': {
+            ++skipLines;
+            return InfoEstat(Estats::SplashScreen, doc);
+        }
+        case 'M': {
+std::cerr << "minigameFitIt actiu" << std::endl;
+            ++skipLines;
+            return InfoEstat(Estats::MinigaemFitIt, doc);
+        }
+        case 'N':
+            /*//s'ha de incloure el Minigaem1.h
+            Minigaem1 minigame;
+            minigame.play();
+            delete estat;
+            estat = new Minigaem1();
+            */
+            break;
+        case 'W':
+            /*
+            //buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
+
+            drawableObjects.push_back();
+            */
+            break;
+        default:
+            break;
+    }
+    infile.close();
+}

@@ -5,9 +5,11 @@
 #include "ResourceHolder.h"
 #include "ResourceIdentifiers.h"
 #include "PilaEstats.h"
+#include "IdentificadorsEstat.h"
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
+
 
 class Joc {
 
@@ -21,8 +23,6 @@ class Joc {
 		void processEvents();
         void update(sf::Time dt);
         void render();
-
-		void readNextState(int& skipLines);
 		
         void updateStatistics(sf::Time dt);
         void registerStates();
@@ -34,6 +34,7 @@ class Joc {
         sf::RenderTexture mRenderTexture;
         TextureHolder mTextures;
         FontHolder mFonts;
+        sf::Vector2f mEscala;
 
         PilaEstats mPilaEstats;
 
