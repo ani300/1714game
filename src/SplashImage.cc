@@ -1,16 +1,23 @@
 /*********************************SplashImage.cpp***********************************/
 #include "SplashImage.h"
 
-SplashImage::SplashImage(PilaEstats& stack, Context context, std::string doc)
+SplashImage::SplashImage(PilaEstats& stack, Context context)
 : Estat(stack, context) {
+
+}
+
+SplashImage::SplashImage(PilaEstats& stack, Context context, std::string document)
+: Estat(stack, context) {
+
+    // CACA A ARREGLAR
     std::stringstream s;
-    DrawableObject* splashImage = new DrawableObject(*gaemTexture);
+    //DrawableObject* splashImage = new DrawableObject(*getContext().rTexture);
 
     s << "res/documents/" << document << std::endl;
     getline(s, str);
     std::string tex;
     std::ifstream infile;
-    infile.open (str);
+    infile.open(str);
 
     if(!infile.is_open()) std::cerr << "No puc obrir el document de l'Splash image" << std::endl;
 
@@ -19,7 +26,7 @@ SplashImage::SplashImage(PilaEstats& stack, Context context, std::string doc)
     std::stringstream t;
     t << "res/pictures/" << tex << std::endl;
 
-    splashImage->loadTexture(tex.c_str());
+    /*mOwnTextures.load(Textures::SplashImage::Fons, tex);
     splashImage->setTextureToSprite();
 
     //centrar la pantalla i escalar la imatge
@@ -28,7 +35,7 @@ SplashImage::SplashImage(PilaEstats& stack, Context context, std::string doc)
     splashImage->setScaleToSprite(sf::Vector2f(esc, esc));
     splashImage->setPosition(sf::Vector2f(0.0f, (gameSize.y-texture.getSize().y*esc)/2));
 
-    drawableObjects.push_back(splashImage);
+    drawableObjects.push_back(splashImage);*/
 
     //number of texts we want to write in this splash immage
     std::string num_text;
@@ -50,7 +57,7 @@ SplashImage::SplashImage(PilaEstats& stack, Context context, std::string doc)
             //set text, font and size to escriptura
             std::cout << text << std::endl;
             escriptura.setString(sf::String(utf8_to_utf16(text)));
-            escriptura.setFont(mFont);
+            escriptura.setFont(getContext().fonts->get(Fonts::AlluraRegular));
             escriptura.setCharacterSize(50);
             escriptura.setColor(sf::Color::Red);
             textos.push_back(escriptura);
@@ -63,17 +70,31 @@ SplashImage::SplashImage(PilaEstats& stack, Context context, std::string doc)
     fletxaRect.setPosition(sf::Vector2f(1620, 930));
 }
 
-void SplashImage::draw()
-{
-    mWorld.draw();
+void SplashImage::draw() {
+    // Print texts
+    //set text values
+    for(int i = 0; i < textos.size(); ++i)	textos[i].setPosition(positions[i]);
+    //draw drawable things
+    for(int i = 0; i < textos.size(); ++i)  getContext().rTexture->draw(textos[i]);
+    getContext().rTexture->draw(fletxaRect);
+    //mWorld.draw();
 }
 
-bool SplashImage::update(sf::Time dt)
-{
-    mWorld.update(dt);
+bool SplashImage::update(sf::Time dt) {
+    // Arreglar input
+    /*if (mouseBut == mouse_left) {
+        sf::Vector2f mouseBo;
+        mouseBo.x = mouseClick.x * 1.0/getContext().escala.x;
+        mouseBo.y = mouseClick.y * 1.0/getContext().escala.y;
+        if (mouseBo.x > 1620 and mouseBo.y > 930) {
+            requestNextState(); // Aquí és on es canvia al següent estat
+        }
+        mouseBut = mouse_none;
+    }*/
+    //mWorld.update(dt);
 
-    CommandQueue& commands = mWorld.getCommandQueue();
-    mPlayer.handleRealtimeInput(commands);
+    //CommandQueue& commands = mWorld.getCommandQueue();
+    //mPlayer.handleRealtimeInput(commands);
 
     return true;
 }
@@ -81,55 +102,14 @@ bool SplashImage::update(sf::Time dt)
 bool SplashImage::handleEvent(const sf::Event& event)
 {
     // Game input handling
-    CommandQueue& commands = mWorld.getCommandQueue();
-    mPlayer.handleEvent(event, commands);
+    //CommandQueue& commands = mWorld.getCommandQueue();
+    //mPlayer.handleEvent(event, commands);
 
     // Escape pressed, trigger the pause screen
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-        requestStackPush(States::Pause);
+    //if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+    //    requestStackPush(States::Pause);
 
     return true;
-}
-
-
-//Destructor
-SplashImage::~SplashImage(){
-}
-
-void SplashImage::render() {
-    Estat::render();
-
-    // Print texts
-    //set text values
-    for(int i = 0; i < textos.size(); ++i)	textos[i].setPosition(positions[i]);
-    //draw drawable things
-    for(int i = 0; i < textos.size(); ++i) rTexture->draw(textos[i]);
-    rTexture->draw(fletxaRect);
-
-    /*//set sprite values
-    sprite.setTexture(texture);
-    sprite.setPosition(position.x, position.y);*/
-}
-
-void SplashImage::update(sf::Time elapsedTime) {
-    if (mouseBut == mouse_left) {
-        sf::Vector2f mouseBo;
-        mouseBo.x = mouseClick.x * 1.0/escala.x;
-        mouseBo.y = mouseClick.y * 1.0/escala.y;
-        if (mouseBo.x > 1620 and mouseBo.y > 930) {
-            std::ofstream outfile;
-            outfile.open("res/documents/Status.txt");
-            if(!outfile.is_open()) std::cerr << "res/documents/Status.txt" << " no obert " << std::endl;
-            outfile << "OK" << std::endl;
-            outfile.close();
-        }
-        mouseBut = mouse_none;
-    }
-}
-
-void SplashImage::handlePlayerMouse(mouseButtons mouseButton, sf::Vector2f mouseClick) {
-    this->mouseBut = mouseButton;
-    this->mouseClick = mouseClick;
 }
 
 std::wstring SplashImage::utf8_to_utf16(const std::string& utf8) {

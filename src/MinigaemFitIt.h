@@ -1,7 +1,7 @@
 /******************************MinigaemFitIt.h**********************************/
 #ifndef MFI
 #define MFI
-
+/*
 #include "Utils.h"
 #include "Estat.h"
 #include "Player.h"
@@ -43,6 +43,6 @@ class MinigaemFitIt: public Estat {
         mouseButtons mouseBut;
         sf::Vector2f mouseClick;
         */
-};
+/*};*/
 
 #endif

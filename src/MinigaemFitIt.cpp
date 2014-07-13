@@ -2,7 +2,7 @@
 #include "MinigaemFitIt.h"
 
 //Constructor
-MinigaemFitIt::MinigaemFitIt(sf::RenderWindow *gaemWindow, sf::RenderTexture *gaemTexture):  
+/*MinigaemFitIt::MinigaemFitIt(sf::RenderWindow *gaemWindow, sf::RenderTexture *gaemTexture):
     Estat(gaemWindow, gaemTexture), player(*gaemTexture), background(*gaemTexture){
         
     if(!font.loadFromFile("res/media/Sansation.otf")) std::cout << "not able to load font sansation.otf" << std::endl;
@@ -141,7 +141,7 @@ void MinigaemFitIt::render(){
     for(int i = 0; i < boxes.size(); ++i){
         drawableObjects.push_back(&boxes[i]);
     }*/
-    Estat::render();
+    /*Estat::render();
     rTexture->draw(text);
 
 }
@@ -158,5 +158,4 @@ void MinigaemFitIt::render(){
         mouseButtons mouseBut;
         sf::Vector2f mouseClick;
         */
-        
-        
+

@@ -5,8 +5,8 @@
 #include "IdentificadorsEstat.h"
 #include "SplashImage.h"
 #include "Minigaem1.h"
-#include "MinigaemFitIt.h"
-#include "Fight.h"
+//#include "MinigaemFitIt.h"
+//#include "Fight.h"
 
 const sf::Time Joc::TimePerFrame = sf::seconds(1.f/60.f);
 
@@ -98,11 +98,11 @@ void Joc::render() {
     mWindow.clear();
     mWindow.setView(mWindow.getDefaultView());
     // Draw the texture
-    sf::Sprite sprite(rTexture.getTexture());
+    sf::Sprite sprite(mRenderTexture.getTexture());
     // Llegeix mida de la finestra (x, y)
     mWindowSize = mWindow.getSize();
     sprite.setScale(1.0, 1.0);
-    mEscala = sf::Vector2f(float(windowSize.x)/float(mRenderTexture.getSize().x), 9.0/16.0*float(windowSize.x)/float(mRenderTexture.getSize().x)); // 16:9 aspect ratio
+    mEscala = sf::Vector2f(float(mWindowSize.x)/float(mRenderTexture.getSize().x), 9.0/16.0*float(mWindowSize.x)/float(mRenderTexture.getSize().x)); // 16:9 aspect ratio
     sprite.setScale(mEscala);
     mWindow.draw(sprite);
     mWindow.draw(mStatisticsText);
@@ -116,7 +116,7 @@ void Joc::updateStatistics(sf::Time dt) {
     mStatisticsNumFrames += 1;
     if (mStatisticsUpdateTime >= sf::seconds(1.0f))
     {
-        mStatisticsText.setString("FPS: " + toString(mStatisticsNumFrames));
+        mStatisticsText.setString("FPS: " + std::to_string(mStatisticsNumFrames));
 
         mStatisticsUpdateTime -= sf::seconds(1.0f);
         mStatisticsNumFrames = 0;
@@ -125,6 +125,6 @@ void Joc::updateStatistics(sf::Time dt) {
 
 void Joc::registerStates() {
     mPilaEstats.registerState<SplashImage>(Estats::SplashScreen);
-    mPilaEstats.registerState<MinigaemFitIt>(Estats::MinigaemFitIt);
+    //mPilaEstats.registerState<MinigaemFitIt>(Estats::MinigaemFitIt);
 }
 

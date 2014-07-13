@@ -3,17 +3,18 @@
 #ifndef SPLASHIMAGE
 #define SPLASHIMAGE
 
-#include <vector>
 #include "Utils.h"
 #include "Estat.h"
-#include <stdexcept>
 #include "DrawableObject.h"
+#include "ResourceHolder.h"
+#include "ResourceIdentifiers.h"
 
 class SplashImage: public Estat {
 
 	public:
 		//Constructor with name of the image it want's to display
-        SplashImage(sf::RenderWindow *gaemWindow, sf::RenderTexture *gaemTexture, std::string document);
+        SplashImage(PilaEstats& stack, Context context);
+        SplashImage(PilaEstats& stack, Context context, std::string document);
 
         virtual void draw();
         virtual bool update(sf::Time dt);
@@ -21,15 +22,16 @@ class SplashImage: public Estat {
 
 	private:
         void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
+        std::wstring utf8_to_utf16(const std::string& utf8);
 
-	    sf::Font mFont;
+        TextureHolder mOwnTextures;
         std::string str;
 		sf::Text escriptura;
 		sf::Vector2f textPosition;
 		std::vector<sf::Text> textos;
 		sf::RectangleShape fletxaRect;
 		std::vector<sf::Vector2f> positions;
-        std::wstring utf8_to_utf16(const std::string& utf8);
+
 
 };
 

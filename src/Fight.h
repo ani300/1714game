@@ -1,4 +1,4 @@
-#ifndef FIGHT_H
+/*#ifndef FIGHT_H
 #define FIGHT_H
 
 #include "Utils.h"
@@ -17,3 +17,4 @@ private:
 };
 
 #endif // FIGHT_H
+*/

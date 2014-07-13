@@ -18,6 +18,12 @@ namespace Textures
         Caixa,
         Fons1
 	};
+
+    namespace SplashImage {
+        enum ID {
+            Fons
+        };
+    }
 }
 
 namespace Fonts

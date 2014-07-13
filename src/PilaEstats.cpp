@@ -40,8 +40,8 @@ void PilaEstats::nextState() {
     mPendingList.push_back(PendingChange(Push, next.first, next.second));
 }
 
-void PilaEstats::pushState(States::ID stateID, std::string file="") {
-    mPendingList.push_back(PendingChange(Push, stateID, file));
+void PilaEstats::pushState(Estats::ID IDestat, std::string file="") {
+    mPendingList.push_back(PendingChange(Push, IDestat, file));
 }
 
 void PilaEstats::popState() {
@@ -56,7 +56,7 @@ bool PilaEstats::isEmpty() const {
 	return mStack.empty();
 }
 
-State::Ptr PilaEstats::createState(Estats::ID IDestat, std::string file="") {
+Estat::Ptr PilaEstats::createState(Estats::ID IDestat, std::string file="") {
     auto found = mFactories.find(IDestat);
 	assert(found != mFactories.end());
 
@@ -83,9 +83,9 @@ void PilaEstats::applyPendingChanges() {
 	mPendingList.clear();
 }
 
-PilaEstats::PendingChange::PendingChange(Action action, States::ID stateID, std::string file="")
+PilaEstats::PendingChange::PendingChange(Action action, Estats::ID IDestat, std::string file)
 : action(action)
-, stateID(stateID)
+, stateID(IDestat)
 , file(file) {
 }
 

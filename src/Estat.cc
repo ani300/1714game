@@ -20,7 +20,7 @@ void Estat::requestNextState() {
     mPila->nextState();
 }
 
-void Estat::requestStackPush(Estats::ID IDEstat, std::string file="") {
+void Estat::requestStackPush(Estats::ID IDEstat, std::string file) {
     mPila->pushState(IDEstat, file);
 }
 

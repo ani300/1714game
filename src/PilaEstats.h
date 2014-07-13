@@ -18,15 +18,15 @@ class PilaEstats : private sf::NonCopyable {
 
         explicit PilaEstats(Estat::Context context);
 
-        template <typename T, typename... Args>
-        void registerState(Estats::ID IDestat, Args args);
+        template <typename T>
+        void registerState(Estats::ID IDestat);
 
         void update(sf::Time dt);
         void draw();
         void handleEvent(const sf::Event& event);
 
         void nextState();
-        void pushState(Estats::ID IDestat, std::string file = "");
+        void pushState(Estats::ID IDestat, std::string file);
         void popState();
         void clearStates();
 
@@ -35,11 +35,11 @@ class PilaEstats : private sf::NonCopyable {
 	private:
         InfoEstat readNextState();
 
-        Estat::Ptr createState(Estats::ID IDestat);
+        Estat::Ptr createState(Estats::ID IDestat, std::string file);
         void applyPendingChanges();
 
         struct PendingChange {
-            explicit PendingChange(Action action, Estats::ID stateID = Estats::None, std::string file = "");
+            explicit PendingChange(Action action, Estats::ID stateID = Estats::None, std::string file = std::string());
 
             Action action;
             Estats::ID stateID;
@@ -52,13 +52,13 @@ class PilaEstats : private sf::NonCopyable {
         int skipLines; // Lector estats
 
         Estat::Context mContext;
-        std::map<Estats::ID, std::function<Estat::Ptr()>> mFactories;
+        std::map<Estats::ID, std::function<Estat::Ptr(std::string&)>> mFactories;
 };
 
 
 template <typename T>
 void PilaEstats::registerState(Estats::ID IDestat) {
-    mFactories[IDestat] = [this] (std::string file="") {
+    mFactories[IDestat] = [this] (std::string& file) {
         if (file != "")
             return Estat::Ptr(new T(*this, mContext, file));
         else
@@ -66,4 +66,4 @@ void PilaEstats::registerState(Estats::ID IDestat) {
 	};
 }
 
-#endif PILAESTATS_HPP
+#endif //PILAESTATS_HPP
