@@ -5,6 +5,9 @@
 
 #include "Utils.h"
 #include "Estat.h"
+#include "SceneNode.hpp"
+#include "TextNode.hpp"
+#include "SpriteNode.hpp"
 #include "DrawableObject.h"
 #include "ResourceHolder.h"
 #include "ResourceIdentifiers.h"
@@ -16,23 +19,26 @@ class SplashImage: public Estat {
         SplashImage(PilaEstats& stack, Context context);
         SplashImage(PilaEstats& stack, Context context, std::string document);
 
-        virtual void draw();
-        virtual bool update(sf::Time dt);
-        virtual bool handleEvent(const sf::Event& event);
+        void draw();
+        bool update(sf::Time dt);
+        bool handleEvent(const sf::Event& event);
 
 	private:
         void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
-        std::wstring utf8_to_utf16(const std::string& utf8);
 
-        TextureHolder mOwnTextures;
+        enum Layer {
+			Background,
+			Text,
+			LayerCount
+		};
+
+        ResourceHolder<sf::Texture, Textures::SplashImage::ID> mOwnTextures;
+
+		SceneNode mSceneGraph;
+		std::array<SceneNode*, LayerCount> mSceneLayers;
+
         std::string str;
-		sf::Text escriptura;
-		sf::Vector2f textPosition;
-		std::vector<sf::Text> textos;
 		sf::RectangleShape fletxaRect;
-		std::vector<sf::Vector2f> positions;
-
-
 };
 
 

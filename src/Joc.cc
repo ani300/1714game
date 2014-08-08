@@ -13,7 +13,7 @@ const sf::Time Joc::TimePerFrame = sf::seconds(1.f/60.f);
 //Constructor
 //Joc::Joc() : window(sf::VideoMode::getDesktopMode(), L"1714: La resistència de l'Història"
 Joc::Joc() :
-  mWindow(sf::VideoMode(1000,500), L"1714: La resistència de l'Història"
+  mWindow(sf::VideoMode(sf::VideoMode::getDesktopMode()), L"1714: La resistència de l'Història"
     , sf::Style::Titlebar | sf::Style::Close)
 , mRenderTexture()
 , mTextures()
@@ -102,8 +102,10 @@ void Joc::render() {
     // Llegeix mida de la finestra (x, y)
     mWindowSize = mWindow.getSize();
     sprite.setScale(1.0, 1.0);
-    mEscala = sf::Vector2f(float(mWindowSize.x)/float(mRenderTexture.getSize().x), 9.0/16.0*float(mWindowSize.x)/float(mRenderTexture.getSize().x)); // 16:9 aspect ratio
-    sprite.setScale(mEscala);
+    sprite.setPosition(0.0, 0.0);
+    mEscala = sf::Vector2f(float(mWindowSize.x)/float(mRenderTexture.getSize().x), 9.0/16.0*float(mWindowSize.x)/float(mRenderTexture.getSize().x)); // 16:9 aspect
+    std::cout << mEscala.x << " " << mEscala.y << std::endl;
+    //sprite.setScale(mEscala);
     mWindow.draw(sprite);
     mWindow.draw(mStatisticsText);
     // End the current frame and display its contents on screen

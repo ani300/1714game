@@ -9,9 +9,7 @@ SplashImage::SplashImage(PilaEstats& stack, Context context)
 SplashImage::SplashImage(PilaEstats& stack, Context context, std::string document)
 : Estat(stack, context) {
 
-    // CACA A ARREGLAR
     std::stringstream s;
-    //DrawableObject* splashImage = new DrawableObject(*getContext().rTexture);
 
     s << "res/documents/" << document << std::endl;
     getline(s, str);
@@ -19,48 +17,61 @@ SplashImage::SplashImage(PilaEstats& stack, Context context, std::string documen
     std::ifstream infile;
     infile.open(str);
 
-    if(!infile.is_open()) std::cerr << "No puc obrir el document de l'Splash image" << std::endl;
+    if(!infile.is_open()) std::cerr << "No puc obrir el document de l'SplashImage" << std::endl;
 
     getline(infile, tex);
     while(tex[0] == '%') getline(infile, tex);
     std::stringstream t;
-    t << "res/pictures/" << tex << std::endl;
+    t << "res/pictures/" << tex << ".png";
 
-    /*mOwnTextures.load(Textures::SplashImage::Fons, tex);
-    splashImage->setTextureToSprite();
+    // CARREGA TEXTURES EXTRA
+    mOwnTextures.load(Textures::SplashImage::Fons, t.str());
+
+    // CREACIÓ ESCENA
+    // Inicialitza les dues capes
+    for (std::size_t i = 0; i < LayerCount; ++i) {
+        SceneNode::Ptr layer(new SceneNode());
+        mSceneLayers[i] = layer.get();
+
+        mSceneGraph.attachChild(std::move(layer));
+    }
+
+    // Prepara el fons de pantalla i la font
+    sf::Texture& texture = mOwnTextures.get(Textures::SplashImage::Fons);
+    sf::Font& font = getContext().fonts->get(Fonts::AlluraRegular);
+
+    // Add the background sprite to the scene
+    std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(texture));
 
     //centrar la pantalla i escalar la imatge
-    sf::Texture texture = splashImage->getTexture();
     float esc = float(gameSize.x)/float(texture.getSize().x);
-    splashImage->setScaleToSprite(sf::Vector2f(esc, esc));
-    splashImage->setPosition(sf::Vector2f(0.0f, (gameSize.y-texture.getSize().y*esc)/2));
+    backgroundSprite->setScale(sf::Vector2f(esc, esc));
+    backgroundSprite->setPosition(sf::Vector2f(0.0f, (gameSize.y-texture.getSize().y*esc)/2));
+    mSceneLayers[Background]->attachChild(std::move(backgroundSprite));
 
-    drawableObjects.push_back(splashImage);*/
-
-    //number of texts we want to write in this splash immage
+    // Afegeix els textos
     std::string num_text;
     getline(infile, num_text); while(num_text[0] == '%') getline(infile, num_text);
     int numText = atoi(num_text.c_str());
 
     for(int i = 0; i < numText; ++i){
-            std::string text, textPosX, textPosY;
-            //read the text that will be displayed (and read again if there is a %)
-            getline(infile, text); while(text[0] == '%') getline(infile, text);
-            //read the X position of the text (and read again if there is a %)
-            getline(infile, textPosX); while(textPosX[0] == '%') getline(infile, textPosX);
-            //read the Y position of the text (and read again if there is a %)
-            getline(infile, textPosY); while(textPosY[0] == '%') getline(infile, textPosY);
-            //save the position that are on strings in a Vector2f
-            textPosition = sf::Vector2f((float)atoi(textPosX.c_str()),(float)atoi(textPosY.c_str()));
-            // s'ha de guardar aquesta posicio a un vector de posicions (moar pushbacks)
-            positions.push_back(textPosition);
-            //set text, font and size to escriptura
-            std::cout << text << std::endl;
-            escriptura.setString(sf::String(utf8_to_utf16(text)));
-            escriptura.setFont(getContext().fonts->get(Fonts::AlluraRegular));
-            escriptura.setCharacterSize(50);
-            escriptura.setColor(sf::Color::Red);
-            textos.push_back(escriptura);
+        std::string text, textPosX, textPosY;
+        //read the text that will be displayed (and read again if there is a %)
+        getline(infile, text); while(text[0] == '%') getline(infile, text);
+        //read the X position of the text (and read again if there is a %)
+        getline(infile, textPosX); while(textPosX[0] == '%') getline(infile, textPosX);
+        //read the Y position of the text (and read again if there is a %)
+        getline(infile, textPosY); while(textPosY[0] == '%') getline(infile, textPosY);
+        //save the position that are on strings in a Vector2f
+        sf::Vector2f textPosition = sf::Vector2f(float(atoi(textPosX.c_str())), float(atoi(textPosY.c_str())));
+
+        //set text, font and size to escriptura
+        std::cout << text << std::endl;
+        std::unique_ptr<TextNode> textNode(new TextNode(font, text));
+        textNode->setPosition(textPosition);
+        textNode->setCharacterSize(50);
+        textNode->setColor(sf::Color::Red);
+        mSceneLayers[Text]->attachChild(std::move(textNode));
     }
 
     // define a 120x50 rectangle
@@ -72,12 +83,8 @@ SplashImage::SplashImage(PilaEstats& stack, Context context, std::string documen
 
 void SplashImage::draw() {
     // Print texts
-    //set text values
-    for(int i = 0; i < textos.size(); ++i)	textos[i].setPosition(positions[i]);
-    //draw drawable things
-    for(int i = 0; i < textos.size(); ++i)  getContext().rTexture->draw(textos[i]);
+    getContext().rTexture->draw(mSceneGraph);
     getContext().rTexture->draw(fletxaRect);
-    //mWorld.draw();
 }
 
 bool SplashImage::update(sf::Time dt) {
@@ -111,64 +118,3 @@ bool SplashImage::handleEvent(const sf::Event& event)
 
     return true;
 }
-
-std::wstring SplashImage::utf8_to_utf16(const std::string& utf8) {
-    std::vector<unsigned long> unicode;
-    size_t i = 0;
-    while (i < utf8.size()) {
-        unsigned long uni;
-        size_t todo;
-        bool error = false;
-        unsigned char ch = utf8[i++];
-        if (ch <= 0x7F) {
-            uni = ch;
-            todo = 0;
-        }
-        else if (ch <= 0xBF) {
-            throw std::logic_error("not a UTF-8 string");
-        }
-        else if (ch <= 0xDF) {
-            uni = ch&0x1F;
-            todo = 1;
-        }
-        else if (ch <= 0xEF) {
-            uni = ch&0x0F;
-            todo = 2;
-        }
-        else if (ch <= 0xF7) {
-            uni = ch&0x07;
-            todo = 3;
-        }
-        else {
-            throw std::logic_error("not a UTF-8 string");
-        }
-        for (size_t j = 0; j < todo; ++j) {
-            if (i == utf8.size())
-                throw std::logic_error("not a UTF-8 string");
-            unsigned char ch = utf8[i++];
-            if (ch < 0x80 || ch > 0xBF)
-                throw std::logic_error("not a UTF-8 string");
-            uni <<= 6;
-            uni += ch & 0x3F;
-        }
-        if (uni >= 0xD800 && uni <= 0xDFFF)
-            throw std::logic_error("not a UTF-8 string");
-        if (uni > 0x10FFFF)
-            throw std::logic_error("not a UTF-8 string");
-        unicode.push_back(uni);
-    }
-    std::wstring utf16;
-    for (size_t i = 0; i < unicode.size(); ++i) {
-        unsigned long uni = unicode[i];
-        if (uni <= 0xFFFF) {
-            utf16 += (wchar_t)uni;
-        }
-        else {
-            uni -= 0x10000;
-            utf16 += (wchar_t)((uni >> 10) + 0xD800);
-            utf16 += (wchar_t)((uni & 0x3FF) + 0xDC00);
-        }
-    }
-    return utf16;
-}
-
