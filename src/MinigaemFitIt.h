@@ -1,44 +1,58 @@
 /******************************MinigaemFitIt.h**********************************/
 #ifndef MFI
 #define MFI
-/*
+
 #include "Utils.h"
 #include "Estat.h"
 #include "Player.h"
 #include "MovileObject.h"
-#include "DrawableObject.h"
+#include "ResourceHolder.h"
+#include "ResourceIdentifiers.h"
+#include "SceneNode.hpp"
+#include "SpriteNode.hpp"
+#include "TextNode.hpp"
+#include "Box.h"
 
 class MinigaemFitIt: public Estat {
 
     public:
         //Constructor
-        MinigaemFitIt(sf::RenderWindow *gaemWindow, sf::RenderTexture *gaemTexture);
+        MinigaemFitIt(PilaEstats& stack, Context context);
+        MinigaemFitIt(PilaEstats& stack, Context context, std::string document);
 
-        //Destructor
-        ~MinigaemFitIt();
-
-         void update(sf::Time elapsedTime);
-         void handlePlayerMouse(mouseButtons mouseBut, sf::Vector2f mouseClick);
-         void render();
+        void draw();
+        bool update(sf::Time dt);
+        bool handleEvent(const sf::Event& event);
 
     private:
+        enum Layer {
+            Background,
+            Boxes,
+            Text,
+            LayerCount
+        };
 
-        Player player;
-        DrawableObject background;
-        std::vector<MovileObject> boxes;
-        std::vector<int> goodBoxes;
-        sf::Vector2i good_bad;
-        sf::Text text;
-        sf::Font font;
+        TextureHolder mOwnTextures;
+        ResourceHolder<sf::Texture, int> mBoxTextures;
+
+        SceneNode mSceneGraph;
+        std::array<SceneNode*, LayerCount> mSceneLayers;
+
+        Player* mPlayer;
+        TextNode* mText;
+        sf::Vector2i mGood_bad;
+        std::vector<Box*> mBoxes;
+        std::vector<int> mGoodBoxes;
+
+    private:
+        void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
+
+        
+
+};
         
     //heredats de Estat
         /*
-        sf::RenderWindow* rWindow;
-        sf::RenderTexture* rTexture;
-        sf::Vector2u windowSize;
-
-        sf::Vector2f escala;
-        std::vector<DrawableObject*> drawableObjects;
         directions dir;
         mouseButtons mouseBut;
         sf::Vector2f mouseClick;

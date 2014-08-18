@@ -13,17 +13,17 @@
 
 class Joc {
 
-	public:
-		Joc();
+    public:
+        Joc();
 
-		int play();
+        int play();
 
-	private:
-		
-		void processEvents();
+    private:
+        
+        void processEvents();
         void update(sf::Time dt);
         void render();
-		
+        
         void updateStatistics(sf::Time dt);
         void registerStates();
 

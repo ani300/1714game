@@ -21,11 +21,9 @@ SplashImage::SplashImage(PilaEstats& stack, Context context, std::string documen
 
     getline(infile, tex);
     while(tex[0] == '%') getline(infile, tex);
-    std::stringstream t;
-    t << "res/pictures/" << tex << ".png";
 
     // CARREGA TEXTURES EXTRA
-    mOwnTextures.load(Textures::SplashImage::Fons, t.str());
+    mOwnTextures.load(Textures::SplashImage::Fons, Utils::getTexturePath(tex));
 
     // CREACIÓ ESCENA
     // Inicialitza les dues capes

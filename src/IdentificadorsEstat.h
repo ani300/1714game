@@ -2,11 +2,9 @@
 #define IDENTIFICADORS_ESTAT_H
 
 
-namespace Estats
-{
-	enum ID
-	{
-		None,
+namespace Estats {
+    enum ID {
+        None,
         Titol,
         Minigaem1,
         MinigaemFitIt,
@@ -14,7 +12,7 @@ namespace Estats
         SplashScreen,
         Pause,
         Loading
-	};
+    };
 }
 
 #endif // IDENTIFICADORS_ESTAT_H

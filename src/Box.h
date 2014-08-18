@@ -1,17 +1,17 @@
-/******************************player.h**********************************/
-#ifndef PLAYER
-#define PLAYER
+/******************************box.h**********************************/
+#ifndef BOX
+#define BOX
 
 #include "Utils.h"
 #include "MovileObject.h"
 #include "ResourceHolder.h"
 #include "ResourceIdentifiers.h"
 
-class Player: public MovileObject {
+class Box: public MovileObject {
 
     public:
         //Constructor
-        Player(const sf::Texture& texture);
+        Box(const sf::Texture& texture);
 
         sf::Vector2f getSize();
         void setSize(sf::Vector2u desiredSize);
@@ -25,8 +25,6 @@ class Player: public MovileObject {
         
         sf::Sprite mSprite;
         sf::Clock spriteTimmer;
-        sf::Vector2f spriteSize;
-        sf::Vector2f spriteSource;
 };
 
-#endif
+#endif // BOX

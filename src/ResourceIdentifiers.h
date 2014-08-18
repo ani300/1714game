@@ -16,7 +16,9 @@ namespace Textures
         Llibre,
         Player,
         Caixa,
-        Fons1
+        Fons1,
+        MFIFons,
+        MFIPlayer
 	};
 
     namespace SplashImage {

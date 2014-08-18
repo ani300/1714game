@@ -111,6 +111,21 @@ namespace Utils {
         sf::FloatRect bounds = text.getLocalBounds();
         text.setOrigin(std::floor(bounds.width / 2.f), std::floor(bounds.height / 2.f));
     }
+
+    inline std::string getTexturePath(const std::string& name) {
+        std::stringstream png, jpg;
+        png << "res/pictures/" << name << ".png";
+        jpg << "res/pictures/" << name << ".jpg";
+        ifstream f(png.str());
+        if (f.good()) {
+            f.close();
+            return png.str();
+        }
+        else {
+            f.close();
+            return jpg.str();
+        }   
+    }
 }
 
 #endif
