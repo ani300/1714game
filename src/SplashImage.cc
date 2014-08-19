@@ -24,6 +24,7 @@ SplashImage::SplashImage(PilaEstats& stack, Context context, std::string documen
 
     // CARREGA TEXTURES EXTRA
     mOwnTextures.load(Textures::SplashImage::Fons, Utils::getTexturePath(tex));
+    mOwnTextures.load(Textures::SplashImage::Fletxa, Utils::getTexturePath("putafletxa"));
 
     // CREACIÓ ESCENA
     // Inicialitza les dues capes
@@ -36,6 +37,7 @@ SplashImage::SplashImage(PilaEstats& stack, Context context, std::string documen
 
     // Prepara el fons de pantalla i la font
     sf::Texture& texture = mOwnTextures.get(Textures::SplashImage::Fons);
+    sf::Texture& fletxaTexture = mOwnTextures.get(Textures::SplashImage::Fletxa);
     sf::Font& font = getContext().fonts->get(Fonts::AlluraRegular);
 
     // Add the background sprite to the scene
@@ -73,16 +75,17 @@ SplashImage::SplashImage(PilaEstats& stack, Context context, std::string documen
     }
 
     // define a 120x50 rectangle
-    fletxaRect = sf::RectangleShape(sf::Vector2f(300, 150));
+    // Add the background sprite to the scene
+    std::unique_ptr<SpriteNode> fletxaSprite(new SpriteNode(fletxaTexture));
 
-    // change the size to 100x100
-    fletxaRect.setPosition(sf::Vector2f(1620, 930));
+    //centrar la pantalla i escalar la imatge
+    fletxaSprite->setPosition(sf::Vector2f(1620, 880));
+    mSceneLayers[Text]->attachChild(std::move(fletxaSprite));
 }
 
 void SplashImage::draw() {
     // Print texts
     getContext().rTexture->draw(mSceneGraph);
-    getContext().rTexture->draw(fletxaRect);
 }
 
 bool SplashImage::update(sf::Time dt) {

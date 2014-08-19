@@ -23,7 +23,8 @@ namespace Textures
 
     namespace SplashImage {
         enum ID {
-            Fons
+            Fons,
+            Fletxa
         };
     }
 }

@@ -28,6 +28,8 @@ Joc::Joc() :
     if (!mRenderTexture.create(1920, 1080)) cout << "OPSHIT: No pot crear la RenderTexture" << endl;
     mRenderTexture.setSmooth(true);
 
+    mWindow.setKeyRepeatEnabled(false);
+
     // Carrega recursos comuns
     mFonts.load(Fonts::AlluraRegular, "res/media/AlluraRegular.otf");
     mFonts.load(Fonts::Sansation, "res/media/Sansation.ttf");
@@ -49,8 +51,6 @@ int Joc::play() {
     sf::Clock clock;
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
-
-
     while (mWindow.isOpen()) {
         sf::Time dt = clock.restart();
         timeSinceLastUpdate += dt;
@@ -58,7 +58,7 @@ int Joc::play() {
         {
             timeSinceLastUpdate -= TimePerFrame;
 
-            processEvents();
+            processInput();
             update(TimePerFrame);
 
             // Check inside this loop, because stack might be empty before update() call
@@ -73,7 +73,7 @@ int Joc::play() {
     return EXIT_SUCCESS;
 }
 
-void Joc::processEvents() {
+void Joc::processInput() {
     sf::Event event;
     while (mWindow.pollEvent(event))
     {
@@ -108,6 +108,7 @@ void Joc::render() {
     //std::cout << mEscala.x << " " << mEscala.y << std::endl;
     sprite.setScale(mEscala);
     mWindow.draw(sprite);
+    mWindow.setView(mWindow.getDefaultView());
     mWindow.draw(mStatisticsText);
     // End the current frame and display its contents on screen
     mWindow.display();

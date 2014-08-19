@@ -14,8 +14,8 @@
 
 class SplashImage: public Estat {
 
-	public:
-		//Constructor with name of the image it want's to display
+    public:
+        //Constructor with name of the image it want's to display
         SplashImage(PilaEstats& stack, Context context);
         SplashImage(PilaEstats& stack, Context context, std::string document);
 
@@ -23,22 +23,21 @@ class SplashImage: public Estat {
         bool update(sf::Time dt);
         bool handleEvent(const sf::Event& event);
 
-	private:
+    private:
         void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
 
         enum Layer {
-			Background,
-			Text,
-			LayerCount
-		};
+            Background,
+            Text,
+            LayerCount
+        };
 
         ResourceHolder<sf::Texture, Textures::SplashImage::ID> mOwnTextures;
 
-		SceneNode mSceneGraph;
-		std::array<SceneNode*, LayerCount> mSceneLayers;
+        SceneNode mSceneGraph;
+        std::array<SceneNode*, LayerCount> mSceneLayers;
 
         std::string str;
-		sf::RectangleShape fletxaRect;
 };
 
 
