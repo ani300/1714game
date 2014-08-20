@@ -67,11 +67,6 @@ Minigaem1::Minigaem1(PilaEstats& stack, Context context, std::string document)
     mText->setScale(sf::Vector2f(2,2));
     mSceneLayers[Text]->attachChild(std::move(textNode));
 
-    // Prepara el jugador
-    std::unique_ptr<Player> playerNode(new Player(playerTexture));
-    mPlayer = playerNode.get();
-    mPlayer->setSize(sf::Vector2u(100*4, 200*8));
-    mSceneLayers[Boxes]->attachChild(std::move(playerNode));
     
     // Genera les caixes a partir del fitxer
     getline(infile, tex);
@@ -81,24 +76,29 @@ Minigaem1::Minigaem1(PilaEstats& stack, Context context, std::string document)
 
     for(int b = 0; b < boxQtty; ++b) {
         // Carrega la textura de la caixa
-        getline(infile, tex);
-        while(tex[0] == '%') getline(infile, tex);
-        mBoxTextures.load(b, Utils::getTexturePath(tex));
-
+        mBoxTextures.load(b,Utils::getTexturePath("squareSusio"));
+/*      getline(infile,tex);
+        while(tex[0] == '%') getline(infile,tex);
+        mBoxTextures.load(b,Utils::getTexturePath(tex));
+*/
         // Crea la caixa
         std::unique_ptr<Box> boxNode(new Box(mBoxTextures.get(b)));
         mBoxes.push_back(boxNode.get());
         //mBoxes[b]->setSize(sf::Vector2u(200, 200));
 
         // Posició de la caixa
-        getline(infile, tex);
-        while(tex[0] == '%') getline(infile, tex);
-        int posx = atoi(tex.c_str());
-        getline(infile, tex);
-        while(tex[0] == '%') getline(infile, tex);
-        int posy = atoi(tex.c_str());
+        int posx;
+        int posy;
+        if(b != 0) {
+            posx = b*100;        
+            posy = 100;
+        }
+        else {
+            posx = 000;
+            posy = 100;
+        }
         mBoxes[b]->setPosition(sf::Vector2f(posx,posy));
-        mBoxes[b]->setSize(sf::Vector2u(200, 200));
+        mBoxes[b]->setSize(sf::Vector2u(100, 100));
 
         // Decideix si és good box o no
         /*int ran = rand()%3;*/
@@ -108,7 +108,12 @@ Minigaem1::Minigaem1(PilaEstats& stack, Context context, std::string document)
 
         // posa-la a la llista de coses a pintar
         mSceneLayers[Boxes]->attachChild(std::move(boxNode));
+    // Prepara el jugador
     }
+    std::unique_ptr<Player> playerNode(new Player(playerTexture));
+    mPlayer = playerNode.get();
+    mPlayer->setSize(sf::Vector2u(100*4, 200*8));
+    mSceneLayers[Boxes]->attachChild(std::move(playerNode));
 
 }
 
