@@ -2,8 +2,6 @@
 #define MINIGAEM1_H
 
 #include "Utils.h"
-#include "Logic.h"
-#include "Graphic.h"
 #include "SplashImage.h"
 #include "DrawableObject.h"
 
@@ -14,18 +12,18 @@ class Minigaem1 {
         Minigaem1();
         ~Minigaem1();
 
-        int play();
+      //  int play();
 
     private:
 
-        void render();
-        void processEvents();
-        void update(sf::Time elapsedTime);
-        void readNextState(int& skipLines);
-        void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
-        //void move(sf::Vector2f &movement);
+//         void render();
+//         void processEvents();
+//         void update(sf::Time elapsedTime);
+//         void readNextState(int& skipLines);
+//         void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
+//         //void move(sf::Vector2f &movement);
 
-        Logic logic;
+        
         directions dir;
         mouseButtons mouseBut;
         sf::Sprite mPlayer;

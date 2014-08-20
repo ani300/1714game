@@ -120,7 +120,7 @@ directions inverseDir(directions dir){
 }
 
 void MinigaemFitIt::update(sf::Time elapsedTime) {
-<<<<<<< HEAD
+
     //this->handlePlayerInput();
     text.setString("Be: " + std::to_string(good_bad.x) + " Malament: " + std::to_string(good_bad.y));
     player.move(dir, 300*(elapsedTime.asSeconds()));
@@ -192,26 +192,33 @@ void MinigaemFitIt::draw() {
 }
 
 bool MinigaemFitIt::update(sf::Time dt) {
-    // Arreglar input
-    /*if (mouseBut == mouse_left) {
-        sf::Vector2f mouseBo;
-        mouseBo.x = mouseClick.x * 1.0/getContext().escala.x;
-        mouseBo.y = mouseClick.y * 1.0/getContext().escala.y;
-        if (mouseBo.x > 1620 and mouseBo.y > 930) {
-            requestNextState(); // Aquí és on es canvia al següent estat
-        }
-        mouseBut = mouse_none;
-    }*/
-    //mWorld.update(dt);
-
-    //CommandQueue& commands = mWorld.getCommandQueue();
-    //mPlayer.handleRealtimeInput(commands);
+    handleRealtimeInput();
     mSceneGraph.update(dt);
     return true;
 }
 
-bool MinigaemFitIt::handleEvent(const sf::Event& event)
-{
+void MinigaemFitIt::handleRealtimeInput(){
+
+    bool moving = false;
+    mPlayer->setVel(0,0);
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up   ) ) {
+        mPlayer->setVel(mPlayer->getVel().x,mPlayer->getVel().y-5); moving = true;
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down ) ) {
+        mPlayer->setVel(mPlayer->getVel().x,mPlayer->getVel().y+5); moving = true;
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) ) {
+        mPlayer->setVel(mPlayer->getVel().x-5,mPlayer->getVel().y); moving = true;
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ) {
+        mPlayer->setVel(mPlayer->getVel().x+5,mPlayer->getVel().y); moving = true;
+    }
+    if(! moving) mPlayer->setVel(0,0);
+
+}
+
+bool MinigaemFitIt::handleEvent(const sf::Event& event) {
+
     // Game input handling
     //CommandQueue& commands = mWorld.getCommandQueue();
     //mPlayer.handleEvent(event, commands);
