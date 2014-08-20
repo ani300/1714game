@@ -108,9 +108,9 @@ Minigaem1::Minigaem1(PilaEstats& stack, Context context, std::string document)
 
         // posa-la a la llista de coses a pintar
         mSceneLayers[Boxes]->attachChild(std::move(boxNode));
-    // Prepara el jugador
         //if(mPlayer->getColisionBounds().intersects(mBoxes[b]->getColisionBounds())) std::cerr << "HUEHUE" << std::endl;
     }
+    // Prepara el jugador
     std::unique_ptr<Player> playerNode(new Player(playerTexture));
     mPlayer = playerNode.get();
     mPlayer->setSize(sf::Vector2u(100*4, 200*8));
