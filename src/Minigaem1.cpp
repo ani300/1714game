@@ -102,10 +102,10 @@ Minigaem1::Minigaem1(PilaEstats& stack, Context context, std::string document)
 
         // Decideix si és good box o no
         /*int ran = rand()%3;*/
+        
         mGoodSquares.push_back(b);
-        if(b == 0) mBoxes[b]->setColor(sf::Color(200,0,0,250));
-        if(b == 1) mBoxes[b]->setColor(sf::Color(0,200,50,100));
-        if(b == 2) mBoxes[b]->setColor(sf::Color(150,0,50,100));
+        //if(b == 0) mBoxes[b]->setColor(sf::Color(200,0,0,250));
+
         // posa-la a la llista de coses a pintar
         mSceneLayers[Boxes]->attachChild(std::move(boxNode));
     }
