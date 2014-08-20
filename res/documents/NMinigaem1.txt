@@ -1,0 +1,18 @@
+%Minigaem Fit It
+%   Background Texture just name no png nor jpg
+MFIbackground
+%   Player Texture just name no png nor jpg
+MFIplayer
+%   number of boxes
+2
+%   name of box tex
+box
+%   les POSICIONS son relatives a (1920,1080) i pel costat left top
+%   posx
+860
+%   posy
+440
+%   box 2
+box
+200
+200
