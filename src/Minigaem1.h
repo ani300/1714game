@@ -47,16 +47,6 @@ class Minigaem1: public Estat {
     private:
         void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
 
-        
-
 };
-        
-    //heredats de Estat
-        /*
-        directions dir;
-        mouseButtons mouseBut;
-        sf::Vector2f mouseClick;
-        */
-/*};*/
 
 #endif

@@ -44,7 +44,7 @@ class MinigaemFitIt: public Estat {
         std::vector<Box*> mBoxes;
         std::vector<int> mGoodBoxes;
 
-    private:
+        void handleRealtimeInput();
         void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
 
         

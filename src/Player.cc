@@ -28,6 +28,7 @@ void Player::updateCurrent(sf::Time dt) {
 
     if(spriteSource.x >= 4) spriteSource.x = 0;
     */
+    move(getVel());
     mSprite.setTextureRect(sf::IntRect(spriteSource.x*spriteSize.x,
                                       spriteSource.y*spriteSize.y,
                                       spriteSize.x,  spriteSize.y ));
