@@ -14,6 +14,11 @@ sf::Vector2f Player::getSize(){
     return sf::Vector2f(spriteSize.x * mSprite.getScale().x, spriteSize.y * mSprite.getScale().y);
 }
 
+void Player::setPosition(float posX, float posY){
+    sf::Transformable::setPosition(posX,posY);
+    setColisionBoundsPos(sf::Vector2f(posX,posY));
+}
+
 void Player::updateCurrent(sf::Time dt) {
     
     // TODO: Posar tot això al handler de input

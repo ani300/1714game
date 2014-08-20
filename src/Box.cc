@@ -27,8 +27,9 @@ void Box::updateCurrent(sf::Time dt) {
     if(spriteSource.x >= 4) spriteSource.x = 0;
     */
 
-    //move
+    move(getVel());
     setColisionBoundsPos(getPosition());
+//    setColisionBoundsPos(getPosition());
 }
 
 void Box::setPosition(float posX, float posY){

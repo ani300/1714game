@@ -18,6 +18,7 @@ class Player: public MovileObject {
 
         sf::Color getColor();
         void setColor(sf::Color color);
+        void setPosition(float posX, float posY);
 
     private:
         virtual void updateCurrent(sf::Time dt);

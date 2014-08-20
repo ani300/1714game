@@ -189,11 +189,29 @@ void MinigaemFitIt::handlePlayerMouse(mouseButtons mouseBut, sf::Vector2f mouseC
 
 void MinigaemFitIt::draw() {
     // Print texts
+
     getContext().rTexture->draw(mSceneGraph);
 }
 
 bool MinigaemFitIt::update(sf::Time dt) {
     handleRealtimeInput();
+
+    sf::Vector2f nextPlayerPosition;
+    sf::FloatRect movedRect (nextPlayerPosition, mPlayer->getSize());
+    nextPlayerPosition.x = mPlayer->getPosition().x + mPlayer->getVel().x * dt.asSeconds();
+    nextPlayerPosition.y = mPlayer->getPosition().y + mPlayer->getVel().y * dt.asSeconds();
+
+    bool colision = true;
+    while(colision){
+        colision = false;
+        for(int i = 0; i < mBoxes.size(); ++i){
+            if(movedRect.intersects(mBoxes[i]->getColisionBounds())){
+                mBoxes[i]->setVel(mPlayer->getVel());
+                colision = true;
+                movedRect = mBoxes[i]->getColisionBounds();
+            }
+        }
+    }
     mSceneGraph.update(dt);
     return true;
 }
