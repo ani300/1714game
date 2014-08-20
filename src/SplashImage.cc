@@ -91,47 +91,28 @@ void SplashImage::draw() {
 bool SplashImage::update(sf::Time dt) {
     // WOLOLO DO THINGS
     mSceneGraph.update(dt);
-    // Arreglar input
-    /*if (mouseBut == mouse_left) {
-        sf::Vector2f mouseBo;
-        mouseBo.x = mouseClick.x * 1.0/getContext().escala.x;
-        mouseBo.y = mouseClick.y * 1.0/getContext().escala.y;
-        if (mouseBo.x > 1620 and mouseBo.y > 930) {
-            requestNextState(); // Aquí és on es canvia al següent estat
-        }
-        mouseBut = mouse_none;
-    }*/
-    //mWorld.update(dt);
-
-    //CommandQueue& commands = mWorld.getCommandQueue();
-    //mPlayer.handleRealtimeInput(commands);
-
     return true;
 }
 
 bool SplashImage::handleEvent(const sf::Event& event) {
     switch (event.type) {
         // Clic del ratolí
-        case sf::Event::Closed:
-            requestStackPop();
-            requestNextState();
+        case sf::Event::MouseButtonPressed:
+            if (event.mouseButton.button == sf::Mouse::Left) {
+                sf::Vector2i mousePos = Utils::correctMouse(
+                    sf::Vector2i(event.mouseButton.x, event.mouseButton.y),
+                    getContext().escala);
+                std::cout << mousePos.x << " " << mousePos.y << std::endl;
+                if (mousePos.x > 1620 and mousePos.y > 880) {
+                    requestStackPop();
+                    requestNextState();
+                }
+            }
             break;
 
         // we don't process other types of events
         default:
             break;
     }
-    // Game input handling
-    //CommandQueue& commands = mWorld.getCommandQueue();
-    //mPlayer.handleEvent(event, commands);
-
-    // Escape pressed, trigger the pause screen
-    //if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-    //    requestStackPush(States::Pause);
-    /*
-    if (wololo) {
-        
-    }
-*/
     return true;
 }

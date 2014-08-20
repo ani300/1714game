@@ -32,6 +32,8 @@ class PilaEstats : private sf::NonCopyable {
         void clearStates();
         void pushState(Estats::ID IDestat, std::string file);
 
+        void setContext(Estat::Context c);
+
 	private:
         InfoEstat readNextState();
 

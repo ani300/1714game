@@ -99,6 +99,13 @@ namespace Utils {
             return jpg.str();
         }   
     }
+
+    inline sf::Vector2i correctMouse(sf::Vector2i mousePos, sf::Vector2f escala) {
+        sf::Vector2i correct;
+        correct.x = int(mousePos.x * 1.0/escala.x);
+        correct.y = int(mousePos.y * 1.0/escala.y);
+        return correct;
+    }
 }
 
 #endif

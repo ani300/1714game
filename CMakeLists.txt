@@ -15,6 +15,7 @@ project(1714game)
 
 # Configuration options
 set(SFML_STATIC_LIBRARIES FALSE CACHE BOOL "Use static SFML librares")
+set(CMAKE_BUILD_TYPE Debug)
 
 # General compiler options
 if (SFML_STATIC_LIBRARIES)
