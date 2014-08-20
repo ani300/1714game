@@ -42,7 +42,7 @@ class Minigaem1: public Estat {
         TextNode* mText;
         sf::Vector2i mGood_bad;
         std::vector<Box*> mBoxes;
-        std::vector<int> mGoodBoxes;
+        std::vector<int> mGoodSquares;
 
         void handleRealtimeInput();
         void click(mouseButtons mouseButton, sf::Vector2f mouseClick);

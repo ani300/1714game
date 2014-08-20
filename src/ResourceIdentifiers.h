@@ -18,7 +18,9 @@ namespace Textures
         Caixa,
         Fons1,
         MFIFons,
-        MFIPlayer
+        MFIPlayer,
+        MG1Fons,
+        MG1Player
 	};
 
     namespace SplashImage {

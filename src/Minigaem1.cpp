@@ -23,19 +23,19 @@ Minigaem1::Minigaem1(PilaEstats& stack, Context context, std::string document)
     s << "res/documents/" << document;
     std::cerr << s.str() << std::endl;
     infile.open (s.str());
-    if(!infile.is_open()) std::cerr << "No puc obrir el document del Minigaem Fit It" << std::endl;
+    if(!infile.is_open()) std::cerr << "No puc obrir el document del Minigaem1" << std::endl;
         
     // CARREGA TEXTURES
 
     //Textura fons
     getline(infile, tex);
     while(tex[0] == '%') getline(infile, tex);
-    mOwnTextures.load(Textures::MFIFons, Utils::getTexturePath(tex));
+    mOwnTextures.load(Textures::MG1Fons, Utils::getTexturePath(tex));
     
     //Textura player
     getline(infile, tex);
     while(tex[0] == '%') getline(infile, tex);
-    mOwnTextures.load(Textures::MFIPlayer, Utils::getTexturePath(tex));
+    mOwnTextures.load(Textures::MG1Player, Utils::getTexturePath(tex));
     
     // CREACIÓ ESCENA
     // Inicialitza les dues capes
@@ -47,14 +47,14 @@ Minigaem1::Minigaem1(PilaEstats& stack, Context context, std::string document)
     }
 
     // Prepara el fons de pantalla i la font
-    sf::Texture& backTexture = mOwnTextures.get(Textures::MFIFons);
-    sf::Texture& playerTexture = mOwnTextures.get(Textures::MFIPlayer);
+    sf::Texture& backTexture = mOwnTextures.get(Textures::MG1Fons);
+    sf::Texture& playerTexture = mOwnTextures.get(Textures::MG1Player);
     sf::Font& font = getContext().fonts->get(Fonts::Sansation);
 
     // Add the background sprite to the scene
     std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(backTexture));
 
-    //centrar la pantalla i escalar la imatge
+    // Centrar la pantalla i escalar la imatge
     float esc = float(gameSize.x)/float(backTexture.getSize().x);
     backgroundSprite->setScale(sf::Vector2f(esc, esc));
     backgroundSprite->setPosition(sf::Vector2f(0.0f, (gameSize.y-backTexture.getSize().y*esc)/2));
@@ -101,11 +101,11 @@ Minigaem1::Minigaem1(PilaEstats& stack, Context context, std::string document)
         mBoxes[b]->setSize(sf::Vector2u(200, 200));
 
         // Decideix si és good box o no
-        int ran = rand()%2;
-        mGoodBoxes.push_back(ran);
-        if(ran == 0) mBoxes[b]->setColor(sf::Color(200,0,0,250));
-        else mBoxes[b]->setColor(sf::Color(0,200,0,250));
-
+        /*int ran = rand()%3;*/
+        mGoodSquares.push_back(b);
+        if(b == 0) mBoxes[b]->setColor(sf::Color(200,0,0,250));
+        if(b == 1) mBoxes[b]->setColor(sf::Color(0,200,50,100));
+        if(b == 2) mBoxes[b]->setColor(sf::Color(150,0,50,100));
         // posa-la a la llista de coses a pintar
         mSceneLayers[Boxes]->attachChild(std::move(boxNode));
     }

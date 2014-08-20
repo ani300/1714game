@@ -4,15 +4,19 @@ MG1background
 %   Player Texture just name no png nor jpg
 MFIplayer
 %   number of boxes
-2
+3
 %   name of box tex
-box
+square
 %   les POSICIONS son relatives a (1920,1080) i pel costat left top
 %   posx
-860
+0
 %   posy
-440
+0
 %   box 2
-box
+square
 200
-200
+0
+%   box 3
+square
+400
+0
