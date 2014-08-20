@@ -1,6 +1,6 @@
 %Minigaem Fit It
 %   Background Texture just name no png nor jpg
-MFIbackground
+MG1background
 %   Player Texture just name no png nor jpg
 MFIplayer
 %   number of boxes
