@@ -21,22 +21,22 @@ class Minigaem1 {
         void render();
         void processEvents();
         void update(sf::Time elapsedTime);
-        void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
         void readNextState(int& skipLines);
+        void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
         //void move(sf::Vector2f &movement);
 
         Logic logic;
         directions dir;
         mouseButtons mouseBut;
-        sf::Vector2f mouseClick;
-        sf::RenderWindow window;
-        sf::RenderTexture rTexture;
-        sf::Vector2u windowSize;
-        sf::Texture tbackground;
-        sf::Texture tplayer;
         sf::Sprite mPlayer;
-        sf::Sprite mBackground;
+        sf::Texture tplayer;
         sf::Vector2f escala;
+        sf::Sprite mBackground;
+        sf::RenderWindow window;
+        sf::Vector2u windowSize;
+        sf::Vector2f mouseClick;
+        sf::Texture tbackground;
+        sf::RenderTexture rTexture;
 
         std::vector<DrawableObject*> drawableObjects;
 };

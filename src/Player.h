@@ -16,12 +16,12 @@ class Player: public MovileObject {
         sf::Vector2f getSize();
         void setSize(sf::Vector2u desiredSize);
 
-        void setColor(sf::Color color);
         sf::Color getColor();
+        void setColor(sf::Color color);
 
     private:
-        virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
         virtual void updateCurrent(sf::Time dt);
+        virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
         
         sf::Sprite mSprite;
         sf::Clock spriteTimmer;

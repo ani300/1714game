@@ -19,15 +19,15 @@ class SceneNode: public sf::Transformable, public sf::Drawable, private sf::NonC
 
 
 	private:
-		virtual void updateCurrent(sf::Time dt);
 		void updateChildren(sf::Time dt);
+		virtual void updateCurrent(sf::Time dt);
 
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-		virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 		void drawChildren(sf::RenderTarget& target, sf::RenderStates states) const;
+		virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
-		std::vector<Ptr> mChildren;
 		SceneNode* mParent;
+		std::vector<Ptr> mChildren;
 };
 
 #endif // SCENENODE_HPP

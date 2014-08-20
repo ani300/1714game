@@ -1,5 +1,5 @@
 #include "Controller.h"
-/*
+/*  THE MOST USEFUL CLASS IN THE GAME
 struct AircraftMover {
 	AircraftMover(float vx, float vy)
 	: velocity(vx, vy) {

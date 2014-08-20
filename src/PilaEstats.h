@@ -21,16 +21,16 @@ class PilaEstats : private sf::NonCopyable {
         template <typename T>
         void registerState(Estats::ID IDestat);
 
+        bool isEmpty() const;
+
+		void draw();
         void update(sf::Time dt);
-        void draw();
         void handleEvent(const sf::Event& event);
 
-        void nextState();
-        void pushState(Estats::ID IDestat, std::string file);
         void popState();
+        void nextState();
         void clearStates();
-
-        bool isEmpty() const;
+        void pushState(Estats::ID IDestat, std::string file);
 
 	private:
         InfoEstat readNextState();

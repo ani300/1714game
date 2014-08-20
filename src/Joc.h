@@ -21,28 +21,24 @@ class Joc {
 
     private:
         
-        void processInput();
-        void update(sf::Time dt);
         void render();
-        
-        void updateStatistics(sf::Time dt);
+        void processInput();
         void registerStates();
+        void update(sf::Time dt);
+        void updateStatistics(sf::Time dt);
 
         static const sf::Time TimePerFrame;
 
-        sf::RenderWindow mWindow;
-        sf::Vector2u mWindowSize;
-        sf::RenderTexture mRenderTexture;
-
-        TextureHolder mTextures;
-        FontHolder mFonts;
-
         sf::Vector2f mEscala;
-
-        PilaEstats mPilaEstats;
-
+        sf::Vector2u mWindowSize;
+        sf::RenderWindow mWindow;
         sf::Text mStatisticsText;
         sf::Time mStatisticsUpdateTime;
+        sf::RenderTexture mRenderTexture;
+
+        FontHolder mFonts;
+        PilaEstats mPilaEstats;
+        TextureHolder mTextures;
         std::size_t mStatisticsNumFrames;
 };
 
