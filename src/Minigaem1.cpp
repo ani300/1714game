@@ -1,176 +1,224 @@
+/******************************Minigaem1.cpp**********************************/
 #include "Minigaem1.h"
 
-
 //Constructor
-Minigaem1::Minigaem1() : window(sf::VideoMode::getDesktopMode(), L"1714: La resistència de l'Història"
-    , sf::Style::Titlebar | sf::Style::Close), rTexture() {
-    dir = dir_none;
-    if (!rTexture.create(1920, 1080)) cout << "OPMERDA: No pot crear la RenderTexture" << endl;
-    rTexture.setSmooth(true);
-}
-
-Minigaem1::~Minigaem1() {
-    // Neteja la memòria
+Minigaem1::Minigaem1(PilaEstats& stack, Context context)
+: Estat(stack, context)
+, mPlayer(nullptr)
+, mText(nullptr)
+, mGood_bad(0, 0) {
 
 }
 
-void Minigaem1::processEvents() {
-    sf::Event event;
-    while(window.pollEvent(event)) {
-        switch(event.type) {
-            case sf::Event::KeyPressed:
-                handlePlayerInput(event.key.code,true);
-                break;
-            case sf::Event::KeyReleased:
-                handlePlayerInput(event.key.code,false);
-                break;
-            case sf::Event::MouseButtonPressed:
-                if (event.mouseButton.button == sf::Mouse::Left) mouseBut = mouse_left;
-                else if (event.mouseButton.button == sf::Mouse::Right) mouseBut = mouse_right;
-                mouseClick.x = event.mouseButton.x;
-                mouseClick.y = event.mouseButton.y;
-                break;
-            case sf::Event::Closed:
-                window.close();
-                break;
-        }
-    }
-}
+Minigaem1::Minigaem1(PilaEstats& stack, Context context, std::string document)
+: Estat(stack, context)
+, mPlayer(nullptr)
+, mText(nullptr)
+, mGood_bad(0, 0){
 
-void Minigaem1::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
+    std::string tex;
+    std::ifstream infile;
 
-    dir = dir_none;
-    if(isPressed){
-        if (isPressed && key == sf::Keyboard::W) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) dir = dir_up_left;
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) dir = dir_up_right;
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dir = dir_none;
-            else dir = dir_up;
-        }
-        if (isPressed && key == sf::Keyboard::S) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) dir = dir_down_left;
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) dir = dir_down_right;
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dir = dir_none;
-            else dir = dir_down;
-        }
-        if (isPressed && key == sf::Keyboard::A) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dir = dir_up_left;
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dir = dir_down_left;
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) dir = dir_none;
-            else dir = dir_left;
-        }
-        if (isPressed && key == sf::Keyboard::D) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dir = dir_up_left;
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dir = dir_down_right;
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) dir = dir_none;
-            else dir = dir_right;
-        }
+    std::stringstream s;
+    s << "res/documents/" << document;
+    std::cerr << s.str() << std::endl;
+    infile.open (s.str());
+    if(!infile.is_open()) std::cerr << "No puc obrir el document del Minigaem Fit It" << std::endl;
+        
+    // CARREGA TEXTURES
+
+    //Textura fons
+    getline(infile, tex);
+    while(tex[0] == '%') getline(infile, tex);
+    mOwnTextures.load(Textures::MFIFons, Utils::getTexturePath(tex));
+    
+    //Textura player
+    getline(infile, tex);
+    while(tex[0] == '%') getline(infile, tex);
+    mOwnTextures.load(Textures::MFIPlayer, Utils::getTexturePath(tex));
+    
+    // CREACIÓ ESCENA
+    // Inicialitza les dues capes
+    for (std::size_t i = 0; i < LayerCount; ++i) {
+        SceneNode::Ptr layer(new SceneNode());
+        mSceneLayers[i] = layer.get();
+
+        mSceneGraph.attachChild(std::move(layer));
     }
 
+    // Prepara el fons de pantalla i la font
+    sf::Texture& backTexture = mOwnTextures.get(Textures::MFIFons);
+    sf::Texture& playerTexture = mOwnTextures.get(Textures::MFIPlayer);
+    sf::Font& font = getContext().fonts->get(Fonts::Sansation);
+
+    // Add the background sprite to the scene
+    std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(backTexture));
+
+    //centrar la pantalla i escalar la imatge
+    float esc = float(gameSize.x)/float(backTexture.getSize().x);
+    backgroundSprite->setScale(sf::Vector2f(esc, esc));
+    backgroundSprite->setPosition(sf::Vector2f(0.0f, (gameSize.y-backTexture.getSize().y*esc)/2));
+    mSceneLayers[Background]->attachChild(std::move(backgroundSprite));
+
+    // Prepara el text
+    std::unique_ptr<TextNode> textNode(new TextNode(font, ""));
+    mText = textNode.get(); // Guarda una referència al TextNode
+    mText->setPosition(100 , 0);
+    mText->setScale(sf::Vector2f(2,2));
+    mSceneLayers[Text]->attachChild(std::move(textNode));
+
+    // Prepara el jugador
+    std::unique_ptr<Player> playerNode(new Player(playerTexture));
+    mPlayer = playerNode.get();
+    mPlayer->setSize(sf::Vector2u(100*4, 200*8));
+    mSceneLayers[Boxes]->attachChild(std::move(playerNode));
+    
+    // Genera les caixes a partir del fitxer
+    getline(infile, tex);
+    while(tex[0] == '%') getline(infile, tex);
+    int boxQtty = atoi(tex.c_str());
+    std::cout << boxQtty << std::endl;
+
+    for(int b = 0; b < boxQtty; ++b) {
+        // Carrega la textura de la caixa
+        getline(infile, tex);
+        while(tex[0] == '%') getline(infile, tex);
+        mBoxTextures.load(b, Utils::getTexturePath(tex));
+
+        // Crea la caixa
+        std::unique_ptr<Box> boxNode(new Box(mBoxTextures.get(b)));
+        mBoxes.push_back(boxNode.get());
+        //mBoxes[b]->setSize(sf::Vector2u(200, 200));
+
+        // Posició de la caixa
+        getline(infile, tex);
+        while(tex[0] == '%') getline(infile, tex);
+        int posx = atoi(tex.c_str());
+        getline(infile, tex);
+        while(tex[0] == '%') getline(infile, tex);
+        int posy = atoi(tex.c_str());
+        mBoxes[b]->setPosition(sf::Vector2f(posx,posy));
+        mBoxes[b]->setSize(sf::Vector2u(200, 200));
+
+        // Decideix si és good box o no
+        int ran = rand()%2;
+        mGoodBoxes.push_back(ran);
+        if(ran == 0) mBoxes[b]->setColor(sf::Color(200,0,0,250));
+        else mBoxes[b]->setColor(sf::Color(0,200,0,250));
+
+        // posa-la a la llista de coses a pintar
+        mSceneLayers[Boxes]->attachChild(std::move(boxNode));
+    }
 
 }
 
-/*void Minigaem1::move(sf::Vector2f &movement) {
-    mPlayer.setPosition(movement.x,movement.y);
-}*/
+/*
+directions inverseDir(directions dir){
+    if(dir == dir_none) return dir_none;
+    if(dir%2 == 0) return static_cast<directions>(dir+1);
+    else return static_cast<directions> (dir-1);
+}
 
 void Minigaem1::update(sf::Time elapsedTime) {
-    for(int i = 0; i < drawableObjects.size(); ++i){
-
-        if(dir != dir_none) { //THERE IS MOVEMENT
-            sf::Vector2f movement(0.f,0.f);
-            movement.x = dirx[dir] * elapsedTime.asSeconds();
-            movement.y = diry[dir] * elapsedTime.asSeconds();
-            mPlayer.move(movement*elapsedTime.asSeconds());
-            dir = dir_none;
+<<<<<<< HEAD
+    //this->handlePlayerInput();
+    text.setString("Be: " + std::to_string(good_bad.x) + " Malament: " + std::to_string(good_bad.y));
+    player.move(dir, 300*(elapsedTime.asSeconds()));
+    for(int i = 0; i < boxes.size(); ++i){
+        if (player.colide(boxes[i])) {
+            sf::Vector2f aux = boxes[i].getPosition();
+            boxes[i].move(dir, 310*(elapsedTime.asSeconds()));
+            for(int k = 0; k < boxes.size(); ++k){
+                if(k != i){
+                    if(boxes[i].colide(boxes[k])){
+                        boxes[k].move(dir, 315*elapsedTime.asSeconds());
+                    }
+                }
+            }
+            if(boxes[i].getPosition() == aux) player.move(inverseDir(dir), 300*(elapsedTime.asSeconds()));
         }
-        if(mouseBut != mouse_none){
-            drawableObjects[i]->click(mouseBut, mouseClick);
-            mouseBut = mouse_none;
-        }
+    }
+    if(player.getPosition().y < 100) player.setPosition(sf::Vector2f(player.getPosition().x, 100));
+    //Check boxes are in the game
+    for(int i = 0; i < boxes.size(); ++i) {
+        if(boxes[i].getPosition().x == gameSize.x - boxes[i].getSize().x) {
 
+            if(boxes[i].getColor() == (sf::Color(0,200,0,250))) ++good_bad.x;
+            else ++good_bad.y;
+
+            int posx = rand()%gameSize.x -210;
+            int posy = rand()%(gameSize.y-100) -100;
+            int ran = rand()%2;
+            goodBoxes[i] = ran;
+            if(ran == 0) boxes[i].setColor(sf::Color(200,0,0,250));
+            else boxes[i].setColor(sf::Color(0,200,0,250));
+            boxes[i].setPosition(sf::Vector2f(posx, posy));
+            boxes[i].move(dir, 0);
+        }
+        if(boxes[i].getPosition().y <= 100 - boxes[i].getSize().y/2) {
+
+            if(boxes[i].getColor() == (sf::Color(200,0,0,250))) ++good_bad.x;
+            else ++good_bad.y;
+
+            int posx = rand()%gameSize.x - 210;
+            int posy = rand()%(gameSize.y-100) - 100;
+            int ran = rand()%2;
+            goodBoxes[i] = ran;
+            if(ran == 0) boxes[i].setColor(sf::Color(200,0,0,250));
+            else boxes[i].setColor(sf::Color(0,200,0,250));
+            boxes[i].setPosition(sf::Vector2f(posx, posy));
+            boxes[i].move(dir, 0);
+        }
+    }
+
+    if(good_bad.x - good_bad.y >= 1){
+        std::cout << "Penguin" << std::endl;
+        std::ofstream outfile;
+        outfile.open("res/documents/Status.txt");
+        if(!outfile.is_open()) std::cerr << "res/documents/Status.txt" << " no obert " << std::endl;
+        outfile << "OK" << std::endl;
+        outfile.close();
     }
 }
 
-void Minigaem1::render() {
-    rTexture.clear();
-    rTexture.draw(mBackground);
-    rTexture.draw(mPlayer);
-    rTexture.display();
+void Minigaem1::handlePlayerMouse(mouseButtons mouseBut, sf::Vector2f mouseClick){
+    //o no
+}
+*/
 
-
-    // Now we start rendering to the window, clear it first
-   window.clear();
-   // Draw the texture
-   sf::Sprite sprite(rTexture.getTexture());
-   // Llegeix mida de la finestra (x, y)
-   windowSize = window.getSize();
-   sprite.setScale(1.0, 1.0);
-   escala = sf::Vector2f(float(windowSize.x)/float(rTexture.getSize().x), float(windowSize.y)/float(rTexture.getSize().y));
-   sprite.setScale(escala);
-
-   window.draw(sprite);
-   // End the current frame and display its contents on screen
-   window.display();
+void Minigaem1::draw() {
+    // Print texts
+    getContext().rTexture->draw(mSceneGraph);
 }
 
-void Minigaem1::readNextState(int& skipLines){
-    std::string doc;
-    std::ifstream infile;
-    infile.open("res/documents/Minigaem1.txt");
-    if(!infile.is_open()) std::cerr << "res/document/Minigaem1.txt" << " no obert " << std::endl;
-
-    for(int i = 0; i < skipLines; ++i) std::getline(infile,doc); // Saves the line in STRING.
-    std::getline(infile,doc);
-    //% means this line is a comment
-    /*while(doc[0] == '%') {
-        std::getline(infile,doc);
-        ++skipLines;
+bool Minigaem1::update(sf::Time dt) {
+    // Arreglar input
+    /*if (mouseBut == mouse_left) {
+        sf::Vector2f mouseBo;
+        mouseBo.x = mouseClick.x * 1.0/getContext().escala.x;
+        mouseBo.y = mouseClick.y * 1.0/getContext().escala.y;
+        if (mouseBo.x > 1620 and mouseBo.y > 930) {
+            requestNextState(); // Aquí és on es canvia al següent estat
+        }
+        mouseBut = mouse_none;
     }*/
+    //mWorld.update(dt);
 
-    //TODO posar que agafi dels fitxers, hardcodeado per veure si va
-    tbackground.loadFromFile("res/pictures/Netejabackground.png");
-    tplayer.loadFromFile("res/pictures/Netejaplayer.png");
-
-
-    mBackground.setScale(sf::Vector2f(float(rTexture.getSize().x)/float(tbackground.getSize().x), float(rTexture.getSize().y)/float(tbackground.getSize().y)));
-    mPlayer.setScale(sf::Vector2f(0.1*float(rTexture.getSize().x)/float(tplayer.getSize().x), 0.1*float(rTexture.getSize().y)/float(tplayer.getSize().y)));
-
-    mPlayer.setTexture(tplayer,true);
-    mBackground.setTexture(tbackground,true);
-
+    //CommandQueue& commands = mWorld.getCommandQueue();
+    //mPlayer.handleRealtimeInput(commands);
+    mSceneGraph.update(dt);
+    return true;
 }
 
+bool Minigaem1::handleEvent(const sf::Event& event)
+{
+    // Game input handling
+    //CommandQueue& commands = mWorld.getCommandQueue();
+    //mPlayer.handleEvent(event, commands);
 
+    // Escape pressed, trigger the pause screen
+    //if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+    //    requestStackPush(States::Pause);
 
-int Minigaem1::play() {
-
-    sf::Clock clock;
-    sf::Time timeSinceLastUpdate = sf::Time::Zero;
-
-    int skipLines = 0;
-    readNextState(skipLines);
-
-    window.setVerticalSyncEnabled(true);
-
-    while(window.isOpen()) {
-        std::ifstream estatFile;
-        estatFile.open("res/documents/Status.txt");
-        std::string stat;
-        getline(estatFile, stat);
-        estatFile.close();
-        if(stat == "OK") {
-            readNextState(skipLines);
-        }
-        processEvents();
-        timeSinceLastUpdate += clock.restart();
-
-        while(timeSinceLastUpdate > TimePerFrame) {
-            timeSinceLastUpdate -= TimePerFrame;
-            processEvents();
-            update(TimePerFrame);
-        }
-        render();
-    }
-    return EXIT_SUCCESS;
+    return true;
 }

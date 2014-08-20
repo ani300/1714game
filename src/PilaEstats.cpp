@@ -110,18 +110,15 @@ PilaEstats::InfoEstat PilaEstats::readNextState() {
             return InfoEstat(Estats::SplashScreen, doc);
         }
         case 'M': {
-std::cerr << "minigameFitIt actiu" << std::endl;
+            std::cerr << "minigameFitIt actiu" << std::endl;
             ++skipLines;
             return InfoEstat(Estats::MinigaemFitIt, doc);
         }
-        case 'N':
-            /*//s'ha de incloure el Minigaem1.h
-            Minigaem1 minigame;
-            minigame.play();
-            delete estat;
-            estat = new Minigaem1();
-            */
-            break;
+        case 'N': {
+            std::cerr << "minigame1 actiu bitches" << std::endl;
+            ++skipLines;
+            return InfoEstat(Estats::Minigaem1,doc);
+        }
         case 'W':
             /*
             //buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!

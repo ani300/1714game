@@ -1,44 +1,62 @@
-#ifndef MINIGAEM1_H
-#define MINIGAEM1_H
+/******************************Minigaem1.h**********************************/
+#ifndef MG1
+#define MG1
 
 #include "Utils.h"
-#include "Logic.h"
-#include "Graphic.h"
-#include "SplashImage.h"
-#include "DrawableObject.h"
+#include "Estat.h"
+#include "Player.h"
+#include "MovileObject.h"
+#include "ResourceHolder.h"
+#include "ResourceIdentifiers.h"
+#include "SceneNode.hpp"
+#include "SpriteNode.hpp"
+#include "TextNode.hpp"
+#include "Box.h"
 
-
-class Minigaem1 {
+class Minigaem1: public Estat {
 
     public:
-        Minigaem1();
-        ~Minigaem1();
+        //Constructor
+        Minigaem1(PilaEstats& stack, Context context);
+        Minigaem1(PilaEstats& stack, Context context, std::string document);
 
-        int play();
+        void draw();
+        bool update(sf::Time dt);
+        bool handleEvent(const sf::Event& event);
 
     private:
+        enum Layer {
+            Background,
+            Boxes,
+            Text,
+            LayerCount
+        };
 
-        void render();
-        void processEvents();
-        void update(sf::Time elapsedTime);
-        void readNextState(int& skipLines);
-        void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
-        //void move(sf::Vector2f &movement);
+        TextureHolder mOwnTextures;
+        ResourceHolder<sf::Texture, int> mBoxTextures;
 
-        Logic logic;
+        SceneNode mSceneGraph;
+        std::array<SceneNode*, LayerCount> mSceneLayers;
+
+        Player* mPlayer;
+        TextNode* mText;
+        sf::Vector2i mGood_bad;
+        std::vector<Box*> mBoxes;
+        std::vector<int> mGoodBoxes;
+
+    private:
+        void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
+
+        
+
+};
+        
+    //heredats de Estat
+        /*
         directions dir;
         mouseButtons mouseBut;
-        sf::Sprite mPlayer;
-        sf::Texture tplayer;
-        sf::Vector2f escala;
-        sf::Sprite mBackground;
-        sf::RenderWindow window;
-        sf::Vector2u windowSize;
         sf::Vector2f mouseClick;
-        sf::Texture tbackground;
-        sf::RenderTexture rTexture;
+        */
+/*};*/
 
-        std::vector<DrawableObject*> drawableObjects;
-};
-
-#endif // MINIGAEM1_H
+#endif

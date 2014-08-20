@@ -129,6 +129,7 @@ void Joc::updateStatistics(sf::Time dt) {
 
 void Joc::registerStates() {
     mPilaEstats.registerState<SplashImage>(Estats::SplashScreen);
+    mPilaEstats.registerState<Minigaem1>(Estats::Minigaem1);
     mPilaEstats.registerState<MinigaemFitIt>(Estats::MinigaemFitIt);
 }
 
