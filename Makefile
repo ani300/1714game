@@ -39,10 +39,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/darkdiable/Desktop/1714game
+CMAKE_SOURCE_DIR = /home/kaito/Escriptori/GitProjects/1714game
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/darkdiable/Desktop/1714game
+CMAKE_BINARY_DIR = /home/kaito/Escriptori/GitProjects/1714game
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -69,9 +69,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/darkdiable/Desktop/1714game/CMakeFiles /home/darkdiable/Desktop/1714game/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kaito/Escriptori/GitProjects/1714game/CMakeFiles /home/kaito/Escriptori/GitProjects/1714game/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/darkdiable/Desktop/1714game/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kaito/Escriptori/GitProjects/1714game/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -231,30 +231,6 @@ src/Fight.cc.s:
 	$(MAKE) -f CMakeFiles/1714game.dir/build.make CMakeFiles/1714game.dir/src/Fight.cc.s
 .PHONY : src/Fight.cc.s
 
-src/Graphic.o: src/Graphic.cc.o
-.PHONY : src/Graphic.o
-
-# target to build an object file
-src/Graphic.cc.o:
-	$(MAKE) -f CMakeFiles/1714game.dir/build.make CMakeFiles/1714game.dir/src/Graphic.cc.o
-.PHONY : src/Graphic.cc.o
-
-src/Graphic.i: src/Graphic.cc.i
-.PHONY : src/Graphic.i
-
-# target to preprocess a source file
-src/Graphic.cc.i:
-	$(MAKE) -f CMakeFiles/1714game.dir/build.make CMakeFiles/1714game.dir/src/Graphic.cc.i
-.PHONY : src/Graphic.cc.i
-
-src/Graphic.s: src/Graphic.cc.s
-.PHONY : src/Graphic.s
-
-# target to generate assembly for a file
-src/Graphic.cc.s:
-	$(MAKE) -f CMakeFiles/1714game.dir/build.make CMakeFiles/1714game.dir/src/Graphic.cc.s
-.PHONY : src/Graphic.cc.s
-
 src/Joc.o: src/Joc.cc.o
 .PHONY : src/Joc.o
 
@@ -278,30 +254,6 @@ src/Joc.s: src/Joc.cc.s
 src/Joc.cc.s:
 	$(MAKE) -f CMakeFiles/1714game.dir/build.make CMakeFiles/1714game.dir/src/Joc.cc.s
 .PHONY : src/Joc.cc.s
-
-src/Logic.o: src/Logic.cc.o
-.PHONY : src/Logic.o
-
-# target to build an object file
-src/Logic.cc.o:
-	$(MAKE) -f CMakeFiles/1714game.dir/build.make CMakeFiles/1714game.dir/src/Logic.cc.o
-.PHONY : src/Logic.cc.o
-
-src/Logic.i: src/Logic.cc.i
-.PHONY : src/Logic.i
-
-# target to preprocess a source file
-src/Logic.cc.i:
-	$(MAKE) -f CMakeFiles/1714game.dir/build.make CMakeFiles/1714game.dir/src/Logic.cc.i
-.PHONY : src/Logic.cc.i
-
-src/Logic.s: src/Logic.cc.s
-.PHONY : src/Logic.s
-
-# target to generate assembly for a file
-src/Logic.cc.s:
-	$(MAKE) -f CMakeFiles/1714game.dir/build.make CMakeFiles/1714game.dir/src/Logic.cc.s
-.PHONY : src/Logic.cc.s
 
 src/Map.o: src/Map.cc.o
 .PHONY : src/Map.o
@@ -591,15 +543,9 @@ help:
 	@echo "... src/Fight.o"
 	@echo "... src/Fight.i"
 	@echo "... src/Fight.s"
-	@echo "... src/Graphic.o"
-	@echo "... src/Graphic.i"
-	@echo "... src/Graphic.s"
 	@echo "... src/Joc.o"
 	@echo "... src/Joc.i"
 	@echo "... src/Joc.s"
-	@echo "... src/Logic.o"
-	@echo "... src/Logic.i"
-	@echo "... src/Logic.s"
 	@echo "... src/Map.o"
 	@echo "... src/Map.i"
 	@echo "... src/Map.s"
