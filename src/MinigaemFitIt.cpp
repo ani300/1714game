@@ -14,7 +14,8 @@ MinigaemFitIt::MinigaemFitIt(PilaEstats& stack, Context context, std::string doc
 : Estat(stack, context)
 , mPlayer(nullptr)
 , mText(nullptr)
-, mGood_bad(0, 0){
+, mGood_bad(0, 0)
+{
 
     std::string tex;
     std::ifstream infile;
@@ -202,16 +203,16 @@ void MinigaemFitIt::handleRealtimeInput(){
     bool moving = false;
     mPlayer->setVel(0,0);
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up   ) ) {
-        mPlayer->setVel(mPlayer->getVel().x,mPlayer->getVel().y-5); moving = true;
+        mPlayer->setVel(mPlayer->getVel().x,mPlayer->getVel().y-movVel); moving = true;
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down ) ) {
-        mPlayer->setVel(mPlayer->getVel().x,mPlayer->getVel().y+5); moving = true;
+        mPlayer->setVel(mPlayer->getVel().x,mPlayer->getVel().y+movVel); moving = true;
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) ) {
-        mPlayer->setVel(mPlayer->getVel().x-5,mPlayer->getVel().y); moving = true;
+        mPlayer->setVel(mPlayer->getVel().x-movVel,mPlayer->getVel().y); moving = true;
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ) {
-        mPlayer->setVel(mPlayer->getVel().x+5,mPlayer->getVel().y); moving = true;
+        mPlayer->setVel(mPlayer->getVel().x+movVel,mPlayer->getVel().y); moving = true;
     }
     if(! moving) mPlayer->setVel(0,0);
 

@@ -12,6 +12,14 @@
     else if(position.y + this->getSize().y > gameSize.y) position.y = gameSize.y - this->getSize().y;
     vel.x = vel.y = 0; 
 }*/
+MovileObject::MovileObject(): colisionBounds(0,0,0,0){
+    mVel.x = 0;
+    mVel.y = 0;
+}
+
+sf::FloatRect MovileObject::getColisionBounds(){
+    return colisionBounds;
+}
 
 void MovileObject::setDirToVel(directions dir, float quantatMoviment){
     mVel.x = dirx[dir] * quantatMoviment;
@@ -35,4 +43,12 @@ void MovileObject::updateCurrent(sf::Time dt) {
     move(mVel * dt.asSeconds());
 }
 
+void MovileObject::setColisionBoundsPos(sf::Vector2f pos){
+    colisionBounds.top = pos.y;
+    colisionBounds.left = pos.x;
+}
 
+void MovileObject::setColisionBoundsSize(sf::Vector2u size){
+    colisionBounds.width = size.x;
+    colisionBounds.height = size.y;
+}

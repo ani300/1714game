@@ -4,6 +4,7 @@
 //Constructor
 Box::Box(const sf::Texture& texture)
 : mSprite(texture) {
+    setColisionBoundsPos(getPosition());
 }
 
 sf::Vector2f Box::getSize(){
@@ -25,6 +26,19 @@ void Box::updateCurrent(sf::Time dt) {
 
     if(spriteSource.x >= 4) spriteSource.x = 0;
     */
+
+    //move
+    setColisionBoundsPos(getPosition());
+}
+
+void Box::setPosition(float posX, float posY){
+    sf::Transformable::setPosition(posX,posY);
+    setColisionBoundsPos(sf::Vector2f(posX,posY));
+}
+
+void Box::setPosition(const sf::Vector2f& position){
+    sf::Transformable::setPosition(position);
+    setColisionBoundsPos(position);
 }
 
 
@@ -37,8 +51,9 @@ void Box::setSize(sf::Vector2u desiredSize){
     scalex = scaley = 0.0;
     scalex = float(desiredSize.x)/mSprite.getTexture()->getSize().x;
     scaley = float(desiredSize.y)/mSprite.getTexture()->getSize().y;
-    std::cout << scalex << " " << scaley << std::endl;
+//    std::cout << scalex << " " << scaley << std::endl;
     setScale(scalex, scaley);
+    setColisionBoundsSize(desiredSize);
 }
 
 void Box::setColor(sf::Color color){

@@ -18,6 +18,8 @@ class Box: public MovileObject {
 
         sf::Color getColor();
         void setColor(sf::Color color);
+        void setPosition(float posX, float posY);
+        void setPosition(const sf::Vector2f& position);
 
     private:
         virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;

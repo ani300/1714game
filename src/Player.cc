@@ -7,6 +7,7 @@ Player::Player(const sf::Texture& texture)
     spriteSize.x = texture.getSize().x/4;
     spriteSize.y = texture.getSize().y/8;
     spriteSource.x = spriteSource.y = 0;
+    setColisionBoundsPos(getPosition());
 }
 
 sf::Vector2f Player::getSize(){
@@ -29,6 +30,7 @@ void Player::updateCurrent(sf::Time dt) {
     if(spriteSource.x >= 4) spriteSource.x = 0;
     */
     move(getVel());
+    setColisionBoundsPos(getPosition());
     mSprite.setTextureRect(sf::IntRect(spriteSource.x*spriteSize.x,
                                       spriteSource.y*spriteSize.y,
                                       spriteSize.x,  spriteSize.y ));
@@ -45,6 +47,7 @@ void Player::setSize(sf::Vector2u desiredSize){
     scalex = float(desiredSize.x)/mSprite.getTexture()->getSize().x;
     scaley = float(desiredSize.y)/mSprite.getTexture()->getSize().y;
     setScale(scalex, scaley);
+    setColisionBoundsSize(desiredSize);
 }
 
 void Player::setColor(sf::Color color){
