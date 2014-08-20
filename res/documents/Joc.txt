@@ -1,5 +1,5 @@
 %TESTING
-NMinigaem1.txt
+MinigaemFitIt.txt
 % refrigerator
 % aquest primer simbol es un comentari
 % cada instrucció ha de tenir una lletra inicial diferent
