@@ -89,6 +89,8 @@ void SplashImage::draw() {
 }
 
 bool SplashImage::update(sf::Time dt) {
+    // WOLOLO DO THINGS
+    mSceneGraph.update(dt);
     // Arreglar input
     /*if (mouseBut == mouse_left) {
         sf::Vector2f mouseBo;
@@ -107,8 +109,18 @@ bool SplashImage::update(sf::Time dt) {
     return true;
 }
 
-bool SplashImage::handleEvent(const sf::Event& event)
-{
+bool SplashImage::handleEvent(const sf::Event& event) {
+    switch (event.type) {
+        // Clic del ratolí
+        case sf::Event::Closed:
+            requestStackPop();
+            requestNextState();
+            break;
+
+        // we don't process other types of events
+        default:
+            break;
+    }
     // Game input handling
     //CommandQueue& commands = mWorld.getCommandQueue();
     //mPlayer.handleEvent(event, commands);
@@ -116,6 +128,10 @@ bool SplashImage::handleEvent(const sf::Event& event)
     // Escape pressed, trigger the pause screen
     //if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
     //    requestStackPush(States::Pause);
-
+    /*
+    if (wololo) {
+        
+    }
+*/
     return true;
 }

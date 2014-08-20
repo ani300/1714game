@@ -121,7 +121,7 @@ PilaEstats::InfoEstat PilaEstats::readNextState() {
         }
         case 'W':
             /*
-            //buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
+            //buidar drawableObjects;
 
             drawableObjects.push_back();
             */
