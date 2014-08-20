@@ -6,17 +6,4 @@ MFIplayer
 %   number of boxes
 3
 %   name of box tex
-square
-%   les POSICIONS son relatives a (1920,1080) i pel costat left top
-%   posx
-0
-%   posy
-0
-%   box 2
-square
-200
-0
-%   box 3
-square
-400
-0
+
