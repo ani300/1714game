@@ -51,6 +51,8 @@ MinigaemFitIt::MinigaemFitIt(PilaEstats& stack, Context context, std::string doc
     sf::Texture& backTexture = mOwnTextures.get(Textures::MFIFons);
     sf::Texture& playerTexture = mOwnTextures.get(Textures::MFIPlayer);
     sf::Font& font = getContext().fonts->get(Fonts::Sansation);
+    mText = new TextNode(font, "Penguin");
+    mText->setPosition(0,0);
 
     // Add the background sprite to the scene
     std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(backTexture));
@@ -261,9 +263,13 @@ bool MinigaemFitIt::update(sf::Time dt) {
         }
     }
 
-    if(mGood_bad.x - mGood_bad.y >= 1){
+    mText->setString("Be: " + std::to_string(mGood_bad.x) + " Malament: " + std::to_string(mGood_bad.y));
+
+    if(mGood_bad.x - mGood_bad.y >= 5){
         //std::cout << "Penguin" << std::endl;
-//canvia l'estat
+        //canvia l'estat
+        requestStackPop();
+        requestNextState();
     }
 
     return true;
