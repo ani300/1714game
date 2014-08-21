@@ -11,22 +11,24 @@
 const sf::Time Joc::TimePerFrame = sf::seconds(1.f/60.f);
 
 //Constructor
-//Joc::Joc() : window(sf::VideoMode::getDesktopMode(), L"1714: La resistència de l'Història"
 Joc::Joc() :
   mWindow(sf::VideoMode(sf::VideoMode::getDesktopMode()), L"1714: La resistència de l'Història"
     , sf::Style::Titlebar | sf::Style::Close)
 , mRenderTexture()
 , mTextures()
 , mFonts()
-, mWindowSize(mWindow.getSize())
-, mEscala(sf::Vector2f(float(mWindowSize.x)/float(mRenderTexture.getSize().x),
-                       9.0/16.0*float(mWindowSize.x)/float(mRenderTexture.getSize().x)))
+, mWindowSize(mWindow.getSize().x, mWindow.getSize().y)
+, mEscala(float(mWindow.getSize().x)/1920.0, 9.0/16.0*float(mWindow.getSize().x)/1920.0)
 , mPilaEstats(Estat::Context(mRenderTexture, mTextures, mFonts, mEscala))
 , mStatisticsText()
 , mStatisticsUpdateTime()
 , mStatisticsNumFrames(0){
     if (!mRenderTexture.create(1920, 1080)) cout << "OPSHIT: No pot crear la RenderTexture" << endl;
     mRenderTexture.setSmooth(true);
+
+    mWindowSize = mWindow.getSize();
+    mEscala = sf::Vector2f(float(mWindow.getSize().x)/1920.0, float(mWindow.getSize().x)/1920.0);
+    mPilaEstats.setContext(Estat::Context(mRenderTexture, mTextures, mFonts, mEscala));
 
     mWindow.setKeyRepeatEnabled(false);
 

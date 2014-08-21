@@ -37,7 +37,10 @@ void PilaEstats::handleEvent(const sf::Event& event) {
 
 void PilaEstats::nextState() {
     InfoEstat next = readNextState();
-    mPendingList.push_back(PendingChange(Push, next.first, next.second));
+    if (next.first != Estats::None)
+        mPendingList.push_back(PendingChange(Push, next.first, next.second));
+    else
+        mPendingList.push_back(PendingChange(Clear));
 }
 
 void PilaEstats::pushState(Estats::ID IDestat, std::string file="") {
@@ -121,13 +124,18 @@ PilaEstats::InfoEstat PilaEstats::readNextState() {
         }
         case 'W':
             /*
-            //buidar drawableObjects; -> IMPORTANTISSIM FER DELETE DELS PUNTERS!!!!!!!!!!!!!
+            //buidar drawableObjects;
 
             drawableObjects.push_back();
             */
             break;
         default:
+            return InfoEstat(Estats::None,"");
             break;
     }
     infile.close();
+}
+
+void PilaEstats::setContext(Estat::Context c) {
+    mContext = c;
 }
