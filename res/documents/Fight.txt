@@ -1,0 +1,23 @@
+%Minigaem Fit It
+%   Background Texture just name no png nor jpg
+FightBackground
+%   Player Texture just name no png nor jpg
+FightPlayer
+%	Earth enemy texture
+FightPlayer
+%	Small Air enemy texture
+FightPlayer
+%	Big Air enemy texture
+FightPlayer
+%   From now on, every lines holds an enemy appearance time and position
+%	Time in ms since the start of the level
+%	Position in the range 0-4, 0 being the most left and 4 the most right
+%	1, 2, 3 are air enemies; 0, 4 ground
+%	number of enemies
+%	time position (for every enemy) [b/s for air ones]
+5
+0 0
+0 4
+5000 1 b
+6000 2 s
+7000 3 s
