@@ -18,9 +18,9 @@ class Box: public MovileObject {
 
         sf::Color getColor();
         void setColor(sf::Color color);
+        sf::FloatRect getColisionBounds();
         void setPosition(float posX, float posY);
         void setPosition(const sf::Vector2f& position);
-
     private:
         virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
         virtual void updateCurrent(sf::Time dt);

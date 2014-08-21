@@ -18,16 +18,17 @@ class Player: public MovileObject {
 
         sf::Color getColor();
         void setColor(sf::Color color);
+        sf::FloatRect getColisionBounds();
         void setPosition(float posX, float posY);
 
     private:
-        virtual void updateCurrent(sf::Time dt);
-        virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
-        
+        float auxtimer;
         sf::Sprite mSprite;
         sf::Clock spriteTimmer;
         sf::Vector2f spriteSize;
         sf::Vector2f spriteSource;
+        virtual void updateCurrent(sf::Time dt);
+        virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
 #endif

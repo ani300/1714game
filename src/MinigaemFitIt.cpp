@@ -71,6 +71,7 @@ MinigaemFitIt::MinigaemFitIt(PilaEstats& stack, Context context, std::string doc
     // Prepara el jugador
     std::unique_ptr<Player> playerNode(new Player(playerTexture));
     mPlayer = playerNode.get();
+//    mPlayer->setSize(sf::Vector2u(100*4, 200*8));
     mPlayer->setSize(sf::Vector2u(100*4, 200*8));
     mSceneLayers[Boxes]->attachChild(std::move(playerNode));
     
@@ -197,22 +198,74 @@ bool MinigaemFitIt::update(sf::Time dt) {
     handleRealtimeInput();
 
     sf::Vector2f nextPlayerPosition;
-    sf::FloatRect movedRect (nextPlayerPosition, mPlayer->getSize());
     nextPlayerPosition.x = mPlayer->getPosition().x + mPlayer->getVel().x * dt.asSeconds();
     nextPlayerPosition.y = mPlayer->getPosition().y + mPlayer->getVel().y * dt.asSeconds();
 
-    bool colision = true;
-    while(colision){
-        colision = false;
-        for(int i = 0; i < mBoxes.size(); ++i){
-            if(movedRect.intersects(mBoxes[i]->getColisionBounds())){
-                mBoxes[i]->setVel(mPlayer->getVel());
-                colision = true;
-                movedRect = mBoxes[i]->getColisionBounds();
-            }
+    sf::FloatRect movedBoxRect;
+    sf::FloatRect movedRect (nextPlayerPosition, mPlayer->getSize());
+
+    if(movedRect.intersects(mBoxes[0]->getColisionBounds())){
+        mBoxes[0]->setVel(1.0f * mPlayer->getVel());
+        movedBoxRect = mBoxes[0]->getColisionBounds();
+        movedBoxRect.left = mBoxes[0]->getPosition().x + mBoxes[0]->getVel().x * dt.asSeconds();
+        movedBoxRect.top = mBoxes[0]->getPosition().y + mBoxes[0]->getVel().y * dt.asSeconds();
+        if(movedBoxRect.intersects(mBoxes[1]->getColisionBounds()))
+            mBoxes[1]->setVel(1.0f * mPlayer->getVel());
+    }
+    if(movedRect.intersects(mBoxes[1]->getColisionBounds())){
+        mBoxes[1]->setVel(1.0f * mPlayer->getVel());
+        movedBoxRect = mBoxes[1]->getColisionBounds();
+        movedBoxRect.left = mBoxes[1]->getPosition().x + mBoxes[1]->getVel().x * dt.asSeconds();
+        movedBoxRect.top = mBoxes[1]->getPosition().y + mBoxes[1]->getVel().y * dt.asSeconds();
+        if(movedBoxRect.intersects(mBoxes[0]->getColisionBounds()))
+            mBoxes[0]->setVel(1.0f * mPlayer->getVel());
+    }
+
+    mSceneGraph.update(dt);
+
+    if(mPlayer->getPosition().y < 30) mPlayer->setPosition(mPlayer->getPosition().x, 30);
+    if(mPlayer->getPosition().y > getContext().rTexture->getSize().y - mPlayer->getSize().y)
+        mPlayer->setPosition(mPlayer->getPosition().x, getContext().rTexture->getSize().y - mPlayer->getSize().y);
+    //Check boxes are in the game
+    for(int i = 0; i < mBoxes.size(); ++i) {
+        if(mBoxes[i]->getPosition().x >= gameSize.x - mBoxes[i]->getSize().x) {
+
+            if(mBoxes[i]->getColor() == (sf::Color(0,200,0,250))) ++mGood_bad.x;
+            else ++mGood_bad.y;
+
+            do{
+                int posx = rand()%(int)(gameSize.x -210 - mBoxes[i]->getSize().x) +mBoxes[i]->getSize().x;
+                int posy = rand()%(int)(gameSize.y -100 - 2*mBoxes[i]->getSize().x) +mBoxes[i]->getSize().y +100;
+                int ran = rand()%2;
+                mGoodBoxes[i] = ran;
+                if(ran == 0) mBoxes[i]->setColor(sf::Color(200,0,0,250));
+                else mBoxes[i]->setColor(sf::Color(0,200,0,250));
+                mBoxes[i]->setPosition(sf::Vector2f(posx, posy));
+            }while(mBoxes[1]->getColisionBounds().intersects(mBoxes[0]->getColisionBounds()));
+        }
+        if(mBoxes[i]->getPosition().y <= 100 - mBoxes[i]->getSize().y/2) {
+
+            if(mBoxes[i]->getColor() == (sf::Color(200,0,0,250))) ++mGood_bad.x;
+            else ++mGood_bad.y;
+
+            do{
+                int posx = rand()%(int)(gameSize.x -210 - mBoxes[i]->getSize().x) +mBoxes[i]->getSize().x;
+                int posy = rand()%(int)(gameSize.y -100 - 2*mBoxes[i]->getSize().x) +mBoxes[i]->getSize().y +100;
+                int ran = rand()%2;
+                mGoodBoxes[i] = ran;
+                if(ran == 0) mBoxes[i]->setColor(sf::Color(200,0,0,250));
+                else mBoxes[i]->setColor(sf::Color(0,200,0,250));
+                mBoxes[i]->setPosition(sf::Vector2f(posx, posy));
+            }while(mBoxes[1]->getColisionBounds().intersects(mBoxes[0]->getColisionBounds()));
+
         }
     }
-    mSceneGraph.update(dt);
+
+    if(mGood_bad.x - mGood_bad.y >= 1){
+        //std::cout << "Penguin" << std::endl;
+//canvia l'estat
+    }
+
     return true;
 }
 
@@ -221,18 +274,25 @@ void MinigaemFitIt::handleRealtimeInput(){
     bool moving = false;
     mPlayer->setVel(0,0);
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up   ) ) {
-        mPlayer->setVel(mPlayer->getVel().x,mPlayer->getVel().y-movVel); moving = true;
+        mPlayer->setVel(mPlayer->getVel().x,mPlayer->getVel().y-movVel);
+        mPlayer->setDir(dir_up); moving = true;
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down ) ) {
-        mPlayer->setVel(mPlayer->getVel().x,mPlayer->getVel().y+movVel); moving = true;
+        mPlayer->setVel(mPlayer->getVel().x,mPlayer->getVel().y+movVel);
+        mPlayer->setDir(dir_down); moving = true;
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) ) {
-        mPlayer->setVel(mPlayer->getVel().x-movVel,mPlayer->getVel().y); moving = true;
+        mPlayer->setVel(mPlayer->getVel().x-movVel,mPlayer->getVel().y);
+        mPlayer->setDir(dir_left); moving = true;
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ) {
-        mPlayer->setVel(mPlayer->getVel().x+movVel,mPlayer->getVel().y); moving = true;
+        mPlayer->setVel(mPlayer->getVel().x+movVel,mPlayer->getVel().y);
+        mPlayer->setDir(dir_right); moving = true;
     }
-    if(! moving) mPlayer->setVel(0,0);
+    if(! moving) {
+        mPlayer->setVel(0,0);
+        mPlayer->setDir(dir_none);
+    }
 
 }
 

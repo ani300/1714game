@@ -40,14 +40,12 @@ class MinigaemFitIt: public Estat {
 
         Player* mPlayer;
         TextNode* mText;
-        const int movVel = 5;
+        const int movVel = 300;
         sf::Vector2i mGood_bad;
         std::vector<Box*> mBoxes;
         std::vector<int> mGoodBoxes;
         void handleRealtimeInput();
         void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
-
-        
 
 };
         

@@ -17,8 +17,11 @@ class MovileObject: public SceneNode {
         void setColisionBoundsPos(sf::Vector2f pos);
         void setColisionBoundsSize(sf::Vector2u size);
         void setDirToVel(directions dir, float quantatMoviment);
+        void setDir(directions dir);
+        directions getDir();
 
-	private:
+    private:
+        directions dir;
         sf::Vector2f mVel;
         sf::FloatRect colisionBounds;
 		virtual void updateCurrent(sf::Time dt);

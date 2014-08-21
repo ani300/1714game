@@ -52,3 +52,11 @@ void MovileObject::setColisionBoundsSize(sf::Vector2u size){
     colisionBounds.width = size.x;
     colisionBounds.height = size.y;
 }
+
+void MovileObject::setDir(directions d){
+    dir = d;
+}
+
+directions MovileObject::getDir(){
+    return dir;
+}

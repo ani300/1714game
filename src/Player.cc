@@ -8,10 +8,11 @@ Player::Player(const sf::Texture& texture)
     spriteSize.y = texture.getSize().y/8;
     spriteSource.x = spriteSource.y = 0;
     setColisionBoundsPos(getPosition());
+    setColisionBoundsSize(sf::Vector2u(0,0));
 }
 
 sf::Vector2f Player::getSize(){
-    return sf::Vector2f(spriteSize.x * mSprite.getScale().x, spriteSize.y * mSprite.getScale().y);
+    return sf::Vector2f(spriteSize.x * getScale().x, spriteSize.y * getScale().y);
 }
 
 void Player::setPosition(float posX, float posY){
@@ -20,7 +21,7 @@ void Player::setPosition(float posX, float posY){
 }
 
 void Player::updateCurrent(sf::Time dt) {
-    
+    auxtimer += dt.asSeconds();
     // TODO: Posar tot això al handler de input
     /*if(spriteSource.y == dir){
         MovileObject::moveIt(dir, Movement);
@@ -34,11 +35,19 @@ void Player::updateCurrent(sf::Time dt) {
 
     if(spriteSource.x >= 4) spriteSource.x = 0;
     */
-    move(getVel());
+  //  move(getVel());
+    //dir_up, dir_down, dir_right, dir_left, dir_up_right, dir_down_left, dir_up_left, dir_down_right, dir_none
+    if(getDir() != dir_none)spriteSource.y = (int)getDir();
+    if(getDir() != dir_none && auxtimer >= 0.091) {
+        ++spriteSource.x;
+        auxtimer = 0;
+    }
+    if(spriteSource.x >= 4) spriteSource.x = 0;
+    move(getVel() * dt.asSeconds());
     setColisionBoundsPos(getPosition());
     mSprite.setTextureRect(sf::IntRect(spriteSource.x*spriteSize.x,
-                                      spriteSource.y*spriteSize.y,
-                                      spriteSize.x,  spriteSize.y ));
+                                       spriteSource.y*spriteSize.y,
+                                       spriteSize.x,  spriteSize.y ));
 }
 
 
@@ -52,7 +61,11 @@ void Player::setSize(sf::Vector2u desiredSize){
     scalex = float(desiredSize.x)/mSprite.getTexture()->getSize().x;
     scaley = float(desiredSize.y)/mSprite.getTexture()->getSize().y;
     setScale(scalex, scaley);
-    setColisionBoundsSize(desiredSize);
+    setColisionBoundsSize(sf::Vector2u(desiredSize.x/4, desiredSize.y/8));
+}
+
+sf::FloatRect Player::getColisionBounds(){
+    return getWorldTransform().transformRect(mSprite.getGlobalBounds());
 }
 
 void Player::setColor(sf::Color color){
