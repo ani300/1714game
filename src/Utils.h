@@ -2,6 +2,7 @@
 #define AUX
 
 #include <map>
+#include <list>
 #include <cstdio>
 #include <string>
 #include <memory>

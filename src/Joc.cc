@@ -6,14 +6,14 @@
 #include "SplashImage.h"
 #include "Minigaem1.h"
 #include "MinigaemFitIt.h"
-//#include "Fight.h"
+#include "Fight.h"
 
 const sf::Time Joc::TimePerFrame = sf::seconds(1.f/60.f);
 
 //Constructor
 Joc::Joc() :
   mWindow(sf::VideoMode(sf::VideoMode::getDesktopMode()), L"1714: La resistència de l'Història"
-    , sf::Style::Titlebar | sf::Style::Close)
+    , sf::Style::None/*sf::Style::Titlebar | sf::Style::Close*/)
 , mRenderTexture()
 , mTextures()
 , mFonts()
@@ -83,6 +83,10 @@ void Joc::processInput() {
 
         if (event.type == sf::Event::Closed)
             mWindow.close();
+
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+            mWindow.close();
+        }
     }
 }
 
@@ -133,5 +137,6 @@ void Joc::registerStates() {
     mPilaEstats.registerState<SplashImage>(Estats::SplashScreen);
     mPilaEstats.registerState<Minigaem1>(Estats::Minigaem1);
     mPilaEstats.registerState<MinigaemFitIt>(Estats::MinigaemFitIt);
+    mPilaEstats.registerState<Fight>(Estats::Fight);
 }
 

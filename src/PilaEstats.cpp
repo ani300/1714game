@@ -120,7 +120,12 @@ PilaEstats::InfoEstat PilaEstats::readNextState() {
         case 'N': {
             std::cerr << "minigame1 actiu bitches" << std::endl;
             ++skipLines;
-            return InfoEstat(Estats::Minigaem1,doc);
+            return InfoEstat(Estats::Minigaem1, doc);
+        }
+        case 'F': {
+            std::cerr << "penguins FIGHT" << std::endl;
+            ++skipLines;
+            return InfoEstat(Estats::Fight, doc);
         }
         case 'W':
             /*

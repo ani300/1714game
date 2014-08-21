@@ -20,7 +20,12 @@ namespace Textures
         MFIFons,
         MFIPlayer,
         MG1Fons,
-        MG1Player
+        MG1Player,
+        FightBackground,
+        FightPlayer,
+        FightGroundEnemy,
+        FightSmallAirEnemy,
+        FightBigAirEnemy
 	};
 
     namespace SplashImage {

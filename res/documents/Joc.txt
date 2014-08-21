@@ -1,5 +1,5 @@
 %TESTING
-MinigaemFitIt.txt
+Fight.txt
 % refrigerator
 % aquest primer simbol es un comentari
 % cada instrucció ha de tenir una lletra inicial diferent
@@ -24,7 +24,7 @@ SplashImage5.txt
 SplashImage6.txt
 SplashImage7.txt
 %
-% MinigameX.txt
+%MinigameX.txt
 %
 % WalkmapX.txt
 % BattleX.txt ?
