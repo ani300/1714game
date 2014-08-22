@@ -40,8 +40,9 @@ class MinigaemFitIt: public Estat {
 
         Player* mPlayer;
         TextNode* mText;
-        const int movVel = 300;
         sf::Vector2i mGood_bad;
+        const int movVel = 300;
+        const int qttyToEnd = 10;
         std::vector<Box*> mBoxes;
         std::vector<int> mGoodBoxes;
         void handleRealtimeInput();

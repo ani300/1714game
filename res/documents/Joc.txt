@@ -1,4 +1,5 @@
 %TESTING
+MinigaemFitIt.txt
 Fight.txt
 % refrigerator
 % aquest primer simbol es un comentari

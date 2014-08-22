@@ -207,6 +207,7 @@ bool MinigaemFitIt::update(sf::Time dt) {
     sf::FloatRect movedRect (nextPlayerPosition, mPlayer->getSize());
 
     if(movedRect.intersects(mBoxes[0]->getColisionBounds())){
+        mPlayer->setVel(mPlayer->getVel().x/2,mPlayer->getVel().y/2);
         mBoxes[0]->setVel(1.0f * mPlayer->getVel());
         movedBoxRect = mBoxes[0]->getColisionBounds();
         movedBoxRect.left = mBoxes[0]->getPosition().x + mBoxes[0]->getVel().x * dt.asSeconds();
@@ -215,6 +216,7 @@ bool MinigaemFitIt::update(sf::Time dt) {
             mBoxes[1]->setVel(1.0f * mPlayer->getVel());
     }
     if(movedRect.intersects(mBoxes[1]->getColisionBounds())){
+        mPlayer->setVel(mPlayer->getVel().x/2,mPlayer->getVel().y/2);
         mBoxes[1]->setVel(1.0f * mPlayer->getVel());
         movedBoxRect = mBoxes[1]->getColisionBounds();
         movedBoxRect.left = mBoxes[1]->getPosition().x + mBoxes[1]->getVel().x * dt.asSeconds();
@@ -265,7 +267,7 @@ bool MinigaemFitIt::update(sf::Time dt) {
 
     mText->setString("Be: " + std::to_string(mGood_bad.x) + " Malament: " + std::to_string(mGood_bad.y));
 
-    if(mGood_bad.x - mGood_bad.y >= 5){
+    if(mGood_bad.x - mGood_bad.y >= qttyToEnd){
         //std::cout << "Penguin" << std::endl;
         //canvia l'estat
         requestStackPop();
