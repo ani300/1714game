@@ -116,80 +116,6 @@ MinigaemFitIt::MinigaemFitIt(PilaEstats& stack, Context context, std::string doc
 
 }
 
-/*
-directions inverseDir(directions dir){
-    if(dir == dir_none) return dir_none;
-    if(dir%2 == 0) return static_cast<directions>(dir+1);
-    else return static_cast<directions> (dir-1);
-}
-
-void MinigaemFitIt::update(sf::Time elapsedTime) {
-
-    //this->handlePlayerInput();
-    text.setString("Be: " + std::to_string(good_bad.x) + " Malament: " + std::to_string(good_bad.y));
-    player.move(dir, 300*(elapsedTime.asSeconds()));
-    for(int i = 0; i < boxes.size(); ++i){
-        if (player.colide(boxes[i])) {
-            sf::Vector2f aux = boxes[i].getPosition();
-            boxes[i].move(dir, 310*(elapsedTime.asSeconds()));
-            for(int k = 0; k < boxes.size(); ++k){
-                if(k != i){
-                    if(boxes[i].colide(boxes[k])){
-                        boxes[k].move(dir, 315*elapsedTime.asSeconds());
-                    }
-                }
-            }
-            if(boxes[i].getPosition() == aux) player.move(inverseDir(dir), 300*(elapsedTime.asSeconds()));
-        }
-    }
-    if(player.getPosition().y < 100) player.setPosition(sf::Vector2f(player.getPosition().x, 100));
-    //Check boxes are in the game
-    for(int i = 0; i < boxes.size(); ++i) {
-        if(boxes[i].getPosition().x == gameSize.x - boxes[i].getSize().x) {
-
-            if(boxes[i].getColor() == (sf::Color(0,200,0,250))) ++good_bad.x;
-            else ++good_bad.y;
-
-            int posx = rand()%gameSize.x -210;
-            int posy = rand()%(gameSize.y-100) -100;
-            int ran = rand()%2;
-            goodBoxes[i] = ran;
-            if(ran == 0) boxes[i].setColor(sf::Color(200,0,0,250));
-            else boxes[i].setColor(sf::Color(0,200,0,250));
-            boxes[i].setPosition(sf::Vector2f(posx, posy));
-            boxes[i].move(dir, 0);
-        }
-        if(boxes[i].getPosition().y <= 100 - boxes[i].getSize().y/2) {
-
-            if(boxes[i].getColor() == (sf::Color(200,0,0,250))) ++good_bad.x;
-            else ++good_bad.y;
-
-            int posx = rand()%gameSize.x - 210;
-            int posy = rand()%(gameSize.y-100) - 100;
-            int ran = rand()%2;
-            goodBoxes[i] = ran;
-            if(ran == 0) boxes[i].setColor(sf::Color(200,0,0,250));
-            else boxes[i].setColor(sf::Color(0,200,0,250));
-            boxes[i].setPosition(sf::Vector2f(posx, posy));
-            boxes[i].move(dir, 0);
-        }
-    }
-
-    if(good_bad.x - good_bad.y >= 1){
-        std::cout << "Penguin" << std::endl;
-        std::ofstream outfile;
-        outfile.open("res/documents/Status.txt");
-        if(!outfile.is_open()) std::cerr << "res/documents/Status.txt" << " no obert " << std::endl;
-        outfile << "OK" << std::endl;
-        outfile.close();
-    }
-}
-
-void MinigaemFitIt::handlePlayerMouse(mouseButtons mouseBut, sf::Vector2f mouseClick){
-    //o no
-}
-*/
-
 void MinigaemFitIt::draw() {
     // Print texts
 
@@ -203,8 +129,9 @@ bool MinigaemFitIt::update(sf::Time dt) {
     nextPlayerPosition.x = mPlayer->getPosition().x + mPlayer->getVel().x * dt.asSeconds();
     nextPlayerPosition.y = mPlayer->getPosition().y + mPlayer->getVel().y * dt.asSeconds();
 
+    sf::Vector2f playerColisionSize( mPlayer->getColisionBounds().width, mPlayer->getColisionBounds().height);
     sf::FloatRect movedBoxRect;
-    sf::FloatRect movedRect (nextPlayerPosition, mPlayer->getSize());
+    sf::FloatRect movedRect (nextPlayerPosition, playerColisionSize);
 
     if(movedRect.intersects(mBoxes[0]->getColisionBounds())){
         mPlayer->setVel(mPlayer->getVel().x/2,mPlayer->getVel().y/2);
@@ -265,7 +192,7 @@ bool MinigaemFitIt::update(sf::Time dt) {
         }
     }
 
-    mText->setString("Be: " + std::to_string(mGood_bad.x) + " Malament: " + std::to_string(mGood_bad.y));
+    mText->setString("Caixes ben posades: " + std::to_string(mGood_bad.x - mGood_bad.y));
 
     if(mGood_bad.x - mGood_bad.y >= qttyToEnd){
         //std::cout << "Penguin" << std::endl;

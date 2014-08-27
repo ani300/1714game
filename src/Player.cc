@@ -35,8 +35,6 @@ void Player::updateCurrent(sf::Time dt) {
 
     if(spriteSource.x >= 4) spriteSource.x = 0;
     */
-  //  move(getVel());
-    //dir_up, dir_down, dir_right, dir_left, dir_up_right, dir_down_left, dir_up_left, dir_down_right, dir_none
     if(getDir() != dir_none)spriteSource.y = (int)getDir();
     if(getDir() != dir_none && auxtimer >= 0.091) {
         ++spriteSource.x;
@@ -48,6 +46,7 @@ void Player::updateCurrent(sf::Time dt) {
     mSprite.setTextureRect(sf::IntRect(spriteSource.x*spriteSize.x,
                                        spriteSource.y*spriteSize.y,
                                        spriteSize.x,  spriteSize.y ));
+    //setColisionBoundsSize(sf::Vector2u(spriteSize.x/2, spriteSize.y/2));
 }
 
 
@@ -61,11 +60,11 @@ void Player::setSize(sf::Vector2u desiredSize){
     scalex = float(desiredSize.x)/mSprite.getTexture()->getSize().x;
     scaley = float(desiredSize.y)/mSprite.getTexture()->getSize().y;
     setScale(scalex, scaley);
-    setColisionBoundsSize(sf::Vector2u(desiredSize.x/4, desiredSize.y/8));
+    setColisionBoundsSize(sf::Vector2u(desiredSize.x/6, desiredSize.y/12));
 }
 
 sf::FloatRect Player::getColisionBounds(){
-    return getWorldTransform().transformRect(mSprite.getGlobalBounds());
+    return MovileObject::getColisionBounds(); //return getWorldTransform().transformRect(mSprite.getGlobalBounds());
 }
 
 void Player::setColor(sf::Color color){
