@@ -29,9 +29,8 @@ WalkMap::WalkMap(PilaEstats& stack, Context context, std::string document)
     //Textura fons
     getline(infile, tex);
     while(tex[0] == '%') getline(infile, tex);
-std::cout << "pengUiN" << std::endl;
     mOwnTextures.load(Textures::WMBackground, Utils::getTexturePath(tex));
-std::cout << "pengDOSin" << std::endl;
+
     //Textura player
     getline(infile, tex);
     while(tex[0] == '%') getline(infile, tex);
@@ -47,8 +46,8 @@ std::cout << "pengDOSin" << std::endl;
     }
 
     // Prepara el fons de pantalla i la font
-    sf::Texture& backTexture = mOwnTextures.get(Textures::MFIFons);
-    sf::Texture& playerTexture = mOwnTextures.get(Textures::MFIPlayer);
+    sf::Texture& backTexture = mOwnTextures.get(Textures::WMBackground);
+    sf::Texture& playerTexture = mOwnTextures.get(Textures::WMPlayer);
     sf::Font& font = getContext().fonts->get(Fonts::Sansation);
     mText = new TextNode(font, "Penguin <3");
     mText->setPosition(0,0);
@@ -72,11 +71,17 @@ std::cout << "pengDOSin" << std::endl;
     // Prepara el jugador
     std::unique_ptr<Player> playerNode(new Player(playerTexture));
     mPlayer = playerNode.get();
-//    mPlayer->setSize(sf::Vector2u(100*4, 200*8));
     mPlayer->setSize(sf::Vector2u(100*4, 200*8));
     mSceneLayers[Boxes]->attachChild(std::move(playerNode));
 
-//    // Genera les caixes a partir del fitxer
+    //TODO; PREPARA TOTS ELS OBJECTES
+
+    //TODO: PREPARA TOTS ELS PNJs
+
+    //TODO: CREAR LA VIEW
+
+/*    HINT (es el que hi havia al Minijoc)
+// Genera les caixes a partir del fitxer
 //    getline(infile, tex);
 //    while(tex[0] == '%') getline(infile, tex);
 //    int boxQtty = atoi(tex.c_str());
@@ -112,17 +117,18 @@ std::cout << "pengDOSin" << std::endl;
 //        // posa-la a la llista de coses a pintar
 //        mSceneLayers[Boxes]->attachChild(std::move(boxNode));
 //    }
+*/
 
 }
 
 void WalkMap::draw() {
     // Print texts
-
     getContext().rTexture->draw(mSceneGraph);
 }
 
 bool WalkMap::update(sf::Time dt) {
-//    handleRealtimeInput();
+
+    handleRealtimeInput();
 
 //    sf::Vector2f nextPlayerPosition;
 //    nextPlayerPosition.x = mPlayer->getPosition().x + mPlayer->getVel().x * dt.asSeconds();
@@ -151,7 +157,7 @@ bool WalkMap::update(sf::Time dt) {
 //            mBoxes[0]->setVel(1.0f * mPlayer->getVel());
 //    }
 
-//    mSceneGraph.update(dt);
+    mSceneGraph.update(dt);
 
 //    if(mPlayer->getPosition().y < 30) mPlayer->setPosition(mPlayer->getPosition().x, 30);
 //    if(mPlayer->getPosition().y > getContext().rTexture->getSize().y - mPlayer->getSize().y)
