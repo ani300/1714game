@@ -46,7 +46,7 @@ void Player::updateCurrent(sf::Time dt) {
     mSprite.setTextureRect(sf::IntRect(spriteSource.x*spriteSize.x,
                                        spriteSource.y*spriteSize.y,
                                        spriteSize.x,  spriteSize.y ));
-    //setColisionBoundsSize(sf::Vector2u(spriteSize.x/2, spriteSize.y/2));
+    //setColisionBoundsSize(sf::Vector2u(spriteSize.x/6, spriteSize.y/12));
 }
 
 

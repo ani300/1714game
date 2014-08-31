@@ -6,6 +6,7 @@
 #include "SplashImage.h"
 #include "Minigaem1.h"
 #include "MinigaemFitIt.h"
+#include "WalkMap.h"
 #include "Fight.h"
 
 const sf::Time Joc::TimePerFrame = sf::seconds(1.f/60.f);
@@ -134,9 +135,10 @@ void Joc::updateStatistics(sf::Time dt) {
 }
 
 void Joc::registerStates() {
-    mPilaEstats.registerState<SplashImage>(Estats::SplashScreen);
-    mPilaEstats.registerState<Minigaem1>(Estats::Minigaem1);
-    mPilaEstats.registerState<MinigaemFitIt>(Estats::MinigaemFitIt);
     mPilaEstats.registerState<Fight>(Estats::Fight);
+    mPilaEstats.registerState<WalkMap>(Estats::WalkMap);
+    mPilaEstats.registerState<Minigaem1>(Estats::Minigaem1);
+    mPilaEstats.registerState<SplashImage>(Estats::SplashScreen);
+    mPilaEstats.registerState<MinigaemFitIt>(Estats::MinigaemFitIt);
 }
 

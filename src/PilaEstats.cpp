@@ -127,13 +127,11 @@ PilaEstats::InfoEstat PilaEstats::readNextState() {
             ++skipLines;
             return InfoEstat(Estats::Fight, doc);
         }
-        case 'W':
-            /*
-            //buidar drawableObjects;
-
-            drawableObjects.push_back();
-            */
-            break;
+        case 'W': {
+            std::cerr << "Walk Map" << std::endl;
+            ++skipLines;
+            return InfoEstat(Estats::WalkMap, doc);
+        }
         default:
             return InfoEstat(Estats::None,"");
             break;

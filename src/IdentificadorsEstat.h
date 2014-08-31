@@ -8,6 +8,7 @@ namespace Estats {
         Titol,
         Minigaem1,
         MinigaemFitIt,
+        WalkMap,
         Fight,
         SplashScreen,
         Pause,

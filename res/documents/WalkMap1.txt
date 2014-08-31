@@ -1,0 +1,6 @@
+%WALKMAP
+%   Background Texture just name no png nor jpg
+WMbackground
+%   Player Texture just name no png nor jpg
+WMplayer
+
