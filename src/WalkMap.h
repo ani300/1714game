@@ -37,6 +37,7 @@ class WalkMap: public Estat {
         SceneNode mSceneGraph;
         std::array<SceneNode*, LayerCount> mSceneLayers;
 
+        sf::View view;
         Player* mPlayer;
         TextNode* mText;
         const int movVel = 300;
@@ -51,6 +52,5 @@ class WalkMap: public Estat {
         mouseButtons mouseBut;
         sf::Vector2f mouseClick;
         */
-/*};*/
 
 #endif

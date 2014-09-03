@@ -123,7 +123,23 @@ WalkMap::WalkMap(PilaEstats& stack, Context context, std::string document)
 
 void WalkMap::draw() {
     // Print texts
+//    getContext().rTexture->draw(mSceneGraph);
+
+    sf::Vector2f viewPosition (0,0);
+    sf::Vector2f playerPosition (mPlayer->getPosition());
+    view.reset(sf::FloatRect(playerPosition.x,playerPosition.y,
+                                     getContext().rTexture->getSize().x*0.32,
+                                     getContext().rTexture->getSize().y*0.32));
+    if(playerPosition.y+10 > view.getSize().y/2)
+        viewPosition.y = playerPosition.y+10;
+    else viewPosition.y = view.getSize().y/2;
+    viewPosition.x = view.getSize().x/2;
+    view.setCenter(viewPosition);
+    view.setViewport(sf::FloatRect(0,0,1.0f,1.0f));
+
+    getContext().rTexture->setView(view);
     getContext().rTexture->draw(mSceneGraph);
+
 }
 
 bool WalkMap::update(sf::Time dt) {
