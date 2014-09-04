@@ -27,12 +27,16 @@ class WalkMap: public Estat {
     private:
         enum Layer {
             Background,
+            Pnjs,
+            Items,
             Boxes,
             Text,
             LayerCount
         };
 
         TextureHolder mOwnTextures;
+        ResourceHolder<sf::Texture, int> mItemTextures;
+        ResourceHolder<sf::Texture, int> mPnjTextures;
 
         SceneNode mSceneGraph;
         std::array<SceneNode*, LayerCount> mSceneLayers;
@@ -41,6 +45,8 @@ class WalkMap: public Estat {
         Player* mPlayer;
         TextNode* mText;
         const int movVel = 300;
+        std::vector<Box*> mPnjs;
+        std::vector<Box*> mItems;
 
         void handleRealtimeInput();
 

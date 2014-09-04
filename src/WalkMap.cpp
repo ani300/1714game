@@ -74,50 +74,76 @@ WalkMap::WalkMap(PilaEstats& stack, Context context, std::string document)
     mPlayer->setSize(sf::Vector2u(100*4, 200*8));
     mSceneLayers[Boxes]->attachChild(std::move(playerNode));
 
-    //TODO; PREPARA TOTS ELS OBJECTES
+    // PREPARA TOTS ELS OBJECTES
+    getline(infile, tex);
+    while(tex[0] == '%') getline(infile, tex);
+    int itmQtty = atoi(tex.c_str());
+    std::cout << itmQtty << " items" << std::endl;
+
+    for(int b = 0; b < itmQtty; ++b) {
+        // Carrega
+        getline(infile, tex);
+        while(tex[0] == '%') getline(infile, tex);
+        mItemTextures.load(b, Utils::getTexturePath(tex));
+
+        // Crea
+        std::unique_ptr<Box> boxNode(new Box(mItemTextures.get(b)));
+        mItems.push_back(boxNode.get());
+        //mBoxes[b]->setSize(sf::Vector2u(200, 200));
+
+        // Posició
+        getline(infile, tex);
+        while(tex[0] == '%') getline(infile, tex);
+        int posx = atoi(tex.c_str());
+        getline(infile, tex);
+        while(tex[0] == '%') getline(infile, tex);
+        int posy = atoi(tex.c_str());
+        mItems[b]->setPosition(sf::Vector2f(posx,posy));
+        mItems[b]->setSize(sf::Vector2u(200, 200));
+
+        // posa-la a la llista de coses a pintar
+        mSceneLayers[Boxes]->attachChild(std::move(boxNode));
+    }
 
     //TODO: PREPARA TOTS ELS PNJs
+    getline(infile, tex);
+    while(tex[0] == '%') getline(infile, tex);
+    int pnjQtty = atoi(tex.c_str());
+    std::cout << pnjQtty << " pnjs" << std::endl;
 
-    //TODO: CREAR LA VIEW
+    for(int b = 0; b < pnjQtty; ++b) {
+        // Carrega la textura
+        getline(infile, tex);
+        while(tex[0] == '%') getline(infile, tex);
+        mPnjTextures.load(b, Utils::getTexturePath(tex));
 
-/*    HINT (es el que hi havia al Minijoc)
-// Genera les caixes a partir del fitxer
-//    getline(infile, tex);
-//    while(tex[0] == '%') getline(infile, tex);
-//    int boxQtty = atoi(tex.c_str());
-//    std::cout << boxQtty << std::endl;
+        // Crea
+        std::unique_ptr<Box> boxNode(new Box(mPnjTextures.get(b)));
+        mPnjs.push_back(boxNode.get());
+        //mBoxes[b]->setSize(sf::Vector2u(200, 200));
 
-//    for(int b = 0; b < boxQtty; ++b) {
-//        // Carrega la textura de la caixa
-//        getline(infile, tex);
-//        while(tex[0] == '%') getline(infile, tex);
-//        mBoxTextures.load(b, Utils::getTexturePath(tex));
+        // Posició
+        getline(infile, tex);
+        while(tex[0] == '%') getline(infile, tex);
+        int posx = atoi(tex.c_str());
+        getline(infile, tex);
+        while(tex[0] == '%') getline(infile, tex);
+        int posy = atoi(tex.c_str());
+        mPnjs[b]->setPosition(sf::Vector2f(posx,posy));
+        mPnjs[b]->setSize(sf::Vector2u(200, 200));
+        mPnjs[b]->setMovility(false);
 
-//        // Crea la caixa
-//        std::unique_ptr<Box> boxNode(new Box(mBoxTextures.get(b)));
-//        mBoxes.push_back(boxNode.get());
-//        //mBoxes[b]->setSize(sf::Vector2u(200, 200));
+        //text qeu dirà en parlar-hi
+        getline(infile, tex);
+        while(tex[0] == '%') getline(infile, tex);
+        mPnjs[b]->setText(tex);
 
-//        // Posició de la caixa
-//        getline(infile, tex);
-//        while(tex[0] == '%') getline(infile, tex);
-//        int posx = atoi(tex.c_str());
-//        getline(infile, tex);
-//        while(tex[0] == '%') getline(infile, tex);
-//        int posy = atoi(tex.c_str());
-//        mBoxes[b]->setPosition(sf::Vector2f(posx,posy));
-//        mBoxes[b]->setSize(sf::Vector2u(200, 200));
+        // posa-la a la llista de coses a pintar
+        mSceneLayers[Boxes]->attachChild(std::move(boxNode));
+    }
 
-//        // Decideix si és good box o no
-//        int ran = rand()%2;
-//        mGoodBoxes.push_back(ran);
-//        if(ran == 0) mBoxes[b]->setColor(sf::Color(200,0,0,250));
-//        else mBoxes[b]->setColor(sf::Color(0,200,0,250));
-
-//        // posa-la a la llista de coses a pintar
-//        mSceneLayers[Boxes]->attachChild(std::move(boxNode));
-//    }
-*/
+    // CREAR LA VIEW
+        //ho he posat al draw
 
 }
 
@@ -128,13 +154,14 @@ void WalkMap::draw() {
     sf::Vector2f viewPosition (0,0);
     sf::Vector2f playerPosition (mPlayer->getPosition());
     view.reset(sf::FloatRect(playerPosition.x,playerPosition.y,
-                                     getContext().rTexture->getSize().x*0.32,
-                                     getContext().rTexture->getSize().y*0.32));
-    if(playerPosition.y+10 > view.getSize().y/2)
-        viewPosition.y = playerPosition.y+10;
-    else viewPosition.y = view.getSize().y/2;
+                                     getContext().rTexture->getSize().x*0.62,
+                                     getContext().rTexture->getSize().y*0.62));
+    //if(playerPosition.y+10 > view.getSize().y/2)
+   //     viewPosition.y = playerPosition.y+10;
+    //else
+    viewPosition.y = view.getSize().y/2;
     viewPosition.x = view.getSize().x/2;
-    view.setCenter(viewPosition);
+    view.setCenter(playerPosition);
     view.setViewport(sf::FloatRect(0,0,1.0f,1.0f));
 
     getContext().rTexture->setView(view);
@@ -146,38 +173,40 @@ bool WalkMap::update(sf::Time dt) {
 
     handleRealtimeInput();
 
-//    sf::Vector2f nextPlayerPosition;
-//    nextPlayerPosition.x = mPlayer->getPosition().x + mPlayer->getVel().x * dt.asSeconds();
-//    nextPlayerPosition.y = mPlayer->getPosition().y + mPlayer->getVel().y * dt.asSeconds();
+    sf::Vector2f nextPlayerPosition;
+    nextPlayerPosition.x = mPlayer->getPosition().x + mPlayer->getVel().x * dt.asSeconds();
+    nextPlayerPosition.y = mPlayer->getPosition().y + mPlayer->getVel().y * dt.asSeconds();
 
-//    sf::Vector2f playerColisionSize( mPlayer->getColisionBounds().width, mPlayer->getColisionBounds().height);
-//    sf::FloatRect movedBoxRect;
-//    sf::FloatRect movedRect (nextPlayerPosition, playerColisionSize);
+    sf::Vector2f playerColisionSize( mPlayer->getColisionBounds().width, mPlayer->getColisionBounds().height);
+    sf::FloatRect movedBoxRect;
+    sf::FloatRect movedRect (nextPlayerPosition, playerColisionSize);
 
-//    if(movedRect.intersects(mBoxes[0]->getColisionBounds())){
-//        mPlayer->setVel(mPlayer->getVel().x/2,mPlayer->getVel().y/2);
-//        mBoxes[0]->setVel(1.0f * mPlayer->getVel());
-//        movedBoxRect = mBoxes[0]->getColisionBounds();
-//        movedBoxRect.left = mBoxes[0]->getPosition().x + mBoxes[0]->getVel().x * dt.asSeconds();
-//        movedBoxRect.top = mBoxes[0]->getPosition().y + mBoxes[0]->getVel().y * dt.asSeconds();
-//        if(movedBoxRect.intersects(mBoxes[1]->getColisionBounds()))
-//            mBoxes[1]->setVel(1.0f * mPlayer->getVel());
-//    }
-//    if(movedRect.intersects(mBoxes[1]->getColisionBounds())){
-//        mPlayer->setVel(mPlayer->getVel().x/2,mPlayer->getVel().y/2);
-//        mBoxes[1]->setVel(1.0f * mPlayer->getVel());
-//        movedBoxRect = mBoxes[1]->getColisionBounds();
-//        movedBoxRect.left = mBoxes[1]->getPosition().x + mBoxes[1]->getVel().x * dt.asSeconds();
-//        movedBoxRect.top = mBoxes[1]->getPosition().y + mBoxes[1]->getVel().y * dt.asSeconds();
-//        if(movedBoxRect.intersects(mBoxes[0]->getColisionBounds()))
-//            mBoxes[0]->setVel(1.0f * mPlayer->getVel());
-//    }
+    if(movedRect.intersects(mItems[0]->getColisionBounds())){
+        mPlayer->setVel(mPlayer->getVel().x/2,mPlayer->getVel().y/2);
+        mItems[0]->setVel(1.0f * mPlayer->getVel());
+        movedBoxRect = mItems[0]->getColisionBounds();
+        movedBoxRect.left = mItems[0]->getPosition().x + mItems[0]->getVel().x * dt.asSeconds();
+        movedBoxRect.top = mItems[0]->getPosition().y + mItems[0]->getVel().y * dt.asSeconds();
+        if(movedBoxRect.intersects(mItems[1]->getColisionBounds()))
+            mItems[1]->setVel(1.0f * mPlayer->getVel());
+    }
+    if(movedRect.intersects(mItems[1]->getColisionBounds())){
+        mPlayer->setVel(mPlayer->getVel().x/2,mPlayer->getVel().y/2);
+        mItems[1]->setVel(1.0f * mPlayer->getVel());
+        movedBoxRect = mItems[1]->getColisionBounds();
+        movedBoxRect.left = mItems[1]->getPosition().x + mItems[1]->getVel().x * dt.asSeconds();
+        movedBoxRect.top = mItems[1]->getPosition().y + mItems[1]->getVel().y * dt.asSeconds();
+        if(movedBoxRect.intersects(mItems[0]->getColisionBounds()))
+            mItems[0]->setVel(1.0f * mPlayer->getVel());
+    }
 
     mSceneGraph.update(dt);
 
-//    if(mPlayer->getPosition().y < 30) mPlayer->setPosition(mPlayer->getPosition().x, 30);
-//    if(mPlayer->getPosition().y > getContext().rTexture->getSize().y - mPlayer->getSize().y)
-//        mPlayer->setPosition(mPlayer->getPosition().x, getContext().rTexture->getSize().y - mPlayer->getSize().y);
+    //check if player is in the game and correct it if not
+    if(mPlayer->getPosition().y < 0) mPlayer->setPosition(mPlayer->getPosition().x, 0);
+    if(mPlayer->getPosition().y > getContext().rTexture->getSize().y - mPlayer->getSize().y)
+        mPlayer->setPosition(mPlayer->getPosition().x, getContext().rTexture->getSize().y - mPlayer->getSize().y);
+
 //    //Check boxes are in the game
 //    for(int i = 0; i < mBoxes.size(); ++i) {
 //        if(mBoxes[i]->getPosition().x >= gameSize.x - mBoxes[i]->getSize().x) {
@@ -214,13 +243,6 @@ bool WalkMap::update(sf::Time dt) {
 //    }
 
 //    mText->setString("Caixes ben posades: " + std::to_string(mGood_bad.x - mGood_bad.y));
-
-//    if(mGood_bad.x - mGood_bad.y >= qttyToEnd){
-//        //std::cout << "Penguin" << std::endl;
-//        //canvia l'estat
-//        requestStackPop();
-//        requestNextState();
-//    }
 
     return true;
 }

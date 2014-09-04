@@ -60,17 +60,19 @@ int Joc::play() {
         while (timeSinceLastUpdate > TimePerFrame)
         {
             timeSinceLastUpdate -= TimePerFrame;
-
+//std::cout << clock.getElapsedTime().asSeconds() << " initialBucle time" << std::endl;
             processInput();
+//std::cout << clock.getElapsedTime().asSeconds() << " time to process Input " << std::endl;
             update(TimePerFrame);
-
+//std::cout << clock.getElapsedTime().asSeconds() << " time to update" << std::endl;
             // Check inside this loop, because stack might be empty before update() call
             if (mPilaEstats.isEmpty())
                 mWindow.close();
         }
-
         updateStatistics(dt);
+//std::cout << clock.getElapsedTime().asSeconds() << "let's render" << std::endl;
         render();
+//std::cout << clock.getElapsedTime().asSeconds() << "rendered------------------------------------------------------------------------------------" << std::endl;
     }
 
     return EXIT_SUCCESS;

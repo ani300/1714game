@@ -5,6 +5,8 @@
 Box::Box(const sf::Texture& texture)
 : mSprite(texture) {
     setColisionBoundsPos(getPosition());
+    movile = true;
+    text = "";
 }
 
 sf::Vector2f Box::getSize(){
@@ -73,4 +75,20 @@ sf::Color Box::getColor(){
 
 sf::FloatRect Box::getColisionBounds(){
     return getWorldTransform().transformRect(mSprite.getGlobalBounds());
+}
+
+void Box::setMovility(bool mov){
+    movile = mov;
+}
+
+bool Box::getMovility(){
+    return movile;
+}
+
+void Box::setText(std::string t){
+    text = t;
+}
+
+std::string Box::getText(){
+    return text;
 }
