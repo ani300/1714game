@@ -1,6 +1,8 @@
 /******************************Fight.cpp**********************************/
 #include "Fight.h"
 
+constexpr int Fight::posicions[5][3][2];
+
 //Constructor
 Fight::Fight(PilaEstats& stack, Context context)
 : Estat(stack, context)
@@ -159,11 +161,7 @@ bool Fight::update(sf::Time dt) {
             e.object = enemyNode.get();
 
             // Tria la posició on comença cada un
-            switch(mTimers[i].pos) {
-
-            }
-
-            e.object->setPosition(500.0f+rand()%300, 500.0f+rand()%300);
+            e.object->setPosition(Fight::posicions[mTimers[i].pos][0][0], Fight::posicions[mTimers[i].pos][1][0]);
             mEnemies.push_back(e);
 
             mSceneLayers[Objects]->attachChild(std::move(enemyNode));

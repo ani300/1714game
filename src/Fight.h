@@ -12,6 +12,7 @@
 #include "SpriteNode.hpp"
 #include "TextNode.hpp"
 
+
 class Fight : public Estat {
 	public:
         //Constructor
@@ -36,6 +37,79 @@ class Fight : public Estat {
         };
 
     private:
+        static constexpr int posicions[5][3][2] = {
+            {
+                {
+                    100,
+                    100
+                },
+                {
+                    200,
+                    200
+                },
+                {
+                    300,
+                    300
+                }
+            },
+            {
+                {
+                    200,
+                    100
+                },
+                {
+                    300,
+                    200
+                },
+                {
+                    400,
+                    300
+                }
+            },
+            {
+                {
+                    500,
+                    500
+                },
+                {
+                    600,
+                    600
+                },
+                {
+                    700,
+                    700
+                }
+            },
+            {
+                {
+                    500,
+                    100
+                },
+                {
+                    600,
+                    200
+                },
+                {
+                    700,
+                    300
+                }
+            },
+            {
+                {
+                    150,
+                    150
+                },
+                {
+                    250,
+                    250
+                },
+                {
+                    350,
+                    350
+                }
+            }
+        };
+
         enum Layer {
             Background,
             Objects,
@@ -55,6 +129,8 @@ class Fight : public Estat {
         std::vector<Enemy> mEnemies;
         void handleRealtimeInput();
         void click(mouseButtons mouseButton, sf::Vector2f mouseClick);
+
+
 };
 
 #endif // FIGHT_H
